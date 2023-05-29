@@ -14,7 +14,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView>
-      <Text>HomeScrenj jn en</Text>
+      <Text>HomeScrenj jndmowodmo en</Text>
     </SafeAreaView>
 
   )
