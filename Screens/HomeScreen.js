@@ -9,18 +9,17 @@ const HomeScreen = ({navigation}) => {
     <SafeAreaView style={styles.input}>
     {/*  IMAGE*/}
         <Text style={styles.login}>Login</Text>
-            <CustomInput placeholder="UserName"></CustomInput>
+            <CustomInput placeholder="Email"></CustomInput>
             <CustomInput placeholder="Password"></CustomInput>
-            <Pressable style={styles.button} onPress={() => Alert.alert('Simple Button pressed')}>
+            <Pressable style={styles.button} onPress={() => navigation.navigate("Landing")}>
                 <Text style={styles.text} >Login</Text>
             </Pressable>
-            <Pressable style={styles.button} onPress={() => navigation.push('Register')}>
+            <Pressable style={styles.button} onPress={() => navigation.navigate("Register")}>
                 <Text style={styles.text} >Register</Text>
             </Pressable>
 
                     {/*  Register*/}
 
-            <SearchBar></SearchBar>
 
 
     </SafeAreaView>

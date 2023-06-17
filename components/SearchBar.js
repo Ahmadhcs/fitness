@@ -1,6 +1,6 @@
-import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Alert, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
-
+import SearchFilter from './SearchFilter'
 
 const spoon = "https://api.spoonacular.com/recipes/complexSearch"
 const headerConfig = { headers: { Accept: "application/json" ,},}
@@ -8,22 +8,21 @@ const headerConfig = { headers: { Accept: "application/json" ,},}
 
 export default function SearchBar() {
     const [input, setInput] = React.useState("")
+
+    const [text, setText] = React.useState("")
+
+
  
 
 
     const fetchData = (value)  =>{
-        fetch(`${spoon}?apiKey=e1e9e17338544f5983922872c0475bd2`)
+        fetch(`${spoon}?apiKey=cc26ee6ac9ab4f9baddaa1343d79c0f8`)
         .then((resp) => resp.json())
         .then((json) => {
-            console.log(json)
-            const result = json.results.filter((obj) => {
-                
-                console.log(obj.title.includes(value))
-            })
-
-    
-
-
+            const result = json.results.filter(obj => {
+               return obj.title.toLowerCase().includes(value.toLowerCase())} 
+            )
+            setText(result)
         }).catch((error) => console.log(error));
     };
 
@@ -36,18 +35,25 @@ export default function SearchBar() {
         }
     }
 
+    
+
 
     return (
-        <View style={styles.SearchBack}>
-            <TextInput 
-                placeholder='Input Your Meal!' 
-                value={input}
-                style={styles.search}
-                onChangeText={(text) => 
-                     handleChange(text)
-                }
-                />
+        <View style={styles.total}>
+            <View style={styles.SearchBack}>
+                <TextInput 
+                    placeholder='Input Your Meal!' 
+                    value={input}
+                    style={styles.search}
+                    onChangeText={(text) => 
+                        handleChange(text)
+                    }
+                    />
+                
+            </View>
+            <SearchFilter data={text} input={input} setInput={setInput}/>
         </View>
+        
     )
 }
 
@@ -61,5 +67,10 @@ const styles = StyleSheet.create({
         borderWidth: .7,
         borderColor: "#e8e8e8",
 
+    }, 
+    total:{
+        width: 450,
+        paddingVertical: 8,
+        paddingLeft: 75
     }
 })
