@@ -11,7 +11,7 @@ const HomeScreen = ({navigation}) => {
         <Text style={styles.login}>Login</Text>
             <CustomInput placeholder="Email"></CustomInput>
             <CustomInput placeholder="Password"></CustomInput>
-            <Pressable style={styles.button} onPress={() => navigation.navigate("Landing")}>
+            <Pressable style={styles.button} onPress={() => navigation.navigate("Dashboard")}>
                 <Text style={styles.text} >Login</Text>
             </Pressable>
             <Pressable style={styles.button} onPress={() => navigation.navigate("Register")}>

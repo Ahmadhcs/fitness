@@ -7,6 +7,10 @@ import Register from './Screens/Register';
 import Landing from './Screens/Landing';
 import Email from './Screens/Email';
 import Account from './Screens/Account';
+import Dashboard from './Screens/Dashboard';
+import Measure from './Screens/Measure';
+import AgeGender from './Screens/AgeGender';
+
 const Stack = createNativeStackNavigator();
 
 
@@ -30,6 +34,10 @@ export default function App() {
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Email" component={Email} />
             <Stack.Screen name="Account" component={Account} />
+            <Stack.Screen name="Dashboard" component={Dashboard} />
+            <Stack.Screen name="AgeGender" component={AgeGender} />
+            <Stack.Screen name="Measure" component={Measure} />
+
 
 
           </>
