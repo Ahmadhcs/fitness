@@ -2,6 +2,8 @@ import { View, Text, SafeAreaView, Image, StyleSheet, ScrollView, TouchableOpaci
 import React, { useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import Navbar from '../components/Navbar'
+import { Stack, FAB } from "@react-native-material/core";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 const Dashboard = () => {
     const navigation = useNavigation();
@@ -18,6 +20,7 @@ const Dashboard = () => {
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.user}>
          <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
+
 
         <View style={styles.innerText}>
         <Text style={styles.userText}>Welcome, Ahmad!</Text>
@@ -38,6 +41,7 @@ const Dashboard = () => {
       </TouchableOpacity>
 
       <View style={styles.bottom}>
+
         <Navbar />
       </View>
 
