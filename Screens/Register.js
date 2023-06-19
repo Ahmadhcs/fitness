@@ -1,85 +1,88 @@
-import { View, Text, Pressable, StyleSheet, TextInput, Picker, Button} from 'react-native'
-import React, { useLayoutEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
-import { SafeAreaView } from 'react-native-safe-area-context';
-
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  Picker,
+  Button,
+} from "react-native";
+import React, { useLayoutEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Register = () => {
+  const navigation = useNavigation();
 
-    const navigation = useNavigation();
+  const [name, setName] = useState("");
 
-    const [name, setName] = useState('');
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  }, []);
 
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerShown: false,
-        });
-    }, [])
+  const handleName = () => {
+    //Handle empty or too short
 
-    const handleName = () => {
-      //Handle empty or too short 
-      
-      navigation.navigate('Email', name );
-    };
-
-
-   
+    navigation.navigate("Email", name);
+  };
 
   return (
     <SafeAreaView>
-      <Text style= {styles.title}>What's Your Name?</Text>
+      <Text style={styles.title}>What's Your Name?</Text>
       <Pressable>
-        <Text onPress={() => navigation.navigate('Home')}>Back</Text>
+        <Text onPress={() => navigation.navigate("Home")}>Back</Text>
       </Pressable>
       <View style={styles.main}>
-        <TextInput placeholder="Your Full Name"  style={styles.textbox}  onChangeText={setName} />  
-        <Pressable style={styles.cont} onPress={handleName}><Text style={styles.text}>Continue</Text></Pressable>
+        <TextInput
+          placeholder="Your Full Name"
+          style={styles.textbox}
+          onChangeText={setName}
+        />
+        <Pressable style={styles.cont} onPress={handleName}>
+          <Text style={styles.text}>Continue</Text>
+        </Pressable>
       </View>
-
     </SafeAreaView>
-  )
-}
+  );
+};
 
-const styles =  StyleSheet.create({
+const styles = StyleSheet.create({
   main: {
-    alignItems: 'center',
-    
+    alignItems: "center",
   },
   small: {
-    width: "30%"
+    width: "30%",
   },
-  cont:{
-    
+  cont: {
     backgroundColor: "blue",
     width: "80%",
-    padding:10,
+    padding: 10,
     borderRadius: 6,
-    borderWidth: .7,
+    borderWidth: 0.7,
     borderColor: "blue",
-    marginVertical:5,
-
-  }, 
+    marginVertical: 5,
+  },
   text: {
     color: "white",
     textAlign: "center",
-    fontWeight: "700"
+    fontWeight: "700",
   },
-  title:{
+  title: {
     fontWeight: "700",
     fontSize: "30px",
-    textAlign: 'center'
+    textAlign: "center",
   },
-  textbox:{
-    backgroundColor: 'white',
-        width: '80%',
-        padding:10,
-        borderRadius: 6,
-        borderWidth: .7,
-        marginVertical:5,
-        borderColor: "gray",
+  textbox: {
+    backgroundColor: "white",
+    width: "80%",
+    padding: 10,
+    borderRadius: 6,
+    borderWidth: 0.7,
+    marginVertical: 5,
+    borderColor: "gray",
+  },
+});
 
-
-  }
-})
-
-export default Register
+export default Register;
