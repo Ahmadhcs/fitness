@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   pfp: {
     width: 75,
     height: 75,
-    borderRadius: "60%",
+    borderRadius: 60,
   },
   date: {
     paddingLeft: 21,
