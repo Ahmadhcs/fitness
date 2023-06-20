@@ -12,6 +12,10 @@ import { useNavigation } from "@react-navigation/native";
 import Navbar from "../components/Navbar";
 import { Stack, FAB } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import { Dimensions } from "react-native";
+
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
 
 const Dashboard = () => {
   const navigation = useNavigation();
@@ -82,14 +86,16 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
   },
+  // Log '+' button
   button: {
     position: "absolute",
     backgroundColor: "#0081CF",
-    right: 16,
-    top: 650,
+    right: screenWidth * 0.05,
+    bottom: screenHeight * 0.15,
+    // right: 15,
+    // bottom: 125,
     width: 75,
     height: 75,
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: "50%",
