@@ -22,6 +22,7 @@ const Register = () => {
     });
   }, []);
 
+  // Navigates user to the Email screen with the entered name as a parameter
   const handleName = () => {
     //Handle empty or too short
 
@@ -30,16 +31,23 @@ const Register = () => {
 
   return (
     <SafeAreaView>
+      {/* Prompt */}
       <Text style={styles.title}>What's Your Name?</Text>
+
+      {/* Back button */}
       <Pressable>
         <Text onPress={() => navigation.navigate("Home")}>Back</Text>
       </Pressable>
+
+      {/* Name input */}
       <View style={styles.main}>
         <TextInput
           placeholder="Your Full Name"
           style={styles.textbox}
           onChangeText={setName}
         />
+
+        {/* Continue button */}
         <Pressable style={styles.cont} onPress={handleName}>
           <Text style={styles.text}>Continue</Text>
         </Pressable>

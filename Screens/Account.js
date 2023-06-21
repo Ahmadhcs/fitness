@@ -6,13 +6,13 @@ import {
   TextInput,
   Pressable,
 } from "react-native";
-import Picker from "@react-native-picker/picker";
 import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 const Account = () => {
   const navigation = useNavigation();
 
+  // Variables for userName and password
   const [userName, setUser] = useState("");
   const [password, setPass] = useState("");
 
@@ -22,15 +22,19 @@ const Account = () => {
     });
   }, []);
 
+  // Function to navigate to AgeGender screen
   const handleNewAccount = () => {
     navigation.navigate("AgeGender");
   };
 
   return (
     <SafeAreaView>
+      {/* Title */}
       <View style={styles.top}>
         <Text style={styles.mainTitle}>Let's set up your credintials</Text>
       </View>
+
+      {/* Username and password input fields */}
       <View style={styles.inputs}>
         <TextInput placeholder="Username" style={styles.textbox}></TextInput>
         <TextInput placeholder="Password" style={styles.textbox}></TextInput>
@@ -39,6 +43,8 @@ const Account = () => {
           style={styles.textbox}
         ></TextInput>
       </View>
+
+      {/* Continue button */}
       <View style={styles.buttonView}>
         <Pressable style={styles.cont} onPress={handleNewAccount}>
           <Text style={styles.text}>Continue</Text>

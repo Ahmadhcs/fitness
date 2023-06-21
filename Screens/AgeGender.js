@@ -11,11 +11,13 @@ const AgeGender = () => {
     });
   }, []);
 
+  // Function to navigate to Measure screen
   const handleAgeGender = () => {
     navigation.navigate("Measure");
   };
   return (
     <SafeAreaView>
+      {/* Next button */}
       <Pressable onPress={handleAgeGender}>
         <Text>Next</Text>
       </Pressable>

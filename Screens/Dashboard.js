@@ -10,16 +10,16 @@ import {
 import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Navbar from "../components/Navbar";
-import { Stack, FAB } from "@react-native-material/core";
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Dimensions } from "react-native";
 
+// Screen dimensions
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
 const Dashboard = () => {
   const navigation = useNavigation();
 
+  // Date details
   const today = new Date();
   const currentDate = today.toDateString();
 
@@ -28,30 +28,37 @@ const Dashboard = () => {
       headerShown: false,
     });
   }, []);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      {/* Profle Picture */}
       <View style={styles.user}>
         <Image
           style={styles.pfp}
           source={require("../images/cole.jpeg")}
         ></Image>
 
+        {/* Welcome Text and Date */}
         <View style={styles.innerText}>
           <Text style={styles.userText}>Welcome, Ahmad!</Text>
 
           <Text style={styles.date}>{currentDate.slice(4)}</Text>
         </View>
       </View>
+
+      {/* Dashboard */}
       <View style={styles.middleSection}>
         <View style={styles.header}>
           <Text style={styles.title}>Dashboard</Text>
         </View>
       </View>
 
+      {/* Log Button */}
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
 
+      {/* NavBar */}
       <View style={styles.bottom}>
         <Navbar />
       </View>

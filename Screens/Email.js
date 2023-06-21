@@ -12,8 +12,8 @@ import { useNavigation } from "@react-navigation/native";
 const Email = ({ route }) => {
   const navigation = useNavigation();
 
+  // Parameters and state variables
   const name = route.params;
-
   const [email, setEmail] = useState("");
   const [confirm, setConfirm] = useState("");
 
@@ -23,6 +23,7 @@ const Email = ({ route }) => {
     });
   }, []);
 
+  // Handle email input and validation
   const handleEmail = () => {
     //Handle empty or not valid
 
@@ -35,10 +36,13 @@ const Email = ({ route }) => {
 
   return (
     <SafeAreaView>
+      {/* Prompt */}
       <View style={styles.Titles}>
         <Text style={styles.title}>Hey {name}!</Text>
         <Text style={styles.title}>What is Your Email?</Text>
       </View>
+
+      {/* Email input */}
       <View style={styles.main}>
         <TextInput
           placeholder="Email Address"
@@ -52,6 +56,7 @@ const Email = ({ route }) => {
         />
       </View>
 
+      {/* Continue button */}
       <View style={styles.buttonView}>
         <Pressable style={styles.cont} onPress={handleEmail}>
           <Text style={styles.text}>Continue</Text>
