@@ -58,10 +58,11 @@ const Dashboard = () => {
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
 
-      {/* NavBar */}
+      {/* I commented this out because I declared it in the App.js so we can
+      choose which pages got a navbar
       <View style={styles.bottom}>
         <Navbar />
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 };
@@ -87,20 +88,18 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     fontSize: 25,
   },
-  bottom: {
-    position: "absolute",
-    right: 0,
-    left: 0,
-    bottom: 0,
-  },
-  // Log '+' button
+  // Navbar styling also moved to App.js
+  // bottom: {
+  //   position: "absolute",
+  //   right: 0,
+  //   left: 0,
+  //   bottom: 0,
+  // },
   button: {
     position: "absolute",
     backgroundColor: "#0081CF",
     right: screenWidth * 0.05,
-    bottom: screenHeight * 0.15,
-    // right: 15,
-    // bottom: 125,
+    bottom: screenHeight * 0.02,
     width: 75,
     height: 75,
     justifyContent: "center",

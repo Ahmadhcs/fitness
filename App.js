@@ -10,8 +10,20 @@ import Account from "./screens/Account";
 import Dashboard from "./screens/Dashboard";
 import Measure from "./screens/Measure";
 import AgeGender from "./screens/AgeGender";
+import Navbar from "./components/Navbar";
+import Workout from "./screens/Workout";
+import Weight from "./screens/Weight";
+import Nutrition from "./screens/Nutrition";
 
-// Create a new stack navigator instance
+const withNavbar = (Component) => {
+  return (props) => (
+    <View style={{ flex: 1, justifyContent: "space-between" }}>
+      <Component {...props} />
+      <Navbar navigation={props.navigation} />
+    </View>
+  );
+};
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -19,9 +31,7 @@ export default function App() {
   const isSignedIn = true;
 
   return (
-    // Wrap everything within a navigation container
     <NavigationContainer>
-      {/* Initiate the stack navigator */}
       <Stack.Navigator>
         {/* Conditional rendering of screens based on sign-in state */}
         {isSignedIn ? (
@@ -32,9 +42,12 @@ export default function App() {
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Email" component={Email} />
             <Stack.Screen name="Account" component={Account} />
-            <Stack.Screen name="Dashboard" component={Dashboard} />
             <Stack.Screen name="AgeGender" component={AgeGender} />
             <Stack.Screen name="Measure" component={Measure} />
+            <Stack.Screen name="Dashboard" component={withNavbar(Dashboard)} />
+            <Stack.Screen name="Workout" component={withNavbar(Workout)} />
+            <Stack.Screen name="Weight" component={withNavbar(Weight)} />
+            <Stack.Screen name="Nutrition" component={withNavbar(Nutrition)} />
           </>
         ) : (
           // User isn't signed in

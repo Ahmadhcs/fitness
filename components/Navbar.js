@@ -27,6 +27,7 @@ const Navbar = () => {
               {...props}
             />
           )}
+          onPress={() => navigation.navigate("Nutrition")}
         />
 
         {/* Home button */}
@@ -39,6 +40,7 @@ const Navbar = () => {
               {...props}
             />
           )}
+          onPress={() => navigation.navigate("Dashboard")}
         />
 
         {/* Weight button */}
@@ -51,6 +53,7 @@ const Navbar = () => {
               {...props}
             />
           )}
+          onPress={() => navigation.navigate("Weight")}
         />
 
         {/* Workout button */}
@@ -63,6 +66,7 @@ const Navbar = () => {
               {...props}
             />
           )}
+          onPress={() => navigation.navigate("Workout")}
         />
       </View>
     </View>
