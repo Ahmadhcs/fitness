@@ -2,14 +2,14 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LoginRegister from "./Screens/LoginRegister";
-import Register from "./Screens/Register";
-import Landing from "./Screens/Landing";
-import Email from "./Screens/Email";
-import Account from "./Screens/Account";
-import Dashboard from "./Screens/Dashboard";
-import Measure from "./Screens/Measure";
-import AgeGender from "./Screens/AgeGender";
+import LoginRegister from "./screens/LoginRegister";
+import Register from "./screens/Register";
+import Landing from "./screens/Landing";
+import Email from "./screens/Email";
+import Account from "./screens/Account";
+import Dashboard from "./screens/Dashboard";
+import Measure from "./screens/Measure";
+import AgeGender from "./screens/AgeGender";
 
 // Create a new stack navigator instance
 const Stack = createNativeStackNavigator();
