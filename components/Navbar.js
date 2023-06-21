@@ -17,6 +17,7 @@ const Navbar = () => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
+        {/* Nutrition button */}
         <IconButton
           style={styles.image}
           icon={(props) => (
@@ -27,6 +28,8 @@ const Navbar = () => {
             />
           )}
         />
+
+        {/* Home button */}
         <IconButton
           style={styles.image}
           icon={(props) => (
@@ -37,6 +40,8 @@ const Navbar = () => {
             />
           )}
         />
+
+        {/* Weight button */}
         <IconButton
           style={styles.image}
           icon={(props) => (
@@ -47,6 +52,8 @@ const Navbar = () => {
             />
           )}
         />
+
+        {/* Workout button */}
         <IconButton
           style={styles.image}
           icon={(props) => (

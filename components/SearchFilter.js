@@ -4,17 +4,16 @@ import React from "react";
 const SearchFilter = ({ data, input, setInput }) => {
   return (
     <View style={styles.filter}>
+      {/* Render a list of pressable components based on passed data */}
       <FlatList
         data={data}
         renderItem={({ item }) => {
-          // <Pressable >
-          //     <Text>{item[0].title}</Text>
-          // </Pressable>
-
+          // Return nothing if input is empty
           if (input == "") {
             return <Text></Text>;
           }
 
+          // Return pressable component for each item in data
           return (
             <Pressable style={styles.press} onPress={() => setInput("")}>
               <Text style={styles.output}>{item.title}</Text>
