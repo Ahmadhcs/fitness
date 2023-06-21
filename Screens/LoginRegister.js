@@ -6,25 +6,31 @@ import SearchBar from "../components/SearchBar";
 
 const HomeScreen = ({ navigation }) => {
   return (
+    // SafeAreaView is used to render content within the safe area boundaries of a device.
     <SafeAreaView style={styles.input}>
-      {/*  IMAGE*/}
+      {/* Logo */}
+
+      {/* "Login" title */}
       <Text style={styles.login}>Login</Text>
+      {/* Email and password */}
       <CustomInput placeholder="Email"></CustomInput>
       <CustomInput placeholder="Password"></CustomInput>
+
+      {/* Login button */}
       <Pressable
         style={styles.button}
         onPress={() => navigation.navigate("Dashboard")}
       >
         <Text style={styles.text}>Login</Text>
       </Pressable>
+
+      {/* Register Button */}
       <Pressable
         style={styles.button}
         onPress={() => navigation.navigate("Register")}
       >
         <Text style={styles.text}>Register</Text>
       </Pressable>
-
-      {/*  Register*/}
     </SafeAreaView>
   );
 };
