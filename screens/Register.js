@@ -36,7 +36,7 @@ const Register = () => {
 
       {/* Back button */}
       <Pressable>
-        <Text onPress={() => navigation.navigate("Home")}>Back</Text>
+        <Text onPress={() => navigation.navigate("LoginRegister")}>Back</Text>
       </Pressable>
 
       {/* Name input */}
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "700",
-    fontSize: "30px",
+    fontSize: "30",
     textAlign: "center",
   },
   textbox: {

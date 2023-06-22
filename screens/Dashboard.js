@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   ScrollView,
+  Pressable,
   TouchableOpacity,
 } from "react-native";
 import React, { useLayoutEffect } from "react";
@@ -52,6 +53,12 @@ const Dashboard = () => {
           <Text style={styles.title}>Dashboard</Text>
         </View>
       </View>
+
+      <Pressable>
+        <Text onPress={() => navigation.navigate("LoginRegister")}>
+          LoginRegister (Temporary)
+        </Text>
+      </Pressable>
 
       {/* Log Button */}
       <TouchableOpacity style={styles.button}>

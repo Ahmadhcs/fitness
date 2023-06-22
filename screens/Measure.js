@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView } from "react-native";
+import { Text, SafeAreaView, Pressable } from "react-native";
 import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 
@@ -13,6 +13,11 @@ const Measure = () => {
   return (
     <SafeAreaView>
       <Text>MEASURE</Text>
+      <Pressable>
+        <Text onPress={() => navigation.navigate("Dashboard")}>
+          Dashboard (Temporary)
+        </Text>
+      </Pressable>
     </SafeAreaView>
   );
 };
