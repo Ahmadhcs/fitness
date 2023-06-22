@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from 'expo-status-bar';
+import WeightBar from "../components/WeightBar";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width; 
@@ -57,6 +58,15 @@ const weightTracking = () => {
       <View style={styles.actualBar}></View>
 
       </View>
+    </View>
+    <View style={styles.weightHistory}>
+      <Text style={styles.historyTitle}>Weight History</Text>
+      <View style={styles.weightBars}>
+        <WeightBar />
+        <WeightBar />
+
+      </View>
+
     </View>
   
 
@@ -182,9 +192,19 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 20,
     backgroundColor: '#B39CD0',
-
+  },
+  weightHistory:{
+    paddingLeft: 20,
+    paddingTop: 10
 
   },
+  historyTitle:{
+    fontSize: 25,
+    fontWeight: "bold",
+  },
+  weightBars:{
+    paddingVertical:10,
+  }
    
 
 })
