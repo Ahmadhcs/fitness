@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, Animated} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { StatusBar } from 'expo-status-bar';
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width; 
@@ -12,7 +13,9 @@ const goToWeight = () =>{
 }
 
 const weightTracking = () => {
+
   const navigation = useNavigation();
+  
 
 
   return (
@@ -28,7 +31,34 @@ const weightTracking = () => {
 
     <View style={styles.progress}>
       <Text style={styles.progressText}>Your Progress</Text>
+      <View style={styles.goalWeight}>
+        <View style={styles.goalCurrent}>
+          <Text style={styles.goalTitle}>Current</Text>
+          <Text style={styles.goalActual}>64 Kg</Text>
+        </View>
+
+        <View style={styles.goalLeft}>
+          <Text style={styles.goalTitle}>Left</Text>
+          <Text style={styles.goalActual}>16 Kg</Text>
+        </View>
+
+        <View style={styles.goalTarget}>
+          <Text style={[styles.goalTitle, {textAlign: "right"}]}>Target</Text>
+          <Text style={[styles.goalActual, {textAlign: "right"}]}>50 Kg</Text>
+        </View>
+
+       
+
+
+      </View>
+      <View style={styles.bar}>
+
+      <View style={styles.bottomBar}></View>
+      <View style={styles.actualBar}></View>
+
+      </View>
     </View>
+  
 
 
       <TouchableOpacity style={styles.button}>
@@ -80,15 +110,83 @@ const styles = StyleSheet.create({
 
   },
   progress:{
-    backgroundColor: "#00C2A8",
+    backgroundColor: "#ADC5CF",
     width: screenWidth * 0.9,
-    borderRadius: "10%"
+    height: screenHeight * 0.175,
+    marginLeft: 18, //add more accurate using screen
+    borderRadius: "25%",
+    opacity: 1,
+    marginVertical: 8
   },
   progressText:{
     marginLeft: 20,
+    marginTop: 10,
     fontSize: 15,
-    fontWeight: "500"
-  }
+    fontWeight: "300",
+    
+  },
+  goalWeight:{
+    flexDirection: 'row',
+    paddingLeft: 20,
+    paddingTop: 10,
+    width: '100%'
+    
+  },
+  goalTitle:{
+    color: 'gray',
+    fontSize: 12.5,
+    fontWeight: 'bold',
+
+
+  },
+  goalActual:{
+    fontSize: 20,
+    fontWeight: '600'
+  },
+  goalCurrent:{
+    width: '33%',
+
+  },
+  goalLeft:{
+    width: '33%',
+    justifyContent: 'center', alignItems: 'center'
+
+ 
+
+  },
+  goalTarget:{
+    width: '33%',
+    paddingRight: 10,
+
+  },
+  bar:{
+    position: "relative",
+    paddingTop: 20,
+    paddingLeft: 15
+
+
+   },
+  bottomBar:{
+    width: screenWidth * 0.8,
+    height: 20,
+    borderRadius: 20,
+    backgroundColor: '#FBEAFF',
+    marginTop: 20,
+    marginLeft:15,
+    position: 'absolute'
+
+
+    },
+  actualBar:{
+    width: (screenWidth * 0.8) * (90 - 50  )/100 , // Will be an equation of how much -- (o)
+    height: 20,
+    borderRadius: 20,
+    backgroundColor: '#B39CD0',
+
+
+  },
+   
+
 })
 
 
