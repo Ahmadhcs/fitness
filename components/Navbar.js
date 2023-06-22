@@ -19,9 +19,10 @@ const Navbar = () => {
       <View style={styles.imageContainer}>
         <IconButton
           style={styles.image}
+          onPress={() => console.log('Pressed')}
           icon={(props) => (
             <Icon
-              style={[styles.icon, { fontSize: 30 }]}
+              style={[styles.icon]}
               name="scale"
               {...props}
             />
@@ -29,9 +30,10 @@ const Navbar = () => {
         />
         <IconButton
           style={styles.image}
+          onPress={() => console.log('Pressed')}
           icon={(props) => (
             <Icon
-              style={[styles.icon, { fontSize: 30 }]}
+              style={[styles.icon]}
               name="home"
               {...props}
             />
@@ -39,19 +41,21 @@ const Navbar = () => {
         />
         <IconButton
           style={styles.image}
+          onPress={() => console.log('Pressed')}
           icon={(props) => (
             <Icon
-              style={[styles.icon, { fontSize: 30 }]}
+              style={[styles.icon]}
               name="weight"
               {...props}
             />
           )}
         />
         <IconButton
-          style={styles.image}
+          style={styles.image} 
+          onPress={() => navigation.navigate("Workout")}
           icon={(props) => (
             <Icon
-              style={[styles.icon, { fontSize: 30 }]}
+              style={[styles.icon]}
               name="weight-lifter"
               {...props}
             />
@@ -72,6 +76,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: "white",
+    fontSize: 35
   },
   image: {
     marginHorizontal: 20,

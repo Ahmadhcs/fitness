@@ -10,7 +10,7 @@ import Account from "./Screens/Account";
 import Dashboard from "./Screens/Dashboard";
 import Measure from "./Screens/Measure";
 import AgeGender from "./Screens/AgeGender";
-
+import Workout from "./Screens/Workout";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -29,6 +29,8 @@ export default function App() {
             <Stack.Screen name="Dashboard" component={Dashboard} />
             <Stack.Screen name="AgeGender" component={AgeGender} />
             <Stack.Screen name="Measure" component={Measure} />
+            <Stack.Screen name="Workout" component={Workout} />
+
           </>
         ) : (
           <>
