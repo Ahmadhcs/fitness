@@ -35,7 +35,7 @@ const WeightBar = (props) => {
 
 const styles = StyleSheet.create({
     container:{
-        width: screenWidth * 0.85,
+        width: screenWidth * 0.9,
         height: screenHeight * 0.09,
         borderRadius: "30%",
         marginBottom: 10,

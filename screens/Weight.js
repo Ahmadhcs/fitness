@@ -29,6 +29,9 @@ const weightTracking = () => {
             source={require("../images/cole.jpeg")}
           ></Image>
       </View>
+      <View style={styles.graph}>
+
+      </View>
 
       <View style={styles.progress}>
         <Text style={styles.progressText}>Your Progress</Text>
@@ -107,7 +110,8 @@ const styles = StyleSheet.create({
   },
   header:{
     paddingLeft: 20,
-    flexDirection: "row"
+    flexDirection: "row",
+    paddingBottom: screenHeight * 0.02
   },
   headerText:{
     paddingTop: 20,
@@ -117,11 +121,12 @@ const styles = StyleSheet.create({
 
   },
   pfp:{
-    width: 75,
-    height: 75,
+    width: 60,
+    height: 60 ,
     borderRadius: 60,
-    marginLeft: screenWidth * 0.3,
-    paddingTop: 10
+    marginLeft: screenWidth * 0.325,
+    marginTop: screenHeight * 0.01,
+    paddingTop: 20
 
   },
   progress:{
@@ -214,6 +219,20 @@ const styles = StyleSheet.create({
   },
   weightBars:{
     paddingVertical:10,
+  },
+  graph:{
+    backgroundColor: "white",
+    width: screenWidth * 0.9,
+    height: screenHeight * 0.4,
+    borderRadius: "20%",
+    borderColor: 'black',
+    borderWidth: 0.15,
+    marginLeft: 20,
+    shadowColor: '#171717',
+    shadowOffset: {width: 2, height: 2.5},
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    borderRadius: 6,
   }
    
 
