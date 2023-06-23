@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image, Animated} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -21,62 +21,67 @@ const weightTracking = () => {
 
   return (
     <SafeAreaView  style={{ flex: 1 }}>
-
-    <View style={styles.header}>
-      <Text style={styles.headerText}>My Weight</Text>
-      <Image
-          style={styles.pfp}
-          source={require("../images/cole.jpeg")}
-        ></Image>
-    </View>
-
-    <View style={styles.progress}>
-      <Text style={styles.progressText}>Your Progress</Text>
-      <View style={styles.goalWeight}>
-        <View style={styles.goalCurrent}>
-          <Text style={styles.goalTitle}>Current</Text>
-          <Text style={styles.goalActual}>64 Kg</Text>
-        </View>
-
-        <View style={styles.goalLeft}>
-          <Text style={styles.goalTitle}>Left</Text>
-          <Text style={styles.goalActual}>16 Kg</Text>
-        </View>
-
-        <View style={styles.goalTarget}>
-          <Text style={[styles.goalTitle, {textAlign: "right"}]}>Target</Text>
-          <Text style={[styles.goalActual, {textAlign: "right"}]}>50 Kg</Text>
-        </View>
-
-       
-
-
-      </View>
-      <View style={styles.bar}>
-
-      <View style={styles.bottomBar}></View>
-      <View style={styles.actualBar}></View>
-
-      </View>
-    </View>
-    <View style={styles.weightHistory}>
-      <Text style={styles.historyTitle}>Weight History</Text>
-      <View style={styles.weightBars}>
-        <WeightBar />
-        <WeightBar />
-
+      <ScrollView>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>My Weight</Text>
+        <Image
+            style={styles.pfp}
+            source={require("../images/cole.jpeg")}
+          ></Image>
       </View>
 
-    </View>
-  
+      <View style={styles.progress}>
+        <Text style={styles.progressText}>Your Progress</Text>
+        <View style={styles.goalWeight}>
+          <View style={styles.goalCurrent}>
+            <Text style={styles.goalTitle}>Current</Text>
+            <Text style={styles.goalActual}>64 Kg</Text>
+          </View>
+
+          <View style={styles.goalLeft}>
+            <Text style={styles.goalTitle}>Left</Text>
+            <Text style={styles.goalActual}>16 Kg</Text>
+          </View>
+
+          <View style={styles.goalTarget}>
+            <Text style={[styles.goalTitle, {textAlign: "right"}]}>Target</Text>
+            <Text style={[styles.goalActual, {textAlign: "right"}]}>50 Kg</Text>
+          </View>
+
+        
 
 
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText} onPress={() => navigation.navigate("InputWeight")}>+</Text>
-      </TouchableOpacity>
+        </View>
+        <View style={styles.bar}>
 
+        <View style={styles.bottomBar}></View>
+        <View style={styles.actualBar}></View>
+
+        </View>
+      </View>
+      <View style={styles.weightHistory}>
+        <Text style={styles.historyTitle}>Weight History</Text>
+        <View style={styles.weightBars}>
+          <WeightBar />
+          <WeightBar />
+          <WeightBar />
+          <WeightBar />
+          <WeightBar />
+          <WeightBar />
+
+
+        </View>
+
+      </View>
     
 
+      </ScrollView>
+
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText} onPress={() => navigation.navigate("InputWeight")}>+</Text>
+        </TouchableOpacity>
+
+      
     </SafeAreaView>
   );
 };
@@ -120,13 +125,18 @@ const styles = StyleSheet.create({
 
   },
   progress:{
-    backgroundColor: "#ADC5CF",
+    backgroundColor: "white",
     width: screenWidth * 0.9,
     height: screenHeight * 0.175,
     marginLeft: 18, //add more accurate using screen
     borderRadius: "25%",
     opacity: 1,
-    marginVertical: 8
+    marginVertical: 8,
+    shadowColor: '#171717',
+    shadowOffset: {width: 2, height: 2.5},
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    borderRadius: 6,
   },
   progressText:{
     marginLeft: 20,
@@ -180,7 +190,7 @@ const styles = StyleSheet.create({
     width: screenWidth * 0.8,
     height: 20,
     borderRadius: 20,
-    backgroundColor: '#FBEAFF',
+    backgroundColor: '#009EFA',
     marginTop: 20,
     marginLeft:15,
     position: 'absolute'
@@ -191,7 +201,7 @@ const styles = StyleSheet.create({
     width: (screenWidth * 0.8) * (90 - 50  )/100 , // Will be an equation of how much -- (o)
     height: 20,
     borderRadius: 20,
-    backgroundColor: '#B39CD0',
+    backgroundColor: '#00D2FC',
   },
   weightHistory:{
     paddingLeft: 20,
