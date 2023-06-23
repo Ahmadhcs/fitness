@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IconButton, FAB } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import LinearGradient from 'react-native-linear-gradient';
 
 const Navbar = () => {
   const navigation = useNavigation();
@@ -15,6 +16,8 @@ const Navbar = () => {
   }, []);
 
   return (
+
+
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         {/* Nutrition button */}

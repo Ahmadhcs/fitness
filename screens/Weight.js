@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Button, Pressable} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -80,9 +80,9 @@ const weightTracking = () => {
 
       </ScrollView>
 
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText} onPress={() => navigation.navigate("InputWeight")}>+</Text>
-        </TouchableOpacity>
+        <Pressable onPress={() => navigation.navigate("InputWeight")} style={styles.button}>
+          <Text style={styles.buttonText} >+</Text>
+        </Pressable>
 
       
     </SafeAreaView>
