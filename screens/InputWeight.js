@@ -19,7 +19,7 @@ const InputWeight = () => {
 
   const handleAdd = () =>{
     //Handle the add by sending back to backend etc
-    navigation.navigate("Weight")
+    navigation.navigate("Weight", { TodayWeight: weight })
   }
   return (
     <SafeAreaView style={{flex: 1, marginTop: screenHeight * 0.175}}>

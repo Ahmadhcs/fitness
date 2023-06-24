@@ -5,15 +5,19 @@ import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from 'expo-status-bar';
 import WeightBar from "../components/WeightBar";
+import { Canvas, Path, runTiming, Skia, useComputedValue, useFont, useValue } from "@shopify/react-native-skia";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width; 
+
 
 const goToWeight = () =>{
   console.log("in")
 }
 
+
 const weightTracking = () => {
+
 
   const navigation = useNavigation();
   
