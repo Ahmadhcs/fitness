@@ -15,9 +15,7 @@ const goToWeight = () =>{
   console.log("in")
 }
 
-
 const weightTracking = () => {
-
 
   const navigation = useNavigation();
   
@@ -81,7 +79,6 @@ const weightTracking = () => {
 
       </View>
     
-
       </ScrollView>
 
         <Pressable onPress={() => navigation.navigate("InputWeight")} style={styles.button}>
@@ -119,7 +116,6 @@ const styles = StyleSheet.create({
   },
   headerText:{
     paddingTop: 20,
-
     fontSize: screenWidth * 0.08,
     fontWeight: "bold"
 
@@ -165,8 +161,6 @@ const styles = StyleSheet.create({
     color: 'gray',
     fontSize: 12.5,
     fontWeight: 'bold',
-
-
   },
   goalActual:{
     fontSize: 20,
