@@ -197,8 +197,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft:15,
     position: 'absolute'
-
-
     },
   actualBar:{
     width: (screenWidth * 0.8) * (90 - 50  )/100 , // Will be an equation of how much -- (o)
