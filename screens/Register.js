@@ -1,13 +1,13 @@
+import React, { useLayoutEffect, useState } from "react";
 import {
   View,
   Text,
   Pressable,
   StyleSheet,
   TextInput,
-  Picker,
-  Button,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -24,72 +24,117 @@ const Register = () => {
 
   // Navigates user to the Email screen with the entered name as a parameter
   const handleName = () => {
-    //Handle empty or too short
+    // Handle empty or too short
 
-    navigation.navigate("Email", name);
+    navigation.navigate("EmailPassword", name);
   };
 
   return (
-    <SafeAreaView>
-      {/* Prompt */}
-      <Text style={styles.title}>What's Your Name?</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.keyboardAvoidingView}
+    >
+      <SafeAreaView style={styles.main}>
+        {/* Prompt */}
+        <Text style={styles.title}>What's Your Name?</Text>
 
-      {/* Back button */}
-      <Pressable>
-        <Text onPress={() => navigation.navigate("LoginRegister")}>Back</Text>
-      </Pressable>
+        {/* Name input */}
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.textBox}
+            placeholder="Full Name"
+            onChangeText={setName}
+          />
+        </View>
 
-      {/* Name input */}
-      <View style={styles.main}>
-        <TextInput
-          placeholder="Your Full Name"
-          style={styles.textbox}
-          onChangeText={setName}
-        />
+        {/* Buttons */}
+        <View style={styles.buttonsContainer}>
+          {/* Back button */}
+          <Pressable
+            style={[styles.button, styles.back]}
+            onPress={() => navigation.navigate("LoginRegister")}
+          >
+            <Text style={styles.backText}>Back</Text>
+          </Pressable>
 
-        {/* Continue button */}
-        <Pressable style={styles.cont} onPress={handleName}>
-          <Text style={styles.text}>Continue</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
+          {/* Gap */}
+          <View style={styles.gap} />
+
+          {/* Continue button */}
+          <Pressable
+            style={[styles.button, styles.continue]}
+            onPress={handleName}
+          >
+            <Text style={styles.continueText}>Continue</Text>
+          </Pressable>
+        </View>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
+  keyboardAvoidingView: {
+    flex: 1,
+  },
   main: {
+    flex: 1,
+    justifyContent: "space-between",
     alignItems: "center",
-  },
-  small: {
-    width: "30%",
-  },
-  cont: {
-    backgroundColor: "blue",
-    width: "80%",
-    padding: 10,
-    borderRadius: 6,
-    borderWidth: 0.7,
-    borderColor: "blue",
-    marginVertical: 5,
-  },
-  text: {
-    color: "white",
-    textAlign: "center",
-    fontWeight: "700",
+    paddingHorizontal: "10%",
   },
   title: {
+    marginTop: "10%",
     fontWeight: "700",
-    fontSize: "30",
+    fontSize: 30,
     textAlign: "center",
   },
-  textbox: {
-    backgroundColor: "white",
+  inputContainer: {
+    height: 50,
     width: "80%",
+  },
+  textBox: {
+    backgroundColor: "white",
+    width: "100%",
     padding: 10,
     borderRadius: 6,
     borderWidth: 0.7,
-    marginVertical: 5,
     borderColor: "gray",
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    paddingHorizontal: "5%",
+  },
+  button: {
+    borderRadius: 6,
+    borderWidth: 0.7,
+    padding: 10,
+    height: 50,
+    flex: 1,
+    justifyContent: "center",
+  },
+  back: {
+    backgroundColor: "#c3ddf2",
+    borderColor: "#c3ddf2",
+  },
+  continue: {
+    backgroundColor: "blue",
+    borderColor: "blue",
+  },
+  backText: {
+    textAlign: "center",
+    fontWeight: "700",
+  },
+  continueText: {
+    textAlign: "center",
+    fontWeight: "700",
+    color: "white",
+  },
+  gap: {
+    width: "5%",
   },
 });
 

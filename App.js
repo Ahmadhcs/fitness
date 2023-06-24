@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginRegister from "./screens/LoginRegister";
 import Register from "./screens/Register";
 import Landing from "./screens/Landing";
-import Email from "./screens/Email";
+import EmailPassword from "./screens/EmailPassword";
 import Account from "./screens/Account";
 import Dashboard from "./screens/Dashboard";
 import Measure from "./screens/Measure";
@@ -40,7 +40,7 @@ export default function App() {
             <Stack.Screen name="LoginRegister" component={LoginRegister} />
             <Stack.Screen name="Landing" component={Landing} />
             <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="Email" component={Email} />
+            <Stack.Screen name="EmailPassword" component={EmailPassword} />
             <Stack.Screen name="Account" component={Account} />
             <Stack.Screen name="AgeGender" component={AgeGender} />
             <Stack.Screen name="Measure" component={Measure} />
