@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import Workout from "./screens/Workout";
 import Weight from "./screens/Weight";
 import Nutrition from "./screens/Nutrition";
+import InputWeight from "./screens/InputWeight";
 
 // Sign Up Process
 import Name from "./screens/signupProcess/Name";
@@ -50,6 +51,9 @@ export default function App() {
             <Stack.Screen name="Workout" component={withNavbar(Workout)} />
             <Stack.Screen name="Weight" component={withNavbar(Weight)} />
             <Stack.Screen name="Nutrition" component={withNavbar(Nutrition)} />
+            {/* dont add navbar */}
+            <Stack.Screen name="InputWeight" component={InputWeight} />
+
           </>
         ) : (
           // User isn't signed in
