@@ -53,7 +53,6 @@ export default function App() {
             <Stack.Screen name="Nutrition" component={withNavbar(Nutrition)} />
             {/* dont add navbar */}
             <Stack.Screen name="InputWeight" component={InputWeight} />
-
           </>
         ) : (
           // User isn't signed in
