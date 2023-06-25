@@ -30,7 +30,7 @@ const HomeScreen = ({ navigation }) => {
       {/* Sign up button */}
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate("Register")}
+        onPress={() => navigation.navigate("Name")}
       >
         <Text style={styles.buttonText}>Sign Up</Text>
       </Pressable>
@@ -39,7 +39,7 @@ const HomeScreen = ({ navigation }) => {
         Already have an account?{" "}
         <Text
           style={styles.loginLink}
-          onPress={() => navigation.navigate("LoginRegister")}
+          onPress={() => navigation.navigate("Dashboard")}
         >
           Log in
         </Text>

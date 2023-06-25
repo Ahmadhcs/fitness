@@ -1,19 +1,21 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+// Screens
 import LoginRegister from "./screens/LoginRegister";
-import Register from "./screens/Register";
-import Landing from "./screens/Landing";
-import EmailPassword from "./screens/EmailPassword";
-import Account from "./screens/Account";
 import Dashboard from "./screens/Dashboard";
-import Measure from "./screens/Measure";
-import AgeGender from "./screens/AgeGender";
 import Navbar from "./components/Navbar";
 import Workout from "./screens/Workout";
 import Weight from "./screens/Weight";
 import Nutrition from "./screens/Nutrition";
+
+// Sign Up Process
+import Name from "./screens/signupProcess/Name";
+import Credentials from "./screens/signupProcess/Credentials";
+import Metrics from "./screens/signupProcess/Metrics";
+import Gender from "./screens/signupProcess/Gender";
+import Age from "./screens/signupProcess/Age";
 
 const withNavbar = (Component) => {
   return (props) => (
@@ -38,12 +40,12 @@ export default function App() {
           // User is signed in
           <>
             <Stack.Screen name="LoginRegister" component={LoginRegister} />
-            <Stack.Screen name="Landing" component={Landing} />
-            <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="EmailPassword" component={EmailPassword} />
-            <Stack.Screen name="Account" component={Account} />
-            <Stack.Screen name="AgeGender" component={AgeGender} />
-            <Stack.Screen name="Measure" component={Measure} />
+            {/* Sign Up Process */}
+            <Stack.Screen name="Name" component={Name} />
+            <Stack.Screen name="Gender" component={Gender} />
+            <Stack.Screen name="Age" component={Age} />
+            <Stack.Screen name="Metrics" component={Metrics} />
+            <Stack.Screen name="Credentials" component={Credentials} />
             <Stack.Screen name="Dashboard" component={withNavbar(Dashboard)} />
             <Stack.Screen name="Workout" component={withNavbar(Workout)} />
             <Stack.Screen name="Weight" component={withNavbar(Weight)} />
@@ -52,19 +54,15 @@ export default function App() {
         ) : (
           // User isn't signed in
           <>
-            <Stack.Screen name="Landing" component={Landing} />
+            <Stack.Screen name="LoginRegister" component={LoginRegister} />
+            <Stack.Screen name="Name" component={Name} />
+            <Stack.Screen name="Gender" component={Gender} />
+            <Stack.Screen name="Age" component={Age} />
+            <Stack.Screen name="Metrics" component={Metrics} />
+            <Stack.Screen name="Credentials" component={Credentials} />
           </>
         )}
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
