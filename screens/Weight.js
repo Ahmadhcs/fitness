@@ -207,7 +207,6 @@ const styles = StyleSheet.create({
   weightHistory:{
     paddingLeft: 20,
     paddingTop: 10
-
   },
   historyTitle:{
     fontSize: 25,
