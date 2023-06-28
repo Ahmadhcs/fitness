@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IconButton, FAB } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import LinearGradient from 'react-native-linear-gradient';
+import LinearGradient from "react-native-linear-gradient";
 
 const Navbar = () => {
   const navigation = useNavigation();
@@ -16,19 +16,13 @@ const Navbar = () => {
   }, []);
 
   return (
-
-
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         {/* Nutrition button */}
         <IconButton
           style={styles.image}
           icon={(props) => (
-            <Icon
-              style={[styles.icon, { fontSize: 30 }]}
-              name="scale"
-              {...props}
-            />
+            <Icon style={[styles.icon, { fontSize: 30 }]} name="scale" {...props} />
           )}
           onPress={() => navigation.navigate("Nutrition")}
         />
@@ -37,11 +31,7 @@ const Navbar = () => {
         <IconButton
           style={styles.image}
           icon={(props) => (
-            <Icon
-              style={[styles.icon, { fontSize: 30 }]}
-              name="home"
-              {...props}
-            />
+            <Icon style={[styles.icon, { fontSize: 30 }]} name="home" {...props} />
           )}
           onPress={() => navigation.navigate("Dashboard")}
         />
@@ -50,11 +40,7 @@ const Navbar = () => {
         <IconButton
           style={styles.image}
           icon={(props) => (
-            <Icon
-              style={[styles.icon, { fontSize: 30 }]}
-              name="weight"
-              {...props}
-            />
+            <Icon style={[styles.icon, { fontSize: 30 }]} name="weight" {...props} />
           )}
           onPress={() => navigation.navigate("Weight")}
         />

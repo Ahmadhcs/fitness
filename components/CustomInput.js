@@ -15,10 +15,7 @@ const HomeScreen = (props) => {
   return (
     <View style={styles.container}>
       {/* Custom TextInput with placeholder passed from props */}
-      <TextInput
-        placeholder={props.placeholder}
-        style={styles.input}
-      ></TextInput>
+      <TextInput placeholder={props.placeholder} style={styles.input}></TextInput>
     </View>
   );
 };

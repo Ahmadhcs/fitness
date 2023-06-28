@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Alert,
-  FlatList,
-} from "react-native";
+import { View, Text, TextInput, StyleSheet, Alert, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import SearchFilter from "./SearchFilter";
 
