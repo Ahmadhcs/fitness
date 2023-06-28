@@ -33,8 +33,7 @@ const Name = () => {
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
-      >
+        style={styles.container}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.container}>
             {/* Header */}
@@ -48,16 +47,15 @@ const Name = () => {
               </View>
 
               {/* Back button */}
-              <Pressable
-                style={styles.backButton}
-                onPress={() => navigation.goBack()}
-              >
+              <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
                 <Text style={styles.backButtonText}>&lt; Back</Text>
               </Pressable>
 
               {/* Prompt */}
               <View style={styles.Titles}>
-                <Text style={styles.title}>What's Your Name?</Text>
+                <Text autoCorrect={false} style={styles.title}>
+                  What's Your Name?
+                </Text>
               </View>
             </View>
 

@@ -33,8 +33,7 @@ const Credentials = () => {
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
-      >
+        style={styles.container}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.container}>
             {/* Header */}
@@ -48,17 +47,14 @@ const Credentials = () => {
               </View>
 
               {/* Back button */}
-              <Pressable
-                style={styles.backButton}
-                onPress={() => navigation.goBack()}
-              >
+              <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
                 <Text style={styles.backButtonText}>&lt; Back</Text>
               </Pressable>
 
               {/* Prompt */}
               <View style={styles.Titles}>
-                <Text style={styles.title}>Text 1</Text>
-                <Text style={styles.title}>Text 2</Text>
+                <Text style={styles.title}>Almost There</Text>
+                <Text style={styles.title}>Some text over here</Text>
               </View>
             </View>
 
@@ -71,11 +67,14 @@ const Credentials = () => {
                   style={styles.textbox}
                   onChangeText={setEmail}
                   autoFocus={true}
+                  autoCorrect={false}
+                  autoCapitalize="none"
                 />
                 <TextInput
                   placeholder="Password"
                   style={styles.textbox}
                   onChangeText={setPassword}
+                  secureTextEntry={true}
                 />
               </View>
             </View>

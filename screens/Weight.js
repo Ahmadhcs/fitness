@@ -1,91 +1,87 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Button, Pressable} from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  ScrollView,
+  Button,
+  Pressable,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 import WeightBar from "../components/WeightBar";
-import { Canvas, Path, runTiming, Skia, useComputedValue, useFont, useValue } from "@shopify/react-native-skia";
+import {
+  Canvas,
+  Path,
+  runTiming,
+  Skia,
+  useComputedValue,
+  useFont,
+  useValue,
+} from "@shopify/react-native-skia";
 
 const screenHeight = Dimensions.get("window").height;
-const screenWidth = Dimensions.get("window").width; 
+const screenWidth = Dimensions.get("window").width;
 
-
-const goToWeight = () =>{
-  console.log("in")
-}
+const goToWeight = () => {
+  console.log("in");
+};
 
 const weightTracking = () => {
-
   const navigation = useNavigation();
-  
-
 
   return (
-    <SafeAreaView  style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>My Weight</Text>
-        <Image
-            style={styles.pfp}
-            source={require("../images/cole.jpeg")}
-          ></Image>
-      </View>
-      <View style={styles.graph}>
-
-      </View>
-
-      <View style={styles.progress}>
-        <Text style={styles.progressText}>Your Progress</Text>
-        <View style={styles.goalWeight}>
-          <View style={styles.goalCurrent}>
-            <Text style={styles.goalTitle}>Current</Text>
-            <Text style={styles.goalActual}>64 Kg</Text>
-          </View>
-
-          <View style={styles.goalLeft}>
-            <Text style={styles.goalTitle}>Left</Text>
-            <Text style={styles.goalActual}>16 Kg</Text>
-          </View>
-
-          <View style={styles.goalTarget}>
-            <Text style={[styles.goalTitle, {textAlign: "right"}]}>Target</Text>
-            <Text style={[styles.goalActual, {textAlign: "right"}]}>50 Kg</Text>
-          </View>
-
-        
-
-
+        <View style={styles.header}>
+          <Text style={styles.headerText}>My Weight</Text>
+          <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
         </View>
-        <View style={styles.bar}>
+        <View style={styles.graph}></View>
 
-        <View style={styles.bottomBar}></View>
-        <View style={styles.actualBar}></View>
+        <View style={styles.progress}>
+          <Text style={styles.progressText}>Your Progress</Text>
+          <View style={styles.goalWeight}>
+            <View style={styles.goalCurrent}>
+              <Text style={styles.goalTitle}>Current</Text>
+              <Text style={styles.goalActual}>64 Kg</Text>
+            </View>
 
+            <View style={styles.goalLeft}>
+              <Text style={styles.goalTitle}>Left</Text>
+              <Text style={styles.goalActual}>16 Kg</Text>
+            </View>
+
+            <View style={styles.goalTarget}>
+              <Text style={[styles.goalTitle, { textAlign: "right" }]}>Target</Text>
+              <Text style={[styles.goalActual, { textAlign: "right" }]}>50 Kg</Text>
+            </View>
+          </View>
+          <View style={styles.bar}>
+            <View style={styles.bottomBar}></View>
+            <View style={styles.actualBar}></View>
+          </View>
         </View>
-      </View>
-      <View style={styles.weightHistory}>
-        <Text style={styles.historyTitle}>Weight History</Text>
-        <View style={styles.weightBars}>
-          <WeightBar />
-          <WeightBar />
-          <WeightBar />
-          <WeightBar />
-          <WeightBar />
-          <WeightBar />
-
-
+        <View style={styles.weightHistory}>
+          <Text style={styles.historyTitle}>Weight History</Text>
+          <View style={styles.weightBars}>
+            <WeightBar />
+            <WeightBar />
+            <WeightBar />
+            <WeightBar />
+            <WeightBar />
+            <WeightBar />
+          </View>
         </View>
-
-      </View>
-    
       </ScrollView>
 
-        <Pressable onPress={() => navigation.navigate("InputWeight")} style={styles.button}>
-          <Text style={styles.buttonText} >+</Text>
-        </Pressable>
-
-      
+      <Pressable onPress={() => navigation.navigate("InputWeight")} style={styles.button}>
+        <Text style={styles.buttonText}>+</Text>
+      </Pressable>
     </SafeAreaView>
   );
 };
@@ -109,27 +105,25 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     marginBottom: 3,
   },
-  header:{
+  header: {
     paddingLeft: 20,
     flexDirection: "row",
-    paddingBottom: screenHeight * 0.02
+    paddingBottom: screenHeight * 0.02,
   },
-  headerText:{
+  headerText: {
     paddingTop: 20,
     fontSize: screenWidth * 0.08,
-    fontWeight: "bold"
-
+    fontWeight: "bold",
   },
-  pfp:{
+  pfp: {
     width: 60,
-    height: 60 ,
+    height: 60,
     borderRadius: 60,
     marginLeft: screenWidth * 0.325,
     marginTop: screenHeight * 0.01,
-    paddingTop: 20
-
+    paddingTop: 20,
   },
-  progress:{
+  progress: {
     backgroundColor: "white",
     width: screenWidth * 0.9,
     height: screenHeight * 0.175,
@@ -137,104 +131,90 @@ const styles = StyleSheet.create({
     borderRadius: "25%",
     opacity: 1,
     marginVertical: 8,
-    shadowColor: '#171717',
-    shadowOffset: {width: 2, height: 2.5},
+    shadowColor: "#171717",
+    shadowOffset: { width: 2, height: 2.5 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
     borderRadius: 6,
   },
-  progressText:{
+  progressText: {
     marginLeft: 20,
     marginTop: 10,
     fontSize: 15,
     fontWeight: "300",
-    
   },
-  goalWeight:{
-    flexDirection: 'row',
+  goalWeight: {
+    flexDirection: "row",
     paddingLeft: 20,
     paddingTop: 10,
-    width: '100%'
-    
+    width: "100%",
   },
-  goalTitle:{
-    color: 'gray',
+  goalTitle: {
+    color: "gray",
     fontSize: 12.5,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
-  goalActual:{
+  goalActual: {
     fontSize: 20,
-    fontWeight: '600'
+    fontWeight: "600",
   },
-  goalCurrent:{
-    width: '33%',
-
+  goalCurrent: {
+    width: "33%",
   },
-  goalLeft:{
-    width: '33%',
-    justifyContent: 'center', alignItems: 'center'
-
- 
-
+  goalLeft: {
+    width: "33%",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  goalTarget:{
-    width: '33%',
+  goalTarget: {
+    width: "33%",
     paddingRight: 10,
-
   },
-  bar:{
+  bar: {
     position: "relative",
     paddingTop: 20,
-    paddingLeft: 15
-
-
-   },
-  bottomBar:{
+    paddingLeft: 15,
+  },
+  bottomBar: {
     width: screenWidth * 0.8,
     height: 20,
     borderRadius: 20,
-    backgroundColor: '#009EFA',
+    backgroundColor: "#009EFA",
     marginTop: 20,
-    marginLeft:15,
-    position: 'absolute'
-    },
-  actualBar:{
-    width: (screenWidth * 0.8) * (90 - 50  )/100 , // Will be an equation of how much -- (o)
+    marginLeft: 15,
+    position: "absolute",
+  },
+  actualBar: {
+    width: (screenWidth * 0.8 * (90 - 50)) / 100, // Will be an equation of how much -- (o)
     height: 20,
     borderRadius: 20,
-    backgroundColor: '#00D2FC',
+    backgroundColor: "#00D2FC",
   },
-  weightHistory:{
+  weightHistory: {
     paddingLeft: 20,
-    paddingTop: 10
+    paddingTop: 10,
   },
-  historyTitle:{
+  historyTitle: {
     fontSize: 25,
     fontWeight: "bold",
   },
-  weightBars:{
-    paddingVertical:10,
+  weightBars: {
+    paddingVertical: 10,
   },
-  graph:{
+  graph: {
     backgroundColor: "white",
     width: screenWidth * 0.9,
     height: screenHeight * 0.4,
     borderRadius: "20%",
-    borderColor: 'black',
+    borderColor: "black",
     borderWidth: 0.15,
     marginLeft: 20,
-    shadowColor: '#171717',
-    shadowOffset: {width: 2, height: 2.5},
+    shadowColor: "#171717",
+    shadowOffset: { width: 2, height: 2.5 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
     borderRadius: 6,
-
-
-    
-  }
-   
-
-})
-
+  },
+});
 
 export default weightTracking;
