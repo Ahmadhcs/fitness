@@ -45,7 +45,6 @@ const weightTracking = () => {
           <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
         </View>
         <View style={styles.graph}>
-        
        
         </View>
         <View style={styles.progress}>
