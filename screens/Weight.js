@@ -13,16 +13,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import WeightBar from "../components/WeightBar";
+
 import {
-  Canvas,
-  Path,
-  runTiming,
-  Skia,
-  useComputedValue,
-  useFont,
-  useValue,
-} from "@shopify/react-native-skia";
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart
+} from "react-native-chart-kit";
+import * as d3 from 'd3';
+
+import WeightBar from "../components/WeightBar";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -30,6 +32,7 @@ const screenWidth = Dimensions.get("window").width;
 const goToWeight = () => {
   console.log("in");
 };
+
 
 const weightTracking = () => {
   const navigation = useNavigation();
@@ -41,7 +44,10 @@ const weightTracking = () => {
           <Text style={styles.headerText}>My Weight</Text>
           <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
         </View>
-        <View style={styles.graph}></View>
+        <View style={styles.graph}>
+        
+       
+        </View>
 
         <View style={styles.progress}>
           <Text style={styles.progressText}>Your Progress</Text>
