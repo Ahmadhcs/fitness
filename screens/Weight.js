@@ -48,7 +48,6 @@ const weightTracking = () => {
         
        
         </View>
-
         <View style={styles.progress}>
           <Text style={styles.progressText}>Your Progress</Text>
           <View style={styles.goalWeight}>
