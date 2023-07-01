@@ -46,7 +46,8 @@ const weightTracking = () => {
           <Text style={styles.headerText}>My Weight</Text>
           <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
         </View>
-        {/* <View style={styles.graph}> */}
+
+    
   <LineChart 
     data={{
       labels: ["One", "Two", "Three", "Four", "Five"],
@@ -87,34 +88,7 @@ const weightTracking = () => {
     }}
   />
         
-       
-        {/* </View> */}
-
-        {/* <View style={styles.progress}>
-          <Text style={styles.progressText}>Your Progress</Text>
-          <View style={styles.goalWeight}>
-            <View style={styles.goalCurrent}>
-              <Text style={styles.goalTitle}>Current</Text>
-              <Text style={styles.goalActual}>64 Kg</Text>
-            </View>
-
-            <View style={styles.goalLeft}>
-              <Text style={styles.goalTitle}>Left</Text>
-              <Text style={styles.goalActual}>16 Kg</Text>
-            </View>
-
-            <View style={styles.goalTarget}>
-              <Text style={[styles.goalTitle, { textAlign: "right" }]}>Target</Text>
-              <Text style={[styles.goalActual, { textAlign: "right" }]}>50 Kg</Text>
-            </View>
-          </View>
-          <View style={styles.bar}>
-
-            <View style={styles.bottomBar}></View>
-
-            <View style={styles.actualBar}></View>
-          </View>
-        </View> */}
+         
         <View style={styles.weightHistory}>
           <Text style={styles.historyTitle}>Weight History</Text>
           <View style={styles.weightBars}>
