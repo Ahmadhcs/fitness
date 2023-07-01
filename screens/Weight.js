@@ -13,6 +13,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
+import {LinearGradient} from 'expo-linear-gradient';
+
 
 import {
   LineChart,
@@ -44,35 +46,53 @@ const weightTracking = () => {
           <Text style={styles.headerText}>My Weight</Text>
           <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
         </View>
-        <View style={styles.graph}>
+
+    
+  <LineChart 
+    data={{
+      labels: ["One", "Two", "Three", "Four", "Five"],
+      datasets: [
+        {
+          data: [
+            87.6,86.0, 87.1, 88.0, 87.5
+          ]
+        }
+      ]
+    }}
+    width={screenWidth * 0.9} // from react-native
+    height={screenHeight * 0.35}
+    yAxisSuffix="kg"
+    yAxisInterval={1} // optional, defaults to 1
+    chartConfig={{
+      backgroundColor: "#e26a00",
+      backgroundGradientFrom: "#1e88e5",
+      backgroundGradientTo: "#42a5f5",
+      decimalPlaces: 1, // optional, defaults to 2dp
+      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      style: {
+        borderRadius: 16,
        
-        </View>
-        <View style={styles.progress}>
-          <Text style={styles.progressText}>Your Progress</Text>
-          <View style={styles.goalWeight}>
-            <View style={styles.goalCurrent}>
-              <Text style={styles.goalTitle}>Current</Text>
-              <Text style={styles.goalActual}>64 Kg</Text>
-            </View>
-
-            <View style={styles.goalLeft}>
-              <Text style={styles.goalTitle}>Left</Text>
-              <Text style={styles.goalActual}>16 Kg</Text>
-            </View>
-
-            <View style={styles.goalTarget}>
-              <Text style={[styles.goalTitle, { textAlign: "right" }]}>Target</Text>
-              <Text style={[styles.goalActual, { textAlign: "right" }]}>50 Kg</Text>
-            </View>
-          </View>
-          <View style={styles.bar}>
-            <View style={styles.bottomBar}></View>
-            <View style={styles.actualBar}></View>
-          </View>
-        </View>
+      },
+      propsForDots: {
+        r: "6",
+        strokeWidth: "2",
+        stroke: "#1e88e5"
+      }
+    }}
+    bezier
+    style={{
+      marginVertical: 8,
+      borderRadius: 16,
+      paddingLeft: 20,
+    }}
+  />
+        
+         
         <View style={styles.weightHistory}>
           <Text style={styles.historyTitle}>Weight History</Text>
           <View style={styles.weightBars}>
+
             <WeightBar />
             <WeightBar />
             <WeightBar />
@@ -219,6 +239,9 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     borderRadius: 6,
   },
+  Line:{
+    marginLeft:20
+  }
 });
 
 export default weightTracking;
