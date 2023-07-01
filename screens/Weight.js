@@ -88,7 +88,7 @@ const weightTracking = () => {
     }}
   />
         
-         
+
         <View style={styles.weightHistory}>
           <Text style={styles.historyTitle}>Weight History</Text>
           <View style={styles.weightBars}>
