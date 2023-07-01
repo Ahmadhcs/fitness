@@ -46,7 +46,8 @@ const weightTracking = () => {
           <Text style={styles.headerText}>My Weight</Text>
           <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
         </View>
-        {/* <View style={styles.graph}> */}
+
+    
   <LineChart 
     data={{
       labels: ["One", "Two", "Three", "Four", "Five"],
@@ -87,6 +88,7 @@ const weightTracking = () => {
     }}
   />
         
+
         <View style={styles.weightHistory}>
           <Text style={styles.historyTitle}>Weight History</Text>
           <View style={styles.weightBars}>
