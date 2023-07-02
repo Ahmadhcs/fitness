@@ -1,46 +1,49 @@
 import React from "react";
-import { Text , StyleSheet, Dimensions, View, Image, ScrollView, Pressable } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  Dimensions,
+  View,
+  Image,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 
 import FoodLogged from "../components/FoodLogged";
 
-
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
-import {
-  ProgressChart,
-} from "react-native-chart-kit";
+import { ProgressChart } from "react-native-chart-kit";
 
 const data = {
   labels: ["Protien"], // optional
-  data: [159/250],
-  colors:['red']
+  data: [159 / 250],
+  colors: ["red"],
 };
 
 const dataC = {
   labels: ["Carbs"], // optional
-  data: [39/250],
-  colors:['green']
+  data: [39 / 250],
+  colors: ["green"],
 };
 
 const dataF = {
   labels: ["Fats"], // optional
-  data: [89/250],
-  colors:['blue']
+  data: [89 / 250],
+  colors: ["blue"],
 };
 
 const dataCals = {
   labels: ["Cals"], // optional
-  data: [2000/3000],
-  colors:['orange']
+  data: [2000 / 3000],
+  colors: ["orange"],
 };
-
-
 
 const chartConfig = {
   backgroundGradientFrom: "white",
-  backgroundGradientFromOpacity: 0  ,
+  backgroundGradientFromOpacity: 0,
   backgroundGradientTo: "white",
   backgroundGradientToOpacity: 0,
   color: (opacity = 1, _index) => `rgba(255,0,0,0.07)`,
@@ -49,10 +52,9 @@ const chartConfig = {
   useShadowColorFromDataset: false, // optional,
 };
 
-
-const chartConfigCals= {
+const chartConfigCals = {
   backgroundGradientFrom: "white",
-  backgroundGradientFromOpacity: 0  ,
+  backgroundGradientFromOpacity: 0,
   backgroundGradientTo: "white",
   backgroundGradientToOpacity: 0,
   color: (opacity = 1, _index) => `rgba(255,0,0,0.07)`,
@@ -60,11 +62,10 @@ const chartConfigCals= {
   barPercentage: 0.35,
   useShadowColorFromDataset: false, // optional,
 };
-
 
 const chartConfigCarbs = {
   backgroundGradientFrom: "white",
-  backgroundGradientFromOpacity: 0  ,
+  backgroundGradientFromOpacity: 0,
   backgroundGradientTo: "white",
   backgroundGradientToOpacity: 0,
   color: (opacity = 1, _index) => `rgba(0,255,0,0.1)`,
@@ -73,10 +74,9 @@ const chartConfigCarbs = {
   useShadowColorFromDataset: false, // optional,
 };
 
-
 const chartConfigFat = {
   backgroundGradientFrom: "white",
-  backgroundGradientFromOpacity: 0  ,
+  backgroundGradientFromOpacity: 0,
   backgroundGradientTo: "white",
   backgroundGradientToOpacity: 0,
   color: (opacity = 1, _index) => `rgba(0,0,255,.07)`,
@@ -89,137 +89,129 @@ const Nutrition = () => {
   const navigation = useNavigation();
 
   return (
-
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
-
-      <View style={styles.header}>
+        <View style={styles.header}>
           <Text style={styles.headerText}>My Nutrition</Text>
           <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
-      </View>
-
-  <View style={{flexDirection: "row"}}>
-
-    <View style={styles.chartCard}>
-        <View style={styles.innerCard}>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <View style={styles.chartCard}>
+            <View style={styles.innerCard}>
               <ProgressChart
-        data={data}
-        width={screenWidth * 0.4}
-        height={screenHeight * 0.175}
-        strokeWidth={15}
-        radius={30}
-        chartConfig={chartConfig}
-        hideLegend={true}
-        withCustomBarColorFromData={true}
-        style={styles.graph}
-
-      />
-    
-
-    </View>
-    <View style={{display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 20}}>
-      
-      <Text style={{color:"red", fontWeight:"bold"}}>Protien</Text>
-      <Text style={{color:"gray", fontWeight:"700"}}>25/340g</Text>
-    </View>
-   
-
-  </View>
-  <View style={styles.chartCard}>
-  <ProgressChart
-        data={dataC}
-        width={screenWidth * 0.4}
-        height={screenHeight * 0.175}
-        strokeWidth={15}
-        radius={30}
-        chartConfig={chartConfigCarbs}
-        hideLegend={true}
-        withCustomBarColorFromData={true}
-        style={styles.graph}
-
-      />
-    <View style={{display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 20}}>
-      
-      <Text  style={{color:"green", fontWeight:"bold"}}>carbs</Text>
-    <Text style={{color:"gray", fontWeight:"700"}}>49/340g</Text>
-    </View>
-    </View>
-  </View>
-  
-  <View style={{flexDirection: "row", marginTop: 10}}>
-    <View style={styles.chartCard}>
-    <ProgressChart
-        data={dataF}
-        width={screenWidth * 0.4}
-        height={screenHeight * 0.175}
-        strokeWidth={15}
-        radius={30}
-        chartConfig={chartConfigFat}
-        hideLegend={true}
-        withCustomBarColorFromData={true}
-        style={styles.graph}
-
-      />
-      <View style={{display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 20}}>
-      <Text style={{color:"blue", fontWeight:"bold"}}>Fat</Text>
-    <Text style={{color:"gray", fontWeight:"700"}}>49/340g</Text>
-    </View>
-      </View>
-      <View style={styles.chartCard}>
-    <ProgressChart
-        data={dataCals }
-        width={screenWidth * 0.4}
-        height={screenHeight * 0.175}
-        strokeWidth={15}
-        radius={30}
-        chartConfig={chartConfigCals}
-        hideLegend={true}
-        withCustomBarColorFromData={true}
-        style={styles.graph}
-
-      />
-      <View style={{display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 20}}>
-      <Text style={{color:"orange", fontWeight:"bold"}}>Calories</Text>
-    <Text style={{color:"gray", fontWeight:"700"}}>2000/3000</Text>
-    </View>
-      </View>
-  
-  </View>
-
-  
-  <View style={styles.breakfast}>
-    <Text style={{fontSize: 20, fontWeight: "700", paddingLeft: 10}}>Logged Food</Text>
-    <FoodLogged />
-    <FoodLogged />
-    <FoodLogged />
-
-  </View>
-
-
-  </ScrollView>
-  <Pressable onPress={() => navigation.navigate("Reco")} style={styles.button}>
+                data={data}
+                width={screenWidth * 0.4}
+                height={screenHeight * 0.175}
+                strokeWidth={15}
+                radius={30}
+                chartConfig={chartConfig}
+                hideLegend={true}
+                withCustomBarColorFromData={true}
+                style={styles.graph}
+              />
+            </View>
+            <View
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 20,
+              }}>
+              <Text style={{ color: "red", fontWeight: "bold" }}>Protien</Text>
+              <Text style={{ color: "gray", fontWeight: "700" }}>25/340g</Text>
+            </View>
+          </View>
+          <View style={styles.chartCard}>
+            <ProgressChart
+              data={dataC}
+              width={screenWidth * 0.4}
+              height={screenHeight * 0.175}
+              strokeWidth={15}
+              radius={30}
+              chartConfig={chartConfigCarbs}
+              hideLegend={true}
+              withCustomBarColorFromData={true}
+              style={styles.graph}
+            />
+            <View
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 20,
+              }}>
+              <Text style={{ color: "green", fontWeight: "bold" }}>carbs</Text>
+              <Text style={{ color: "gray", fontWeight: "700" }}>49/340g</Text>
+            </View>
+          </View>
+        </View>
+        <View style={{ flexDirection: "row", marginTop: 10 }}>
+          <View style={styles.chartCard}>
+            <ProgressChart
+              data={dataF}
+              width={screenWidth * 0.4}
+              height={screenHeight * 0.175}
+              strokeWidth={15}
+              radius={30}
+              chartConfig={chartConfigFat}
+              hideLegend={true}
+              withCustomBarColorFromData={true}
+              style={styles.graph}
+            />
+            <View
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 20,
+              }}>
+              <Text style={{ color: "blue", fontWeight: "bold" }}>Fat</Text>
+              <Text style={{ color: "gray", fontWeight: "700" }}>49/340g</Text>
+            </View>
+          </View>
+          <View style={styles.chartCard}>
+            <ProgressChart
+              data={dataCals}
+              width={screenWidth * 0.4}
+              height={screenHeight * 0.175}
+              strokeWidth={15}
+              radius={30}
+              chartConfig={chartConfigCals}
+              hideLegend={true}
+              withCustomBarColorFromData={true}
+              style={styles.graph}
+            />
+            <View
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 20,
+              }}>
+              <Text style={{ color: "orange", fontWeight: "bold" }}>Calories</Text>
+              <Text style={{ color: "gray", fontWeight: "700" }}>2000/3000</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.breakfast}>
+          <Text style={{ fontSize: 20, fontWeight: "700", paddingLeft: 10 }}>
+            Logged Food
+          </Text>
+          <FoodLogged />
+          <FoodLogged />
+          <FoodLogged />
+        </View>
+        <View style={{ height: 300 }} /> //change this to edit height of scrollview
+      </ScrollView>
+      <Pressable onPress={() => navigation.navigate("Reco")} style={styles.button}>
         <Text style={styles.buttonText}>+</Text>
       </Pressable>
     </SafeAreaView>
-
   );
 };
 
-
 const styles = StyleSheet.create({
-  header:{
+  header: {
     paddingLeft: 20,
     flexDirection: "row",
     paddingBottom: screenHeight * 0.02,
@@ -237,36 +229,33 @@ const styles = StyleSheet.create({
     marginTop: screenHeight * 0.01,
     paddingTop: 20,
   },
-  chartCard:{
+  chartCard: {
     width: "42.5%",
     backgroundColor: "white",
     marginLeft: screenWidth * 0.05,
     borderRadius: 20,
-
   },
-  graph:{
-    
-  },
-  macro:{
+  graph: {},
+  macro: {
     fontSize: 17,
     fontWeight: "500",
-    paddingLeft:15,
-    paddingTop: 15
+    paddingLeft: 15,
+    paddingTop: 15,
   },
-  bar:{
+  bar: {
     height: 10,
     borderRadius: 20,
   },
-  innerCard:{
-    flexDirection: "row"
+  innerCard: {
+    flexDirection: "row",
   },
-  breakfast:{
+  breakfast: {
     width: screenWidth * 0.9,
     backgroundColor: "white",
     borderRadius: 20,
     marginTop: 10,
     marginLeft: 20,
-    height: screenHeight * 0.03
+    height: screenHeight * 0.03,
   },
   button: {
     position: "absolute",
@@ -286,9 +275,6 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     marginBottom: 3,
   },
-
-
-
-})
+});
 
 export default Nutrition;
