@@ -1,4 +1,5 @@
 import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
 import {
   View,
   Text,
@@ -15,14 +16,26 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 const days = ["Su", "M", "Tu", "W", "Th", "F", "Sa"];
 
-const WorkoutTracking = () => {
+const WorkoutTrackingStack = createStackNavigator();
+
+// Separate component for each workout page
+function WorkoutPage({ route, navigation }) {
+  const { workoutType } = route.params;
+  return (
+    <View style={styles.workoutContainer}>
+      <Text style={styles.workoutText}>This is the {workoutType} page</Text>
+    </View>
+  );
+}
+
+function WorkoutTracking({ navigation }) {
   const today = new Date();
   const currentDay = today.getDay();
   const nextDays = Array(7)
     .fill()
     .map((_, i) => days[(currentDay + i) % 7]);
 
-  const workoutList = ["Push", "Pull", "Legs"];
+  const workoutList = ["Push", "Pull", "Legs", "Misc"];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -42,22 +55,31 @@ const WorkoutTracking = () => {
         <View style={styles.calendarLine} />
       </View>
       <View style={styles.listContainer}>
-        <Ionicons
-          style={styles.gearIcon}
-          name="settings-outline"
-          size={24}
-          color="black"
-        />
         {workoutList.map((workout, index) => (
-          <TouchableOpacity key={index} style={styles.listItem}>
-            <Text style={styles.listItemText}>{workout}</Text>
-            <Text style={styles.arrowIcon}>{">"}</Text>
+          <TouchableOpacity
+            key={index}
+            style={styles.boxContainer}
+            onPress={() => navigation.navigate("WorkoutPage", { workoutType: workout })}>
+            <Text style={styles.boxText}>{workout}</Text>
           </TouchableOpacity>
         ))}
       </View>
      </SafeAreaView>
   );
-};
+}
+
+export default function WorkoutTrackingNavigator() {
+  return (
+    <WorkoutTrackingStack.Navigator initialRouteName="WorkoutTracking">
+      <WorkoutTrackingStack.Screen
+        name="WorkoutTracking"
+        component={WorkoutTracking}
+        options={{ headerShown: false }}
+      />
+      <WorkoutTrackingStack.Screen name="WorkoutPage" component={WorkoutPage} />
+    </WorkoutTrackingStack.Navigator>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -110,29 +132,36 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   listContainer: {
-    paddingLeft: screenWidth * 0.05,
-    paddingRight: screenWidth * 0.05,
-  },
-  listItem: {
+    width: "80%",
+    height: "80%",
+    maxWidth: "80%",
+    maxHeight: screenWidth * 0.8,
     flexDirection: "row",
-    justifyContent: "space-between",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    alignItems: "center",
+    alignSelf: "center",
+  },
+  boxContainer: {
+    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f0f0f0",
-    padding: 15,
-    borderBottomWidth: 0.5,
-    borderBottomColor: "#000",
+    width: "45%",
+    aspectRatio: 1,
+    margin: "2%",
   },
-  gearIcon: {
-    alignSelf: "flex-end",
-    marginBottom: 10,
-  },
-  listItemText: {
+
+  boxText: {
     fontSize: 16,
     fontWeight: "bold",
   },
-  arrowIcon: {
-    fontSize: 18,
+  workoutContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  workoutText: {
+    fontSize: 24,
+    fontWeight: "bold",
   },
 });
-
-export default WorkoutTracking;
