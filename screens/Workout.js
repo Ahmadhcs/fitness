@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import {ProgressBar} from '@react-native-community/progress-bar-android';
 import { style } from "d3";
 
 const screenWidth = Dimensions.get("window").width;

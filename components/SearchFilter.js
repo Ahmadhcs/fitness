@@ -2,6 +2,10 @@ import { View, Text, StyleSheet, FlatList, Pressable } from "react-native";
 import React from "react";
 
 const SearchFilter = ({ data, input, setInput }) => {
+
+  const handleButtonPress = () => {
+    navigation.navigate('Reco', { action: 'doSomething' });
+  };
   return (
     <View style={styles.filter}>
       {/* Render a list of pressable components based on passed data */}
@@ -15,7 +19,7 @@ const SearchFilter = ({ data, input, setInput }) => {
 
           // Return pressable component for each item in data
           return (
-            <Pressable style={styles.press} onPress={() => setInput("")}>
+            <Pressable style={styles.press} onPress={(handleButtonPress) => setInput("")}>
               <Text style={styles.output}>{item.title}</Text>
             </Pressable>
           );
