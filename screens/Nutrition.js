@@ -1,18 +1,15 @@
 import React from "react";
-import { Text , StyleSheet, Dimensions, View, Image } from "react-native";
+import { Text , StyleSheet, Dimensions, View, Image, ScrollView, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
-import {ProgressBar} from '@react-native-community/progress-bar-android';
+import FoodLogged from "../components/FoodLogged";
+
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 import {
-  LineChart,
-  BarChart,
-  PieChart,
   ProgressChart,
-  ContributionGraph,
-  StackedBarChart
 } from "react-native-chart-kit";
 
 const data = {
@@ -33,8 +30,27 @@ const dataF = {
   colors:['blue']
 };
 
+const dataCals = {
+  labels: ["Cals"], // optional
+  data: [2000/3000],
+  colors:['orange']
+};
+
+
 
 const chartConfig = {
+  backgroundGradientFrom: "white",
+  backgroundGradientFromOpacity: 0  ,
+  backgroundGradientTo: "white",
+  backgroundGradientToOpacity: 0,
+  color: (opacity = 1, _index) => `rgba(255,0,0,0.07)`,
+  strokeWidth: 2, // optional, default 3
+  barPercentage: 0.35,
+  useShadowColorFromDataset: false, // optional,
+};
+
+
+const chartConfigCals= {
   backgroundGradientFrom: "white",
   backgroundGradientFromOpacity: 0  ,
   backgroundGradientTo: "white",
@@ -70,8 +86,13 @@ const chartConfigFat = {
 };
 
 const Nutrition = () => {
+  const navigation = useNavigation();
+
   return (
-    <SafeAreaView>
+
+    <SafeAreaView style={{flex:1}}>
+      <ScrollView>
+
       <View style={styles.header}>
           <Text style={styles.headerText}>My Nutrition</Text>
           <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
@@ -96,8 +117,15 @@ const Nutrition = () => {
     
 
     </View>
-    <Text>Protien</Text>
-    <Text>25/340g</Text>
+    <View style={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20}}>
+      
+      <Text style={{color:"red", fontWeight:"bold"}}>Protien</Text>
+      <Text style={{color:"gray", fontWeight:"700"}}>25/340g</Text>
+    </View>
+   
 
   </View>
   <View style={styles.chartCard}>
@@ -113,8 +141,14 @@ const Nutrition = () => {
         style={styles.graph}
 
       />
-      <Text>carbs</Text>
-    <Text>49/340g</Text>
+    <View style={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20}}>
+      
+      <Text  style={{color:"green", fontWeight:"bold"}}>carbs</Text>
+    <Text style={{color:"gray", fontWeight:"700"}}>49/340g</Text>
+    </View>
     </View>
   </View>
   
@@ -132,23 +166,54 @@ const Nutrition = () => {
         style={styles.graph}
 
       />
-      <Text>carbs</Text>
-    <Text>49/340g</Text>
+      <View style={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20}}>
+      <Text style={{color:"blue", fontWeight:"bold"}}>Fat</Text>
+    <Text style={{color:"gray", fontWeight:"700"}}>49/340g</Text>
+    </View>
       </View>
       <View style={styles.chartCard}>
-        <Text>heloo</Text>
+    <ProgressChart
+        data={dataCals }
+        width={screenWidth * 0.4}
+        height={screenHeight * 0.175}
+        strokeWidth={15}
+        radius={30}
+        chartConfig={chartConfigCals}
+        hideLegend={true}
+        withCustomBarColorFromData={true}
+        style={styles.graph}
+
+      />
+      <View style={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20}}>
+      <Text style={{color:"orange", fontWeight:"bold"}}>Calories</Text>
+    <Text style={{color:"gray", fontWeight:"700"}}>2000/3000</Text>
+    </View>
       </View>
   
   </View>
 
   
   <View style={styles.breakfast}>
-    <Text style={{fontSize: 20, color:"#1e88e5", fontWeight: "700"}}>Breakfast</Text>
-    
+    <Text style={{fontSize: 20, fontWeight: "700", paddingLeft: 10}}>Logged Food</Text>
+    <FoodLogged />
+    <FoodLogged />
+    <FoodLogged />
+
   </View>
 
 
+  </ScrollView>
+  <Pressable onPress={() => navigation.navigate("Reco")} style={styles.button}>
+        <Text style={styles.buttonText}>+</Text>
+      </Pressable>
     </SafeAreaView>
+
   );
 };
 
@@ -200,7 +265,26 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 20,
     marginTop: 10,
-    marginLeft: 20
+    marginLeft: 20,
+    height: screenHeight * 0.03
+  },
+  button: {
+    position: "absolute",
+    backgroundColor: "#0081CF",
+    right: screenWidth * 0.05,
+    bottom: screenHeight * 0.02,
+    width: 75,
+    height: 75,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "50%",
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 40,
+    marginLeft: 2,
+    marginBottom: 3,
   },
 
 

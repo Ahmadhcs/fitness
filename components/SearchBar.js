@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, Alert, FlatList } from "react-native";
+import { View, Text, TextInput, StyleSheet, Alert, FlatList, Dimensions } from "react-native";
 import React, { useEffect, useState } from "react";
 import SearchFilter from "./SearchFilter";
 
@@ -6,6 +6,9 @@ import SearchFilter from "./SearchFilter";
 const spoon = "https://api.spoonacular.com/recipes/complexSearch";
 const headerConfig = { headers: { Accept: "application/json" } };
 
+
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
 export default function SearchBar() {
   const [input, setInput] = React.useState("");
   const [text, setText] = React.useState("");
@@ -42,6 +45,7 @@ export default function SearchBar() {
           value={input}
           style={styles.search}
           onChangeText={(text) => handleChange(text)}
+          placeholderTextColor="gray"
         />
       </View>
       {/* Pass fetched data and input setters to SearchFilter */}
@@ -55,14 +59,16 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "80%",
     paddingVertical: 8,
-    paddingLeft: 5,
-    borderRadius: 5,
+    paddingLeft: 15,
+    borderRadius: 15,
     borderWidth: 0.7,
     borderColor: "#e8e8e8",
   },
   total: {
-    width: 450,
-    paddingVertical: 8,
-    paddingLeft: 75,
+    width: screenWidth * 0.95,
   },
+  search:{
+    color: "black",
+    height: screenHeight * 0.0225
+  }
 });
