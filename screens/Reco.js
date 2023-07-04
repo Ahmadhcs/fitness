@@ -96,7 +96,7 @@ const Reco = () =>{
             <Image style={styles.foodPic} source={require("../images/food.png")}></Image>
 
         </View>
-        {suggestions.map((item, index) => (
+        {suggestions.map((item) => (
             <View style={styles.foodCard}>
                 <Image style={styles.foodPick} source={{uri: `${item.image}`}}></Image>
 
@@ -170,7 +170,10 @@ const styles = StyleSheet.create({
       },
       foodCard:{
         paddingVertical: 20,
-        paddingLeft: 20
+        paddingLeft: 20,
+        backgroundColor: "pink",
+        width: screenWidth * 0.9,
+        height: screenHeight * 0.4 
       }
 
 })
