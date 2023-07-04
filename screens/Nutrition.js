@@ -201,7 +201,8 @@ const Nutrition = () => {
           <FoodLogged />
           <FoodLogged />
         </View>
-        <View style={{ height: 300 }} /> //change this to edit height of scrollview
+        {/* Change this to edit height of scroll view */}
+        <View style={{ height: 300 }} />
       </ScrollView>
       <Pressable onPress={() => navigation.navigate("Reco")} style={styles.button}>
         <Text style={styles.buttonText}>+</Text>
