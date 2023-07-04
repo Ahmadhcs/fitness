@@ -1,46 +1,49 @@
 import React from "react";
-import { Text , StyleSheet, Dimensions, View, Image, ScrollView, Pressable } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  Dimensions,
+  View,
+  Image,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 
 import FoodLogged from "../components/FoodLogged";
 
-
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
-import {
-  ProgressChart,
-} from "react-native-chart-kit";
+import { ProgressChart } from "react-native-chart-kit";
 
 const data = {
   labels: ["Protien"], // optional
-  data: [159/250],
-  colors:['red']
+  data: [159 / 250],
+  colors: ["red"],
 };
 
 const dataC = {
   labels: ["Carbs"], // optional
-  data: [39/250],
-  colors:['green']
+  data: [39 / 250],
+  colors: ["green"],
 };
 
 const dataF = {
   labels: ["Fats"], // optional
-  data: [89/250],
-  colors:['blue']
+  data: [89 / 250],
+  colors: ["blue"],
 };
 
 const dataCals = {
   labels: ["Cals"], // optional
-  data: [2000/3000],
-  colors:['orange']
+  data: [2000 / 3000],
+  colors: ["orange"],
 };
-
-
 
 const chartConfig = {
   backgroundGradientFrom: "white",
-  backgroundGradientFromOpacity: 0  ,
+  backgroundGradientFromOpacity: 0,
   backgroundGradientTo: "white",
   backgroundGradientToOpacity: 0,
   color: (opacity = 1, _index) => `rgba(255,0,0,0.07)`,
@@ -49,10 +52,9 @@ const chartConfig = {
   useShadowColorFromDataset: false, // optional,
 };
 
-
-const chartConfigCals= {
+const chartConfigCals = {
   backgroundGradientFrom: "white",
-  backgroundGradientFromOpacity: 0  ,
+  backgroundGradientFromOpacity: 0,
   backgroundGradientTo: "white",
   backgroundGradientToOpacity: 0,
   color: (opacity = 1, _index) => `rgba(255,0,0,0.07)`,
@@ -60,11 +62,10 @@ const chartConfigCals= {
   barPercentage: 0.35,
   useShadowColorFromDataset: false, // optional,
 };
-
 
 const chartConfigCarbs = {
   backgroundGradientFrom: "white",
-  backgroundGradientFromOpacity: 0  ,
+  backgroundGradientFromOpacity: 0,
   backgroundGradientTo: "white",
   backgroundGradientToOpacity: 0,
   color: (opacity = 1, _index) => `rgba(0,255,0,0.1)`,
@@ -73,10 +74,9 @@ const chartConfigCarbs = {
   useShadowColorFromDataset: false, // optional,
 };
 
-
 const chartConfigFat = {
   backgroundGradientFrom: "white",
-  backgroundGradientFromOpacity: 0  ,
+  backgroundGradientFromOpacity: 0,
   backgroundGradientTo: "white",
   backgroundGradientToOpacity: 0,
   color: (opacity = 1, _index) => `rgba(0,0,255,.07)`,
@@ -89,11 +89,9 @@ const Nutrition = () => {
   const navigation = useNavigation();
 
   return (
-
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
-
-      <View style={styles.header}>
+        <View style={styles.header}>
           <Text style={styles.headerText}>My Nutrition</Text>
           <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
       </View>
@@ -212,16 +210,15 @@ const Nutrition = () => {
 
   </ScrollView>
   <Pressable onPress={() => navigation.navigate("Reco")} style={styles.button}>
+
         <Text style={styles.buttonText}>+</Text>
       </Pressable>
     </SafeAreaView>
-
   );
 };
 
-
 const styles = StyleSheet.create({
-  header:{
+  header: {
     paddingLeft: 20,
     flexDirection: "row",
     paddingBottom: screenHeight * 0.02,
@@ -247,23 +244,24 @@ const styles = StyleSheet.create({
   },
   macro:{
     fontSize: 16,
+
     fontWeight: "500",
-    paddingLeft:15,
-    paddingTop: 15
+    paddingLeft: 15,
+    paddingTop: 15,
   },
-  bar:{
+  bar: {
     height: 10,
     borderRadius: 20,
   },
-  innerCard:{
-    flexDirection: "row"
+  innerCard: {
+    flexDirection: "row",
   },
-  breakfast:{
+  breakfast: {
     width: screenWidth * 0.9,
     borderRadius: 20,
     marginTop: 10,
     marginLeft: 20,
-    height: screenHeight * 0.03
+    height: screenHeight * 0.03,
   },
   button: {
     position: "absolute",
@@ -283,9 +281,6 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     marginBottom: 3,
   },
-
-
-
-})
+});
 
 export default Nutrition;
