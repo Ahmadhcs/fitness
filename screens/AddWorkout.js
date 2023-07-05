@@ -22,13 +22,20 @@ function AddWorkout(props) {
   };
 
   const handleDiscard = () => {
+    setModalVisible(false);
     navigation.goBack();
   };
 
   const handleSave = () => {
     // save logic
     // currently just adds a new box to the workout page wih the workout name
-    props.handleSave(workoutName);
+    let finalWorkoutName = workoutName;
+    if (finalWorkoutName === "") {
+      // if workout name is empty then assign a default name
+      finalWorkoutName = "Routine";
+    }
+    // save logic
+    props.handleSave(finalWorkoutName);
   };
 
   const handleWorkoutNameChange = (text) => {
@@ -155,7 +162,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   addButtonText: {
-    color: "white",
+    color: "blue",
     fontWeight: "bold",
     fontSize: 18,
   },

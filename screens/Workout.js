@@ -123,22 +123,22 @@ function WorkoutTracking({ navigation, route }) {
               <TouchableOpacity
                 key={index}
                 style={
-                  boxes.length % 2 == 0 || index !== boxes.length - 1
-                    ? styles.boxContainer
-                    : styles.wideBoxContainer
+                  boxes.length % 2 !== 0 && index === boxes.length - 1
+                    ? styles.aiBoxContainer
+                    : styles.boxContainer
                 }
                 onPress={() => navigation.navigate("WorkoutPage", { workoutType: box })}>
                 <Text style={styles.boxText}>{box}</Text>
               </TouchableOpacity>
             ))}
-            {boxes.length >= 4 && <View style={{ height: 10 }} />}
             <TouchableOpacity
-              style={styles.wideButton}
+              style={styles.aiButton}
               onPress={() => {
-                console.log("Wide Button Pressed!");
+                console.log("ai Button Pressed!");
               }}>
-              <Text style={styles.buttonText}>Wide Button</Text>
+              <Text style={styles.buttonText}>Generate a Workout</Text>
             </TouchableOpacity>
+            <View style={{ height: 10 }} />
           </View>
         </SafeAreaView>
       </ScrollView>
@@ -303,18 +303,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginHorizontal: 10,
   },
-  wideButton: {
+  aiButton: {
     backgroundColor: "#5067FF",
     borderRadius: 30,
     padding: 20,
-    flex: 5,
     elevation: 2,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 10,
-    marginTop: screenWidth / 2 + 10,
+    width: "96%",
+    marginTop: 10,
   },
-  wideBoxContainer: {
+  aiBoxContainer: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f0f0f0",
