@@ -16,6 +16,15 @@ function AddWorkout(props) {
   const [workoutName, setWorkoutName] = useState("");
   const [note, setNote] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [exerciseModalVisible, setExerciseModalVisible] = useState(false);
+
+  const openExerciseModal = () => {
+    setExerciseModalVisible(true);
+  };
+
+  const closeExerciseModal = () => {
+    setExerciseModalVisible(false);
+  };
 
   const handleGoBack = () => {
     setModalVisible(true);
@@ -35,7 +44,8 @@ function AddWorkout(props) {
       finalWorkoutName = "Routine";
     }
     // save logic
-    props.handleSave(finalWorkoutName);
+    navigation.navigate("WorkoutTracking", { newBox: finalWorkoutName });
+    // props.handleSave(finalWorkoutName);
   };
 
   const handleWorkoutNameChange = (text) => {
@@ -69,7 +79,7 @@ function AddWorkout(props) {
         numberOfLines={4}
         onChangeText={handleNoteChange}
       />
-      <TouchableOpacity style={styles.addButton} onPress={() => {}}>
+      <TouchableOpacity style={styles.addButton} onPress={openExerciseModal}>
         <Text style={styles.addButtonText}>Add Exercise</Text>
       </TouchableOpacity>
 
@@ -96,6 +106,27 @@ function AddWorkout(props) {
             </View>
           </View>
         </View>
+      </Modal>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={exerciseModalVisible}
+        onRequestClose={closeExerciseModal}>
+        <SafeAreaView style={styles.modalSafeArea}>
+          <View style={styles.exerciseModal}>
+            <View style={styles.exerciseModalHeader}>
+              <TouchableOpacity onPress={closeExerciseModal}>
+                <Feather name="x" size={24} color="black" />
+              </TouchableOpacity>
+              <Text style={styles.exerciseModalTitle}>Add</Text>
+              <TextInput style={styles.exerciseModalSearchBar} placeholder="Search" />
+              <TouchableOpacity>
+                <Feather name="filter" size={24} color="black" />
+              </TouchableOpacity>
+            </View>
+            {/* rest of stuff here */}
+          </View>
+        </SafeAreaView>
       </Modal>
     </SafeAreaView>
   );
@@ -217,5 +248,33 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
     textAlign: "center",
+  },
+  modalSafeArea: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  exerciseModal: {
+    width: "80%",
+    height: "80%",
+    backgroundColor: "#fff",
+    padding: 20,
+  },
+  exerciseModalHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  exerciseModalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  exerciseModalSearchBar: {
+    flex: 1,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 4,
+    marginHorizontal: 10,
+    paddingHorizontal: 10,
   },
 });

@@ -38,7 +38,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         {/* Conditional rendering of screens based on sign-in state */}
         {isSignedIn ? (
           // User is signed in
@@ -58,11 +58,7 @@ export default function App() {
             {/* dont add navbar */}
             <Stack.Screen name="InputWeight" component={InputWeight} />
             <Stack.Screen name="Reco" component={Reco} />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="AddWorkout"
-              component={AddWorkout}
-            />
+            <Stack.Screen name="AddWorkout" component={AddWorkout} />
           </>
         ) : (
           // User isn't signed in

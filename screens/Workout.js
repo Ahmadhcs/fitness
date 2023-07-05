@@ -13,7 +13,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
-import AddWorkout from "./AddWorkout"; // Adjust the path according to your file structure
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -38,7 +37,7 @@ function AddBoxButton({ onPress }) {
   );
 }
 
-function WorkoutTracking({ navigation, route }) {
+function WorkoutTracking({ navigation, route, showNavbar = true }) {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [selectedDay, setSelectedDay] = React.useState(null);
   const [boxes, setBoxes] = useState([]);
@@ -64,7 +63,7 @@ function WorkoutTracking({ navigation, route }) {
 
   const addBox = () => {
     // setBoxes((prevBoxes) => [...prevBoxes, `New Box ${prevBoxes.length + 1}`]);
-    navigation.navigate("AddWorkout");
+    navigation.navigate("AddWorkout", { showNavbar: false });
   };
 
   return (
@@ -142,9 +141,11 @@ function WorkoutTracking({ navigation, route }) {
           </View>
         </SafeAreaView>
       </ScrollView>
-      <View style={styles.floatingButtonContainer}>
-        <AddBoxButton onPress={addBox} />
-      </View>
+      {showNavbar && (
+        <View style={styles.floatingButtonContainer}>
+          <AddBoxButton onPress={addBox} />
+        </View>
+      )}
     </>
   );
 }
@@ -156,18 +157,6 @@ export default function WorkoutTrackingNavigator() {
         name="WorkoutTracking"
         component={WorkoutTracking}
         options={{ headerShown: false }}
-      />
-      <WorkoutTrackingStack.Screen
-        name="AddWorkout"
-        options={{ headerShown: false }}
-        children={(props) => (
-          <AddWorkout
-            {...props}
-            handleSave={(workoutName) => {
-              props.navigation.navigate("WorkoutTracking", { newBox: workoutName });
-            }}
-          />
-        )}
       />
       <WorkoutTrackingStack.Screen name="WorkoutPage" component={WorkoutPage} />
     </WorkoutTrackingStack.Navigator>
