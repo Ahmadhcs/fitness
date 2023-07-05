@@ -42,10 +42,15 @@ function WorkoutTracking({ navigation }) {
 
   const today = new Date();
   const currentDay = today.getDay();
-  const nextDays = Array(7)
-    .fill()
-    .map((_, i) => days[(currentDay + i) % 7]);
-
+  const prevTwoDays = [days[(currentDay - 2 + 7) % 7], days[(currentDay - 1 + 7) % 7]];
+  const nextDays = [
+    ...prevTwoDays,
+    days[(currentDay + 7) % 7],
+    days[(currentDay + 1) % 7],
+    days[(currentDay + 2) % 7],
+    days[(currentDay + 3) % 7],
+    days[(currentDay + 4) % 7],
+  ];
   const [boxes, setBoxes] = useState([]);
   const addBox = () => {
     setBoxes((prevBoxes) => [...prevBoxes, `New Box ${prevBoxes.length + 1}`]);
@@ -87,7 +92,7 @@ function WorkoutTracking({ navigation }) {
               {nextDays.map((day, index) => (
                 <TouchableOpacity
                   key={index}
-                  style={[styles.day, index === 0 && styles.today]}
+                  style={[styles.day, index === 2 && styles.today]}
                   onPress={() => {
                     setSelectedDay(day);
                     setModalVisible(true);
