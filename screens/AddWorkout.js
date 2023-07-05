@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import AddExerciseModal from "./AddExerciseModal";
 
 function AddWorkout(props) {
   const navigation = useNavigation();
@@ -73,16 +74,17 @@ function AddWorkout(props) {
         onChangeText={handleWorkoutNameChange}
       />
       <TextInput
-        style={styles.notes}
+        style={[styles.notes, { height: 100 }]}
         placeholder="Notes"
         multiline
         numberOfLines={4}
+        maxLength={200}
         onChangeText={handleNoteChange}
+        scrollEnabled={false}
       />
       <TouchableOpacity style={styles.addButton} onPress={openExerciseModal}>
         <Text style={styles.addButtonText}>Add Exercise</Text>
       </TouchableOpacity>
-
       <Modal
         animationType="slide"
         transparent={true}
@@ -107,27 +109,7 @@ function AddWorkout(props) {
           </View>
         </View>
       </Modal>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={exerciseModalVisible}
-        onRequestClose={closeExerciseModal}>
-        <SafeAreaView style={styles.modalSafeArea}>
-          <View style={styles.exerciseModal}>
-            <View style={styles.exerciseModalHeader}>
-              <TouchableOpacity onPress={closeExerciseModal}>
-                <Feather name="x" size={24} color="black" />
-              </TouchableOpacity>
-              <Text style={styles.exerciseModalTitle}>Add</Text>
-              <TextInput style={styles.exerciseModalSearchBar} placeholder="Search" />
-              <TouchableOpacity>
-                <Feather name="filter" size={24} color="black" />
-              </TouchableOpacity>
-            </View>
-            {/* rest of stuff here */}
-          </View>
-        </SafeAreaView>
-      </Modal>
+      <AddExerciseModal visible={exerciseModalVisible} onClose={closeExerciseModal} />
     </SafeAreaView>
   );
 }
@@ -253,10 +235,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.3)",
   },
   exerciseModal: {
-    width: "80%",
-    height: "80%",
+    width: "90%",
+    height: "90%",
+    borderRadius: 14,
     backgroundColor: "#fff",
     padding: 20,
   },
@@ -265,16 +249,27 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  exerciseModalTitle: {
+  exerciseModalAdd: {
     fontSize: 24,
     fontWeight: "bold",
   },
+  searchBarContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
   exerciseModalSearchBar: {
+    height: 40,
     flex: 1,
     borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 4,
-    marginHorizontal: 10,
     paddingHorizontal: 10,
+    marginTop: 20,
+    marginRight: 10,
+  },
+  filterButton: {
+    marginTop: 20,
   },
 });
