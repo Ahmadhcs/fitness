@@ -19,6 +19,8 @@ import Metrics from "./screens/signupProcess/Metrics";
 import Gender from "./screens/signupProcess/Gender";
 import Age from "./screens/signupProcess/Age";
 
+import AddWorkout from "./screens/AddWorkout";
+
 const withNavbar = (Component) => {
   return (props) => (
     <View style={{ flex: 1, justifyContent: "space-between" }}>
@@ -56,7 +58,11 @@ export default function App() {
             {/* dont add navbar */}
             <Stack.Screen name="InputWeight" component={InputWeight} />
             <Stack.Screen name="Reco" component={Reco} />
-
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="AddWorkout"
+              component={AddWorkout}
+            />
           </>
         ) : (
           // User isn't signed in

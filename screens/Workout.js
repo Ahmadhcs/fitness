@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
+import AddWorkout from "./AddWorkout"; // Adjust the path according to your file structure
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -28,6 +29,7 @@ function WorkoutPage({ route, navigation }) {
     </View>
   );
 }
+
 function AddBoxButton({ onPress }) {
   return (
     <TouchableOpacity style={styles.floatingButton} onPress={onPress}>
@@ -36,9 +38,17 @@ function AddBoxButton({ onPress }) {
   );
 }
 
-function WorkoutTracking({ navigation }) {
+function WorkoutTracking({ navigation, route }) {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [selectedDay, setSelectedDay] = React.useState(null);
+  const [boxes, setBoxes] = useState([]);
+
+  const { newBox } = route.params ?? {};
+  useEffect(() => {
+    if (newBox) {
+      setBoxes((prevBoxes) => [...prevBoxes, newBox]);
+    }
+  }, [newBox]);
 
   const today = new Date();
   const currentDay = today.getDay();
@@ -51,9 +61,10 @@ function WorkoutTracking({ navigation }) {
     days[(currentDay + 3) % 7],
     days[(currentDay + 4) % 7],
   ];
-  const [boxes, setBoxes] = useState([]);
+
   const addBox = () => {
-    setBoxes((prevBoxes) => [...prevBoxes, `New Box ${prevBoxes.length + 1}`]);
+    // setBoxes((prevBoxes) => [...prevBoxes, `New Box ${prevBoxes.length + 1}`]);
+    navigation.navigate("AddWorkout");
   };
 
   return (
@@ -145,6 +156,18 @@ export default function WorkoutTrackingNavigator() {
         name="WorkoutTracking"
         component={WorkoutTracking}
         options={{ headerShown: false }}
+      />
+      <WorkoutTrackingStack.Screen
+        name="AddWorkout"
+        options={{ headerShown: false }}
+        children={(props) => (
+          <AddWorkout
+            {...props}
+            handleSave={(workoutName) => {
+              props.navigation.navigate("WorkoutTracking", { newBox: workoutName });
+            }}
+          />
+        )}
       />
       <WorkoutTrackingStack.Screen name="WorkoutPage" component={WorkoutPage} />
     </WorkoutTrackingStack.Navigator>
