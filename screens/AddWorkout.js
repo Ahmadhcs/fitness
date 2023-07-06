@@ -31,6 +31,10 @@ function AddWorkout(props) {
     setModalVisible(true);
   };
 
+  const handleMinimize = () => {
+    navigation.goBack();
+  };
+
   const handleDiscard = () => {
     setModalVisible(false);
     navigation.goBack();
@@ -45,7 +49,7 @@ function AddWorkout(props) {
       finalWorkoutName = "Routine";
     }
     // save logic
-    navigation.navigate("WorkoutTracking", { newBox: finalWorkoutName });
+    navigation.navigate("Workout", { newBox: finalWorkoutName });
     // props.handleSave(finalWorkoutName);
   };
 
@@ -60,7 +64,7 @@ function AddWorkout(props) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
+        <TouchableOpacity style={styles.backButton} onPress={handleMinimize}>
           <Feather name="x" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.title}>New Workout</Text>
@@ -84,6 +88,9 @@ function AddWorkout(props) {
       />
       <TouchableOpacity style={styles.addButton} onPress={openExerciseModal}>
         <Text style={styles.addButtonText}>Add Exercise</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.deleteButton} onPress={handleGoBack}>
+        <Text style={styles.deleteButtonText}>Delete Exercise</Text>
       </TouchableOpacity>
       <Modal
         animationType="slide"
@@ -148,6 +155,15 @@ const styles = StyleSheet.create({
     backgroundColor: "lightblue",
     alignItems: "center",
   },
+  deleteButton: {
+    width: "80%",
+    alignSelf: "center",
+    padding: 10,
+    marginTop: 20,
+    borderRadius: 5,
+    backgroundColor: "red",
+    alignItems: "center",
+  },
   title: {
     fontSize: 20,
     fontWeight: "500",
@@ -176,6 +192,11 @@ const styles = StyleSheet.create({
   },
   addButtonText: {
     color: "blue",
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  deleteButtonText: {
+    color: "darkred",
     fontWeight: "bold",
     fontSize: 18,
   },

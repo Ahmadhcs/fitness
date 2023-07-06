@@ -67,103 +67,100 @@ function WorkoutTracking({ navigation, route, showNavbar = true }) {
   };
 
   return (
-    <>
-      <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-        <Modal animationType="fade" transparent={true} visible={modalVisible}>
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>{selectedDay}</Text>
+    <View style={styles.outerView}>
+      <>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <Modal animationType="fade" transparent={true} visible={modalVisible}>
+            <View style={styles.modalOverlay}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>{selectedDay}</Text>
+                <TouchableOpacity
+                  style={styles.buttonClose}
+                  onPress={() => setModalVisible(!modalVisible)}>
+                  <Text style={styles.textStyle}>Hide Modal</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        </TouchableWithoutFeedback>
+        <ScrollView style={styles.scrollView}>
+          <SafeAreaView style={styles.container}>
+            <View style={styles.header}>
+              <Image style={styles.pfp} source={require("../images/cole.jpeg")} />
+              <Text style={styles.headerText}>My Workout</Text>
+            </View>
+            <View>
               <TouchableOpacity
-                style={styles.buttonClose}
-                onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.textStyle}>Hide Modal</Text>
+                style={styles.editButton}
+                onPress={() => {
+                  console.log("Edit Button Pressed!");
+                }}>
+                <Feather name="edit" size={24} color="black" />
               </TouchableOpacity>
             </View>
-          </View>
-        </Modal>
-      </TouchableWithoutFeedback>
-      <ScrollView style={styles.scrollView}>
-        <SafeAreaView style={styles.container}>
-          <View style={styles.header}>
-            <Image style={styles.pfp} source={require("../images/cole.jpeg")} />
-            <Text style={styles.headerText}>My Workout</Text>
-          </View>
-          <View>
-            <TouchableOpacity
-              style={styles.editButton}
-              onPress={() => {
-                console.log("Edit Button Pressed!");
-              }}>
-              <Feather name="edit" size={24} color="black" />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.calendarContainer}>
-            <View style={styles.calendar}>
-              {nextDays.map((day, index) => (
+            <View style={styles.calendarContainer}>
+              <View style={styles.calendar}>
+                {nextDays.map((day, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={[styles.day, index === 2 && styles.today]}
+                    onPress={() => {
+                      setSelectedDay(day);
+                      setModalVisible(true);
+                    }}>
+                    <Text style={styles.dayText}>{day}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+            <View style={styles.listContainer}>
+              {boxes.length === 0 && (
+                <Text style={styles.noWorkoutsText}>
+                  You have no workouts, create a new template or generate one!
+                </Text>
+              )}
+              {boxes.map((box, index) => (
                 <TouchableOpacity
                   key={index}
-                  style={[styles.day, index === 2 && styles.today]}
-                  onPress={() => {
-                    setSelectedDay(day);
-                    setModalVisible(true);
-                  }}>
-                  <Text style={styles.dayText}>{day}</Text>
+                  style={
+                    boxes.length % 2 !== 0 && index === boxes.length - 1
+                      ? styles.aiBoxContainer
+                      : styles.boxContainer
+                  }
+                  onPress={() =>
+                    navigation.navigate("WorkoutView", { workoutType: box })
+                  }>
+                  <Text style={styles.boxText}>{box}</Text>
                 </TouchableOpacity>
               ))}
-            </View>
-          </View>
-          <View style={styles.listContainer}>
-            {boxes.length === 0 && (
-              <Text style={styles.noWorkoutsText}>
-                You have no workouts, create a new template or generate one!
-              </Text>
-            )}
-            {boxes.map((box, index) => (
               <TouchableOpacity
-                key={index}
-                style={
-                  boxes.length % 2 !== 0 && index === boxes.length - 1
-                    ? styles.aiBoxContainer
-                    : styles.boxContainer
-                }
-                onPress={() => navigation.navigate("WorkoutPage", { workoutType: box })}>
-                <Text style={styles.boxText}>{box}</Text>
+                style={styles.aiButton}
+                onPress={() => {
+                  console.log("ai Button Pressed!");
+                }}>
+                <Text style={styles.buttonText}>Generate a Workout</Text>
               </TouchableOpacity>
-            ))}
-            <TouchableOpacity
-              style={styles.aiButton}
-              onPress={() => {
-                console.log("ai Button Pressed!");
-              }}>
-              <Text style={styles.buttonText}>Generate a Workout</Text>
-            </TouchableOpacity>
-            <View style={{ height: 10 }} />
+              <View style={{ height: 10 }} />
+            </View>
+          </SafeAreaView>
+        </ScrollView>
+        {showNavbar && (
+          <View style={styles.floatingButtonContainer}>
+            <AddBoxButton onPress={addBox} />
           </View>
-        </SafeAreaView>
-      </ScrollView>
-      {showNavbar && (
-        <View style={styles.floatingButtonContainer}>
-          <AddBoxButton onPress={addBox} />
-        </View>
-      )}
-    </>
+        )}
+      </>
+    </View>
   );
 }
 
-export default function WorkoutTrackingNavigator() {
-  return (
-    <WorkoutTrackingStack.Navigator initialRouteName="WorkoutTracking">
-      <WorkoutTrackingStack.Screen
-        name="WorkoutTracking"
-        component={WorkoutTracking}
-        options={{ headerShown: false }}
-      />
-      <WorkoutTrackingStack.Screen name="WorkoutPage" component={WorkoutPage} />
-    </WorkoutTrackingStack.Navigator>
-  );
-}
+export default WorkoutTracking;
 
 const styles = StyleSheet.create({
+  outerView: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
   scrollView: {
     backgroundColor: "#fff",
   },

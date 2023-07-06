@@ -20,6 +20,7 @@ import Gender from "./screens/signupProcess/Gender";
 import Age from "./screens/signupProcess/Age";
 
 import AddWorkout from "./screens/AddWorkout";
+import WorkoutView from "./screens/WorkoutView";
 
 const withNavbar = (Component) => {
   return (props) => (
@@ -59,6 +60,7 @@ export default function App() {
             <Stack.Screen name="InputWeight" component={InputWeight} />
             <Stack.Screen name="Reco" component={Reco} />
             <Stack.Screen name="AddWorkout" component={AddWorkout} />
+            <Stack.Screen name="WorkoutView" component={WorkoutView} />
           </>
         ) : (
           // User isn't signed in
