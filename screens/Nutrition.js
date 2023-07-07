@@ -94,123 +94,133 @@ const Nutrition = () => {
         <View style={styles.header}>
           <Text style={styles.headerText}>My Nutrition</Text>
           <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
-      </View>
+        </View>
 
-  <View style={{flexDirection: "row", backgroundColor: "white", borderRadius: 20, width: screenWidth * 0.9, marginLeft: screenWidth * 0.05}}>
-
-    <View style={styles.chartCard}>
-        <View style={styles.innerCard}>
+        <View
+          style={{
+            flexDirection: "row",
+            backgroundColor: "white",
+            borderRadius: 20,
+            width: screenWidth * 0.9,
+            marginLeft: screenWidth * 0.05,
+          }}>
+          <View style={styles.chartCard}>
+            <View style={styles.innerCard}>
               <ProgressChart
-        data={data}
-        width={screenWidth * 0.25}
-        height={screenHeight * 0.175}
-        strokeWidth={14}
-        radius={28}
-        chartConfig={chartConfig}
-        hideLegend={true}
-        withCustomBarColorFromData={true}
-        style={styles.graph}
+                data={data}
+                width={screenWidth * 0.25}
+                height={screenHeight * 0.175}
+                strokeWidth={14}
+                radius={28}
+                chartConfig={chartConfig}
+                hideLegend={true}
+                withCustomBarColorFromData={true}
+                style={styles.graph}
+              />
+            </View>
+            <View
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 20,
+              }}>
+              <Text style={{ color: "red", fontWeight: "bold" }}>Protein</Text>
+              <Text style={{ color: "gray", fontWeight: "700", fontSize: 12.5 }}>
+                25/340g
+              </Text>
+            </View>
+          </View>
+          <View style={styles.chartCard}>
+            <ProgressChart
+              data={dataC}
+              width={screenWidth * 0.25}
+              height={screenHeight * 0.175}
+              strokeWidth={14}
+              radius={28}
+              chartConfig={chartConfigCarbs}
+              hideLegend={true}
+              withCustomBarColorFromData={true}
+              style={styles.graph}
+            />
+            <View
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 20,
+              }}>
+              <Text style={{ color: "green", fontWeight: "bold" }}>Carbs</Text>
+              <Text style={{ color: "gray", fontWeight: "700", fontSize: 12.5 }}>
+                49/340g
+              </Text>
+            </View>
+          </View>
 
-      />
-    
+          <View style={styles.chartCard}>
+            <ProgressChart
+              data={dataF}
+              width={screenWidth * 0.25}
+              height={screenHeight * 0.175}
+              strokeWidth={14}
+              radius={28}
+              chartConfig={chartConfigFat}
+              hideLegend={true}
+              withCustomBarColorFromData={true}
+              style={styles.graph}
+            />
+            <View
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 20,
+              }}>
+              <Text style={{ color: "blue", fontWeight: "bold" }}>Fat</Text>
+              <Text style={{ color: "gray", fontWeight: "700", fontSize: 12.5 }}>
+                49/340g
+              </Text>
+            </View>
+          </View>
+          <View style={styles.chartCard}>
+            <ProgressChart
+              data={dataCals}
+              width={screenWidth * 0.25}
+              height={screenHeight * 0.175}
+              strokeWidth={14}
+              radius={28}
+              chartConfig={chartConfigCals}
+              hideLegend={true}
+              withCustomBarColorFromData={true}
+              style={styles.graph}
+            />
+            <View
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 20,
+              }}>
+              <Text style={{ color: "orange", fontWeight: "bold" }}>Calories</Text>
+              <Text style={{ color: "gray", fontWeight: "700", fontSize: 12.5 }}>
+                2000/3000
+              </Text>
+            </View>
+          </View>
+        </View>
 
-    </View>
-    <View style={{display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 20}}>
-      
-      <Text style={{color:"red", fontWeight:"bold"}}>Protein</Text>
-      <Text style={{color:"gray", fontWeight:"700", fontSize: 12.5}}>25/340g</Text>
-    </View>
-   
+        <View style={{ flexDirection: "row", marginTop: 10 }}></View>
 
-  </View>
-  <View style={styles.chartCard}>
-  <ProgressChart
-        data={dataC}
-        width={screenWidth * 0.25}
-        height={screenHeight * 0.175}
-        strokeWidth={14}
-        radius={28}
-        chartConfig={chartConfigCarbs}
-        hideLegend={true}
-        withCustomBarColorFromData={true}
-        style={styles.graph}
-
-      />
-    <View style={{display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 20}}>
-      
-      <Text  style={{color:"green", fontWeight:"bold"}}>Carbs</Text>
-    <Text style={{color:"gray", fontWeight:"700", fontSize: 12.5}}>49/340g</Text>
-    </View>
-    </View>
-
-    <View style={styles.chartCard}>
-    <ProgressChart
-        data={dataF}
-        width={screenWidth * 0.25}
-        height={screenHeight * 0.175}
-        strokeWidth={14}
-        radius={28}
-        chartConfig={chartConfigFat}
-        hideLegend={true}
-        withCustomBarColorFromData={true}
-        style={styles.graph}
-
-      />
-      <View style={{display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 20}}>
-      <Text style={{color:"blue", fontWeight:"bold"}}>Fat</Text>
-    <Text style={{color:"gray", fontWeight:"700", fontSize: 12.5}}>49/340g</Text>
-    </View>
-      </View>
-      <View style={styles.chartCard}>
-    <ProgressChart
-        data={dataCals }
-        width={screenWidth * 0.25}
-        height={screenHeight * 0.175}
-        strokeWidth={14}
-        radius={28}
-        chartConfig={chartConfigCals}
-        hideLegend={true}
-        withCustomBarColorFromData={true}
-        style={styles.graph}
-
-      />
-      <View style={{display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 20}}>
-      <Text style={{color:"orange", fontWeight:"bold"}}>Calories</Text>
-    <Text style={{color:"gray", fontWeight:"700", fontSize: 12.5}}>2000/3000</Text>
-    </View>
-    </View>
-  </View>
-  
-  <View style={{flexDirection: "row", marginTop: 10}}>
-    
-  
-  </View>
-
-  
-  <View style={styles.breakfast}>
-    <Text style={{fontSize: 20, fontWeight: "700", paddingLeft: 10}}>Logged Food</Text>
-    <FoodLogged protein="89" />
-    <FoodLogged />
-    <FoodLogged />
-
-  </View>
-
-
-  </ScrollView>
-  <Pressable onPress={() => navigation.navigate("Reco")} style={styles.button}>
-
+        <View style={styles.breakfast}>
+          <Text style={{ fontSize: 20, fontWeight: "700", paddingLeft: 10 }}>
+            Logged Food
+          </Text>
+          <FoodLogged protein="89" />
+          <FoodLogged />
+          <FoodLogged />
+        </View>
+      </ScrollView>
+      <Pressable onPress={() => navigation.navigate("Reco")} style={styles.button}>
         <Text style={styles.buttonText}>+</Text>
       </Pressable>
     </SafeAreaView>
@@ -236,13 +246,11 @@ const styles = StyleSheet.create({
     marginTop: screenHeight * 0.01,
     paddingTop: 20,
   },
-  chartCard:{
+  chartCard: {
     width: screenWidth * 0.225,
   },
-  graph:{
-    
-  },
-  macro:{
+  graph: {},
+  macro: {
     fontSize: 16,
 
     fontWeight: "500",
