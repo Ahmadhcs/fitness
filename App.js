@@ -6,7 +6,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginRegister from "./screens/LoginRegister";
 import Dashboard from "./screens/Dashboard";
 import Navbar from "./components/Navbar";
-import Workout from "./screens/Workout";
 import Weight from "./screens/Weight";
 import Nutrition from "./screens/Nutrition";
 import InputWeight from "./screens/InputWeight";
@@ -18,6 +17,9 @@ import Credentials from "./screens/signupProcess/Credentials";
 import Metrics from "./screens/signupProcess/Metrics";
 import Gender from "./screens/signupProcess/Gender";
 import Age from "./screens/signupProcess/Age";
+
+// Workout Manager
+import WorkoutManager from "./screens/workout/WorkoutManager";
 
 const withNavbar = (Component) => {
   return (props) => (
@@ -36,7 +38,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         {/* Conditional rendering of screens based on sign-in state */}
         {isSignedIn ? (
           // User is signed in
@@ -49,14 +51,13 @@ export default function App() {
             <Stack.Screen name="Metrics" component={Metrics} />
             <Stack.Screen name="Credentials" component={Credentials} />
             <Stack.Screen name="Dashboard" component={withNavbar(Dashboard)} />
-            <Stack.Screen name="Workout" component={withNavbar(Workout)} />
+            <Stack.Screen name="WorkoutManager" component={WorkoutManager} />
             <Stack.Screen name="Weight" component={withNavbar(Weight)} />
             <Stack.Screen name="Nutrition" component={withNavbar(Nutrition)} />
 
             {/* dont add navbar */}
             <Stack.Screen name="InputWeight" component={InputWeight} />
             <Stack.Screen name="Reco" component={Reco} />
-
           </>
         ) : (
           // User isn't signed in
