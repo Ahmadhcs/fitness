@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
-import Navbar from "../components/Navbar";
+import Navbar from "../../components/Navbar";
 
 // Constants for dimensions and weekdays
 const screenWidth = Dimensions.get("window").width;
@@ -87,7 +87,7 @@ function Workout({ newBoxes, navigate }) {
         <ScrollView style={styles.scrollView}>
           <SafeAreaView style={styles.container}>
             <View style={styles.header}>
-              <Image style={styles.pfp} source={require("../images/cole.jpeg")} />
+              <Image style={styles.pfp} source={require("../../images/cole.jpeg")} />
               <Text style={styles.headerText}>My Workout</Text>
             </View>
             <View>

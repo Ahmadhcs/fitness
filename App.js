@@ -18,7 +18,8 @@ import Metrics from "./screens/signupProcess/Metrics";
 import Gender from "./screens/signupProcess/Gender";
 import Age from "./screens/signupProcess/Age";
 
-import WorkoutManager from "./screens/WorkoutManager";
+// Workout Manager
+import WorkoutManager from "./screens/workout/WorkoutManager";
 
 const withNavbar = (Component) => {
   return (props) => (
