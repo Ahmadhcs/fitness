@@ -20,7 +20,7 @@ const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
 
-let utubeAPIKEY = 'AIzaSyCEuZka21EnXBF0yM217BQRw7mpAertXEs'
+let utubeAPIKEY = 'XXX'
 let videoSearchArray = ['pull day', 'Chest Day', "Arms Day", "Core Workout", 'Workout Outside']
 
 let search = `https://www.googleapis.com/youtube/v3/search?key=${utubeAPIKEY}&q=pull day&type=video&maxResults=3&part=snippet`
