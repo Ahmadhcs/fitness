@@ -9,11 +9,9 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-function NewPage({ route, navigation }) {
-  const { boxName } = route.params;
-
+function WorkoutView({ boxName, navigate }) {
   const handleGoBack = () => {
-    navigation.goBack();
+    navigate("workoutView", "workout");
   };
 
   const handleExport = () => {
@@ -21,7 +19,7 @@ function NewPage({ route, navigation }) {
   };
 
   const handleAddExercise = () => {
-    // Navigate to the AddExercise screen
+    navigate("workoutView", "exerciseModal");
   };
 
   const handleStartWorkout = () => {
@@ -138,6 +136,7 @@ const styles = StyleSheet.create({
     margin: 10,
     width: "90%",
     alignSelf: "center",
+    marginBottom: 150,
   },
   buttonText: {
     color: "white",
@@ -146,4 +145,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NewPage;
+export default WorkoutView;

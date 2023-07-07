@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import {
   View,
   Text,
@@ -12,46 +12,50 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
-import { createStackNavigator } from "@react-navigation/stack";
+import Navbar from "../components/Navbar";
 
+// Constants for dimensions and weekdays
 const screenWidth = Dimensions.get("window").width;
-const screenHeight = Dimensions.get("window").height;
 const days = ["Su", "M", "Tu", "W", "Th", "F", "Sa"];
 
-const WorkoutTrackingStack = createStackNavigator();
-
-function WorkoutPage({ route, navigation }) {
-  const { workoutType } = route.params;
+function FloatingButton({ onPress, navigate }) {
   return (
-    <View style={styles.workoutContainer}>
-      <Text style={styles.workoutText}>This is the {workoutType} page</Text>
-    </View>
-  );
-}
-
-function AddBoxButton({ onPress }) {
-  return (
-    <TouchableOpacity style={styles.floatingButton} onPress={onPress}>
+    <TouchableOpacity
+      style={styles.floatingButton}
+      onPress={() => {
+        onPress();
+        navigate("workout", "addWorkout"); // Direct navigation from WorkoutManager to AddWorkout
+      }}>
       <Feather name="plus" size={30} color="#FFF" />
     </TouchableOpacity>
   );
 }
 
-function WorkoutTracking({ navigation, route, showNavbar = true }) {
-  const [modalVisible, setModalVisible] = React.useState(false);
-  const [selectedDay, setSelectedDay] = React.useState(null);
-  const [boxes, setBoxes] = useState([]);
+// Main Workout component
+function Workout({ newBoxes, navigate }) {
+  // Modal state management
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedDay, setSelectedDay] = useState(null);
 
-  const { newBox } = route.params ?? {};
-  useEffect(() => {
-    if (newBox) {
-      setBoxes((prevBoxes) => [...prevBoxes, newBox]);
-    }
-  }, [newBox]);
+  // Calculating the list of boxes only when newBoxes change
+  const boxes = useMemo(() => newBoxes, [newBoxes]);
 
+  // Handler for navigating to the AddWorkout page
+  const handleGoToAddWorkout = () => {
+    navigate("workout", "addWorkout");
+  };
+
+  const handleGoToWorkoutView = () => {
+    navigate("workout", "workoutView");
+  };
+
+  // Creating a new Date object for today's date
   const today = new Date();
+  // Using getDay method to get the current day of the week as a number (0-6, where 0 is Sunday)
   const currentDay = today.getDay();
+  // Calculating the previous two days based on the current day. The "+ 7" and "% 7" operations ensure the day number always stays within the 0-6 range.
   const prevTwoDays = [days[(currentDay - 2 + 7) % 7], days[(currentDay - 1 + 7) % 7]];
+  // Creating an array of the next few days. It includes the previous two days and the current day, then the four days after that.
   const nextDays = [
     ...prevTwoDays,
     days[(currentDay + 7) % 7],
@@ -61,15 +65,11 @@ function WorkoutTracking({ navigation, route, showNavbar = true }) {
     days[(currentDay + 4) % 7],
   ];
 
-  const addBox = () => {
-    // setBoxes((prevBoxes) => [...prevBoxes, `New Box ${prevBoxes.length + 1}`]);
-    navigation.navigate("AddWorkout", { showNavbar: false });
-  };
-
   return (
     <View style={styles.outerView}>
       <>
         <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          {/* Calendaer Day Modal */}
           <Modal animationType="fade" transparent={true} visible={modalVisible}>
             <View style={styles.modalOverlay}>
               <View style={styles.modalView}>
@@ -83,6 +83,7 @@ function WorkoutTracking({ navigation, route, showNavbar = true }) {
             </View>
           </Modal>
         </TouchableWithoutFeedback>
+        {/* Main Workout Page */}
         <ScrollView style={styles.scrollView}>
           <SafeAreaView style={styles.container}>
             <View style={styles.header}>
@@ -90,11 +91,7 @@ function WorkoutTracking({ navigation, route, showNavbar = true }) {
               <Text style={styles.headerText}>My Workout</Text>
             </View>
             <View>
-              <TouchableOpacity
-                style={styles.editButton}
-                onPress={() => {
-                  console.log("Edit Button Pressed!");
-                }}>
+              <TouchableOpacity style={styles.editButton}>
                 <Feather name="edit" size={24} color="black" />
               </TouchableOpacity>
             </View>
@@ -120,41 +117,35 @@ function WorkoutTracking({ navigation, route, showNavbar = true }) {
                 </Text>
               )}
               {boxes.map((box, index) => (
+                // For each 'box', a TouchableOpacity is rendered with a unique 'key' prop (for performance)
                 <TouchableOpacity
                   key={index}
                   style={
                     boxes.length % 2 !== 0 && index === boxes.length - 1
-                      ? styles.aiBoxContainer
-                      : styles.boxContainer
+                      ? styles.oddBoxContainer
+                      : styles.evenBoxContainer
                   }
-                  onPress={() =>
-                    navigation.navigate("WorkoutView", { workoutType: box })
-                  }>
+                  onPress={handleGoToWorkoutView}>
                   <Text style={styles.boxText}>{box}</Text>
                 </TouchableOpacity>
               ))}
-              <TouchableOpacity
-                style={styles.aiButton}
-                onPress={() => {
-                  console.log("ai Button Pressed!");
-                }}>
+              <TouchableOpacity style={styles.aiButton}>
                 <Text style={styles.buttonText}>Generate a Workout</Text>
               </TouchableOpacity>
-              <View style={{ height: 10 }} />
+              <View style={{ height: 100 }} />
             </View>
           </SafeAreaView>
         </ScrollView>
-        {showNavbar && (
-          <View style={styles.floatingButtonContainer}>
-            <AddBoxButton onPress={addBox} />
-          </View>
-        )}
+        <View style={styles.floatingButtonContainer}>
+          <FloatingButton onPress={handleGoToAddWorkout} navigate={navigate} />
+        </View>
+        <Navbar />
       </>
     </View>
   );
 }
 
-export default WorkoutTracking;
+export default Workout;
 
 const styles = StyleSheet.create({
   outerView: {
@@ -239,7 +230,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: 10,
   },
-  boxContainer: {
+  evenBoxContainer: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f0f0f0",
@@ -288,6 +279,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: 10,
+    marginBottom: 100,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
   aiButton: {
     backgroundColor: "#5067FF",
@@ -299,7 +295,7 @@ const styles = StyleSheet.create({
     width: "96%",
     marginTop: 10,
   },
-  aiBoxContainer: {
+  oddBoxContainer: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f0f0f0",

@@ -6,7 +6,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginRegister from "./screens/LoginRegister";
 import Dashboard from "./screens/Dashboard";
 import Navbar from "./components/Navbar";
-import Workout from "./screens/Workout";
 import Weight from "./screens/Weight";
 import Nutrition from "./screens/Nutrition";
 import InputWeight from "./screens/InputWeight";
@@ -19,8 +18,7 @@ import Metrics from "./screens/signupProcess/Metrics";
 import Gender from "./screens/signupProcess/Gender";
 import Age from "./screens/signupProcess/Age";
 
-import AddWorkout from "./screens/AddWorkout";
-import WorkoutView from "./screens/WorkoutView";
+import WorkoutManager from "./screens/WorkoutManager";
 
 const withNavbar = (Component) => {
   return (props) => (
@@ -52,15 +50,13 @@ export default function App() {
             <Stack.Screen name="Metrics" component={Metrics} />
             <Stack.Screen name="Credentials" component={Credentials} />
             <Stack.Screen name="Dashboard" component={withNavbar(Dashboard)} />
-            <Stack.Screen name="Workout" component={withNavbar(Workout)} />
+            <Stack.Screen name="WorkoutManager" component={WorkoutManager} />
             <Stack.Screen name="Weight" component={withNavbar(Weight)} />
             <Stack.Screen name="Nutrition" component={withNavbar(Nutrition)} />
 
             {/* dont add navbar */}
             <Stack.Screen name="InputWeight" component={InputWeight} />
             <Stack.Screen name="Reco" component={Reco} />
-            <Stack.Screen name="AddWorkout" component={AddWorkout} />
-            <Stack.Screen name="WorkoutView" component={WorkoutView} />
           </>
         ) : (
           // User isn't signed in

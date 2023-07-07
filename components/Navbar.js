@@ -55,7 +55,7 @@ const Navbar = () => {
               {...props}
             />
           )}
-          onPress={() => navigation.navigate("Workout")}
+          onPress={() => navigation.navigate("WorkoutManager")}
         />
       </View>
     </View>

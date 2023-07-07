@@ -9,54 +9,52 @@ import {
   SafeAreaView,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import AddExerciseModal from "./AddExerciseModal";
 
-function AddWorkout(props) {
-  const navigation = useNavigation();
+function AddWorkout({ navigate, onAddNewBox }) {
+  // Local states for workout name and notes
   const [workoutName, setWorkoutName] = useState("");
   const [note, setNote] = useState("");
+
+  // State for delete modal visibility
   const [modalVisible, setModalVisible] = useState(false);
-  const [exerciseModalVisible, setExerciseModalVisible] = useState(false);
 
-  const openExerciseModal = () => {
-    setExerciseModalVisible(true);
+  // Function to handle the opening of Exercise Modal
+  const handleOpenExerciseModal = () => {
+    navigate("addWorkout", "exerciseModal");
   };
 
-  const closeExerciseModal = () => {
-    setExerciseModalVisible(false);
-  };
-
-  const handleGoBack = () => {
+  // Function to handle the opening of Delete Modal
+  const handleOpenDeleteModal = () => {
     setModalVisible(true);
   };
 
-  const handleMinimize = () => {
-    navigation.goBack();
+  // Function to handle going back to Workout page
+  const handleGoBack = () => {
+    navigate("addWorkout", "workout");
   };
 
-  const handleDiscard = () => {
-    setModalVisible(false);
-    navigation.goBack();
+  // Function to handle delete workout
+  const handleDelete = () => {
+    setModalVisible(false); // Close delete modal
+    navigate("addWorkout", "workout");
   };
 
+  // Function to handle 'Save' operation
   const handleSave = () => {
-    // save logic
-    // currently just adds a new box to the workout page wih the workout name
-    let finalWorkoutName = workoutName;
-    if (finalWorkoutName === "") {
-      // if workout name is empty then assign a default name
-      finalWorkoutName = "Routine";
+    if (workoutName) {
+      // If there's a workout name, add a new box to the workout page
+      onAddNewBox(workoutName);
     }
-    // save logic
-    navigation.navigate("Workout", { newBox: finalWorkoutName });
-    // props.handleSave(finalWorkoutName);
+    setWorkoutName(""); // Reset workout name
+    navigate("addWorkout", "workout");
   };
 
+  // Function to handle workout name change
   const handleWorkoutNameChange = (text) => {
     setWorkoutName(text);
   };
 
+  // Function to handle note change
   const handleNoteChange = (text) => {
     setNote(text);
   };
@@ -64,7 +62,7 @@ function AddWorkout(props) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={handleMinimize}>
+        <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
           <Feather name="x" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.title}>New Workout</Text>
@@ -73,6 +71,7 @@ function AddWorkout(props) {
         </TouchableOpacity>
       </View>
       <TextInput
+        // Apply styles to the Workout Name text input based on condition
         style={[styles.workoutName, workoutName ? styles.active : styles.inactive]}
         placeholder="Workout Name"
         onChangeText={handleWorkoutNameChange}
@@ -86,10 +85,10 @@ function AddWorkout(props) {
         onChangeText={handleNoteChange}
         scrollEnabled={false}
       />
-      <TouchableOpacity style={styles.addButton} onPress={openExerciseModal}>
+      <TouchableOpacity style={styles.addButton} onPress={handleOpenExerciseModal}>
         <Text style={styles.addButtonText}>Add Exercise</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.deleteButton} onPress={handleGoBack}>
+      <TouchableOpacity style={styles.deleteButton} onPress={handleOpenDeleteModal}>
         <Text style={styles.deleteButtonText}>Delete Exercise</Text>
       </TouchableOpacity>
       <Modal
@@ -101,10 +100,10 @@ function AddWorkout(props) {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Do you want to discard the workout?</Text>
+            <Text style={styles.modalText}>Do you want to delete the workout?</Text>
             <View style={styles.modalButtons}>
-              <TouchableOpacity style={styles.discardButton} onPress={handleDiscard}>
-                <Text style={styles.modalButtonText}>Discard</Text>
+              <TouchableOpacity style={styles.confirmDeleteButton} onPress={handleDelete}>
+                <Text style={styles.modalButtonText}>Delete</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -116,7 +115,6 @@ function AddWorkout(props) {
           </View>
         </View>
       </Modal>
-      <AddExerciseModal visible={exerciseModalVisible} onClose={closeExerciseModal} />
     </SafeAreaView>
   );
 }
@@ -226,7 +224,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
   },
-  discardButton: {
+  confirmDeleteButton: {
     flex: 1,
     margin: 10,
     backgroundColor: "red",
