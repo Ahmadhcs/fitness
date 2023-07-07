@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,17 +7,35 @@ import {
   Modal,
   SafeAreaView,
   StyleSheet,
+  ScrollView,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import axios from "axios";
 
 export default function AddExerciseModal({ visible, navigate }) {
   const [searchText, setSearchText] = useState("");
-  const categories = ["Chest", "Triceps", "Biceps", "Back", "Shoulders", "Legs", "Abs"];
+  const [categories, setCategories] = useState([]);
 
   // Function to handle the opening of Category Modal
   const handleOpenCategoryModal = () => {
     navigate("exerciseModal", "categoryModal");
   };
+
+  useEffect(() => {
+    axios
+      .get("https://exercisedb.p.rapidapi.com/exercises/bodyPartList", {
+        headers: {
+          "x-rapidapi-key": "da649500b0mshb1e7de48cddfd80p1378b5jsnb0aa765842fe",
+          "x-rapidapi-host": "exercisedb.p.rapidapi.com",
+        },
+      })
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <>
@@ -28,53 +46,55 @@ export default function AddExerciseModal({ visible, navigate }) {
         onRequestClose={() => navigate("exerciseModal", "addWorkout")}>
         <SafeAreaView style={styles.modalSafeArea}>
           <View style={styles.exerciseModal}>
-            <View style={styles.exerciseModalHeader}>
-              <TouchableOpacity
-                style={styles.backButton}
-                onPress={() => navigate("exerciseModal", "addWorkout")}>
-                <Feather name="x" size={24} color="white" />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  /* Implement logic for the Add button */
-                }}>
-                <Text style={styles.exerciseModalAdd}> Add </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.searchBarContainer}>
-              <TextInput
-                style={styles.exerciseModalSearchBar}
-                placeholder="Search"
-                onChangeText={setSearchText}
-                value={searchText}
-              />
-              <TouchableOpacity style={styles.filterButton}>
-                <Text style={styles.filterButtonText}> Filter </Text>
-              </TouchableOpacity>
-            </View>
-            {/* If no search text has been entered, show the recent exercises section */}
-            {!searchText && (
-              <>
-                <Text style={styles.recentSection}> Recent exercises </Text>
-                <TouchableOpacity style={styles.exerciseButton}>
-                  {/* Hardcoded for now */}
-                  <Text style={styles.exerciseButtonText}> Bench Press </Text>
-                </TouchableOpacity>
-                <View style={styles.separator} />
-              </>
-            )}
-            {categories.map((category, index) => (
-              <View key={category} style={{ width: "100%" }}>
+            <ScrollView>
+              <View style={styles.exerciseModalHeader}>
                 <TouchableOpacity
-                  style={styles.categoryButton}
-                  onPress={handleOpenCategoryModal}>
-                  <Text style={styles.categoryButtonText}>{category}</Text>
-                  <Text style={styles.arrow}>{">"}</Text>
+                  style={styles.backButton}
+                  onPress={() => navigate("exerciseModal", "addWorkout")}>
+                  <Feather name="x" size={24} color="white" />
                 </TouchableOpacity>
-                {/* If this is not the last category in the array, add a line */}
-                {index < categories.length - 1 && <View style={styles.separator} />}
+                <TouchableOpacity
+                  onPress={() => {
+                    /* Implement logic for the Add button */
+                  }}>
+                  <Text style={styles.exerciseModalAdd}> Add </Text>
+                </TouchableOpacity>
               </View>
-            ))}
+              <View style={styles.searchBarContainer}>
+                <TextInput
+                  style={styles.exerciseModalSearchBar}
+                  placeholder="Search"
+                  onChangeText={setSearchText}
+                  value={searchText}
+                />
+                <TouchableOpacity style={styles.filterButton}>
+                  <Text style={styles.filterButtonText}> Filter </Text>
+                </TouchableOpacity>
+              </View>
+              {/* If no search text has been entered, show the recent exercises section */}
+              {!searchText && (
+                <>
+                  <Text style={styles.recentSection}> Recent exercises </Text>
+                  <TouchableOpacity style={styles.exerciseButton}>
+                    {/* Hardcoded for now */}
+                    <Text style={styles.exerciseButtonText}> Bench Press </Text>
+                  </TouchableOpacity>
+                  <View style={styles.separator} />
+                </>
+              )}
+              {categories.map((category, index) => (
+                <View key={category} style={{ width: "100%" }}>
+                  <TouchableOpacity
+                    style={styles.categoryButton}
+                    onPress={handleOpenCategoryModal}>
+                    <Text style={styles.categoryButtonText}>{category}</Text>
+                    <Text style={styles.arrow}>{">"}</Text>
+                  </TouchableOpacity>
+                  {/* If this is not the last category in the array, add a line */}
+                  {index < categories.length - 1 && <View style={styles.separator} />}
+                </View>
+              ))}
+            </ScrollView>
           </View>
         </SafeAreaView>
       </Modal>
