@@ -130,7 +130,7 @@ const Reco = () =>{
 
       <Text style={{fontSize: screenWidth * 0.09, fontWeight: '500', paddingLeft: screenWidth * 0.1, paddingTop: 30}}>left...</Text>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity onPress={() => navigation.navigate("GeneratedMeals")} style={styles.button}>
         <Text style={{color:'white', fontSize: 22.5, fontWeight: '600'}}>Close your rings</Text>
         
       </TouchableOpacity>

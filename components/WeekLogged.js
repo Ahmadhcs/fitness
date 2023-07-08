@@ -20,11 +20,6 @@ const WeekLogged = () => {
             <DayLogged />
             <DayLogged />
             <DayLogged />
-
-
-            
-
-        
         </ScrollView>
     </View>
 
