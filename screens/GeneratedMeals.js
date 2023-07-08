@@ -77,6 +77,5 @@ import FoodCard from "../components/FoodCard";
       fontSize: 15,
     },
   });
-  
   export default GeneratedMeals;
   
