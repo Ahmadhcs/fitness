@@ -41,7 +41,6 @@ import FoodCard from "../components/FoodCard";
       </SafeAreaView>
     );
   };
-  
   const styles = StyleSheet.create({
     today: {
       fontSize: screenWidth * 0.09,
