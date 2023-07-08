@@ -10,7 +10,7 @@ import Weight from "./screens/Weight";
 import Nutrition from "./screens/Nutrition";
 import InputWeight from "./screens/InputWeight";
 import Reco from "./screens/Reco";
-
+import LogMeal from "./screens/LogMeal";
 // Sign Up Process
 import Name from "./screens/signupProcess/Name";
 import Credentials from "./screens/signupProcess/Credentials";
@@ -58,6 +58,8 @@ export default function App() {
             {/* dont add navbar */}
             <Stack.Screen name="InputWeight" component={InputWeight} />
             <Stack.Screen name="Reco" component={Reco} />
+            <Stack.Screen name="LogMeal" component={LogMeal} />
+
           </>
         ) : (
           // User isn't signed in

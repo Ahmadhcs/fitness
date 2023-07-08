@@ -13,17 +13,20 @@ import React, { useLayoutEffect, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Navbar from "../components/Navbar";
 import { Dimensions } from "react-native";
-import { style } from "d3";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Screen dimensions
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
 
-let utubeAPIKEY = 'XXX'
+let utubeAPIKEY = 'AIzaSyCEuZka21EnXBF0yM217BQRw7mpAertXEs'
 let videoSearchArray = ['pull day', 'Chest Day', "Arms Day", "Core Workout", 'Workout Outside']
 
 let search = `https://www.googleapis.com/youtube/v3/search?key=${utubeAPIKEY}&q=pull day&type=video&maxResults=3&part=snippet`
+
+
+
 
 let hardCodedPlaylists = [
   {
@@ -33,10 +36,6 @@ let hardCodedPlaylists = [
   {
     image:'https://i.scdn.co/image/ab67706c0000da842f2eff7da6b035f1fb1ea4f7',
     url:'https://open.spotify.com/playlist/7kfohPIiBUM4tF2B8YEn85'
-  },
-  {
-    imageURl:'https://i.scdn.co/image/ab67706c0000da84a8aba03848547b7e46b07905',
-    url: 'https://open.spotify.com/playlist/4n8nkhViVxHsx4YiGDC8p3'
   },
   {
     image: 'https://i.scdn.co/image/ab67706c0000da8444b3ae92f2d4e13759ff819d',
@@ -58,28 +57,10 @@ let hardCodedPlaylists = [
     image: "https://i.scdn.co/image/ab67706c0000da84622c36e105af4aac83c34e77",
     url: "https://open.spotify.com/playlist/7JIGfa0KkCTDxUPOQySODP"
   },
-  {
-    image: "https://i.scdn.co/image/ab67706c0000da84bcf98f323eac3eb258755224" ,
-    url: "https://open.spotify.com/playlist/3Qlo8PGJKE53FgTcIjuIvJ"
-  }
+  
 
 ]
 
-
-const chooseGymplaylist = () =>{
-  const result = [];
-  const copiedArr = [...hardCodedPlaylists];
-  
-  for (let i = 0; i < 3; i++) {
-    const randomIndex = Math.floor(Math.random() * copiedArr.length);
-    const randomItem = copiedArr[randomIndex];
-    result.push(randomItem);
-    copiedArr.splice(randomIndex, 1); // Splice out the selected item from the copied array
-  }
-
-
-  return result
-}
 
 
 
@@ -93,10 +74,25 @@ handleClick = (link) => {
     });
 }
 
+const chooseGymplaylist = () =>{
+  const result = [];
+  const copiedArr = [...hardCodedPlaylists];
+
+  
+  for (let i = 0; i < 3; i++) {
+    const randomIndex = Math.floor(Math.random() * copiedArr.length);
+    const randomItem = copiedArr[randomIndex];
+    result.push(randomItem);
+    copiedArr.splice(randomIndex, 1); // Splice out the selected item from the copied array
+  }
 
 
 
-const Dashboard = () => {
+  return result
+}
+
+
+const Dashboard = (props) => {
   const [videos, setVideos] = useState([]);
 
   const navigation = useNavigation();
@@ -113,50 +109,63 @@ const Dashboard = () => {
 
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchVideos = async () => {
+      console.log("in")
       try {
-        const response = await fetch(
-          search
-        );
+        const response = await fetch(search);
         const json = await response.json();
         setVideos(json.items);
-        // console.log(videos)
+        await AsyncStorage.setItem("videos", JSON.stringify(json.items));
       } catch (error) {
         console.error(error);
       }
     };
 
-    fetchData();
+    const retrieveVideos = async () => {
+      try {
+        const storedVideos = await AsyncStorage.getItem("videos");
+        if (storedVideos) {
+          setVideos(JSON.parse(storedVideos));
+        } else {
+          fetchVideos();
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const scheduleVideoUpdate = () => {
+      const now = new Date();
+      const targetTime = new Date(now);
+      targetTime.setHours(12, 30, 0); // Set the target time to 12:30 PM today
+
+      let timeDiff = targetTime.getTime() - now.getTime();
+      if (timeDiff < 0) {
+        // If the target time has already passed, move it to 12:30 PM tomorrow
+        targetTime.setDate(targetTime.getDate() + 1);
+        timeDiff = targetTime.getTime() - now.getTime();
+      }
+
+      setTimeout(() => {
+        fetchVideos();
+        setInterval(fetchVideos, 24 * 60 * 60 * 1000); // Update videos every 24 hours
+      }, timeDiff);
+    };
+
+    retrieveVideos();
+    scheduleVideoUpdate();
   }, []);
 
+  
 
-  const gymPlaylistArray = chooseGymplaylist()
+
+
+  const gymPlaylistArray = props.gymPlaylistArray
 
  
 
 
-  useEffect(() => {
-    // Calculate the time until the next scheduled API call
-    const now = new Date();
-    const targetTime = new Date();
-    targetTime.setHours(12); // Set the desired hour for the API call
-    targetTime.setMinutes(0); // Set the desired minute for the API call
-    targetTime.setSeconds(0); // Set the desired second for the API call
-
-    let timeDiff = targetTime.getTime() - now.getTime();
-    if (timeDiff < 0) {
-      timeDiff += 24 * 60 * 60 * 1000; // Add 24 hours if the target time has already passed today
-    }
-
-    // Schedule the API call at the specified time every day
-    const timerId = setInterval(() => {
-      fetchVideos();
-    }, timeDiff);
-
-    // Clean up the interval when the component unmounts
-    return () => clearInterval(timerId);
-  }, []);
-
+  
 
 
   return (
@@ -215,22 +224,22 @@ const Dashboard = () => {
       <Text style={{fontSize: 18, fontWeight: "600", paddingLeft: 20, paddingBottom: 5, paddingTop: 5}}>Fitness Videos</Text>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.videoSection}>
-        {/* {videos.map((video) => (
+        {videos.map((video) => (
         <View style={styles.videoCard}>
           <Image
             source={{ uri: video.snippet.thumbnails.medium.url }}
-            style={{ width: 240, height: 120 , borderRadius: 20,}}
+            style={{ width: 240, height: 120 ,top :-10, borderTopLeftRadius: 20,  borderTopRightRadius: 20}}
           />
         </View>
-      ))} */}
+      ))}
 
-      <TouchableOpacity activeOpacity={1} style={styles.videoCard} onPress={() => handleClick('https://google.com')}>
+      {/* <TouchableOpacity activeOpacity={1} style={styles.videoCard} onPress={() => handleClick('https://google.com')}>
           <Image
             source={require("../images/place.jpg")}
             style={{ width: 240, height: 120 ,top :-10, borderTopLeftRadius: 20,  borderTopRightRadius: 20}}
           />
 
-                  <Text style={{paddingLeft: 10,  paddingRight: 10, fontSize: 14, fontWeight: '400', paddingTop: 8}}>Push Day with Mustafa the BUM ej fww !</Text>
+                  <Text style={{paddingLeft: 10,  paddingRight: 10, fontSize: 14, fontWeight: '400', paddingTop: 5}}>Spring Bulk Day 158 - Back</Text>
 
         </TouchableOpacity>
         <View style={styles.videoCard}>
@@ -238,7 +247,8 @@ const Dashboard = () => {
             source={require("../images/place.jpg")}
             style={{ width: 240, height: 120 ,top :-10, borderTopLeftRadius: 20,  borderTopRightRadius: 20}}
           />
-                  <Text style={{paddingLeft: 10,  paddingRight: 10, fontSize: 14, fontWeight: '400', paddingTop: 8}}>Push Day with Mustafa the BUM ej fww !</Text>
+                  <Text style={{paddingLeft: 10,  paddingRight: 10, fontSize: 14, fontWeight: '400', paddingTop: 0}}>The Ultimate PULL Workout For Muscle Growth [Back, Biceps, Rear Delts] (2023)
+</Text>
 
         </View>
         <View style={styles.videoCard}>
@@ -248,7 +258,7 @@ const Dashboard = () => {
           />
                   <Text style={{paddingLeft: 10,  paddingRight: 10, fontSize: 14, fontWeight: '400', paddingTop: 8}}>Push Day with Mustafa the BUM ej fww !</Text>
 
-        </View>
+        </View> */}
 
 
 
@@ -264,6 +274,10 @@ const Dashboard = () => {
     </SafeAreaView>
   );
 };
+
+const gymPlaylistArray = chooseGymplaylist();
+
+
 
 const styles = StyleSheet.create({
   user: {
@@ -356,4 +370,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Dashboard;
+export default (chooseGymplaylist) => <Dashboard gymPlaylistArray={gymPlaylistArray} />;

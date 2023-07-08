@@ -1,4 +1,4 @@
-import { Text , StyleSheet, Dimensions, View, Image, ScrollView, Pressable, TextInput, FlatList } from "react-native";
+import { Text , StyleSheet, Dimensions, View, Image, ScrollView, Pressable, TextInput, FlatList, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { create } from "d3";
@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useLayoutEffect } from "react";
 const spoon = "https://api.spoonacular.com/recipes/complexSearch";
 const headerConfig = { headers: { Accept: "application/json" } };
+
 
 // const detailedMacros = `https://api.spoonacular.com/recipes/${id}/nutritionWidget.json`
 
@@ -59,51 +60,82 @@ const Reco = () =>{
       }, [navigation]);
 
     return(
-    <View>
-        <View style={styles.grayCard}>
-            <View style={styles.total}>
-            <View style={styles.SearchBack}>
-            {/* Text input for search with change handler */}
-            <TextInput
-                placeholder="Input Your Meal!"
-                value={input}
-                style={styles.search}
-                onChangeText={(text) => handleChange(text)}
-                placeholderTextColor="gray"
-            />
-            </View>
-            {/* Pass fetched data and input setters to SearchFilter */}
-            <View style={styles.filter}>
-            {/* Render a list of pressable components based on passed data */}
-            <FlatList
-            data={text}
-            renderItem={({ item }) => {
-                // Return nothing if input is empty
-                if (input == "") {
-                return <Text></Text>;
-                }
+    // <View>
+    //     <View style={styles.grayCard}>
+    //         <View style={styles.total}>
+    //         <View style={styles.SearchBack}>
+    //         {/* Text input for search with change handler */}
+    //         <TextInput
+    //             placeholder="Input Your Meal!"
+    //             value={input}
+    //             style={styles.search}
+    //             onChangeText={(text) => handleChange(text)}
+    //             placeholderTextColor="gray"
+    //         />
+    //         </View>
+    //         {/* Pass fetched data and input setters to SearchFilter */}
+    //         <View style={styles.filter}>
+    //         {/* Render a list of pressable components based on passed data */}
+    //         <FlatList
+    //         data={text}
+    //         renderItem={({ item }) => {
+    //             // Return nothing if input is empty
+    //             if (input == "") {
+    //             return <Text></Text>;
+    //             }
     
-                // Return pressable component for each item in data
-                return (
-                <Pressable style={styles.press} onPress={() => handleButtonPress(item)}>
-                    <Text style={styles.output}>{item.title}</Text>
-                </Pressable>
-                );
-            }}
-            />
-        </View>
-        </View>
-            <Image style={styles.foodPic} source={require("../images/food.png")}></Image>
+    //             // Return pressable component for each item in data
+    //             return (
+    //             <Pressable style={styles.press} onPress={() => handleButtonPress(item)}>
+    //                 <Text style={styles.output}>{item.title}</Text>
+    //             </Pressable>
+    //             );
+    //         }}
+    //         />
+    //     </View>
+    //     </View>
+    //         <Image style={styles.foodPic} source={require("../images/food.png")}></Image>
 
+    //     </View>
+    //     {suggestions.map((item) => (
+    //         <View style={styles.foodCard}>
+    //             <Image style={styles.foodPick} source={{uri: `${item.image}`}}></Image>
+    //         </View>
+            
+    //     ))}
+
+
+       
+
+    // </View>
+    <SafeAreaView>
+      <Text style={{fontSize: screenWidth * 0.09, fontWeight: '500', paddingLeft: screenWidth * 0.1, paddingTop: 20}}>You've got</Text>
+      <View style={{flexDirection: 'row', paddingTop: screenHeight * 0.05}}>
+        <View style={{paddingLeft: screenWidth * 0.1}}>
+          <Text style={{fontSize: screenWidth * 0.05, fontWeight: '700'}}>300g</Text>
+          <Text style={{fontSize: screenWidth * 0.045, fontWeight: '700'}}>Carbs</Text>
         </View>
-        {suggestions.map((item) => (
-            <View style={styles.foodCard}>
-                <Image style={styles.foodPick} source={{uri: `${item.image}`}}></Image>
 
-            </View>
-        ))}
+        <View style={{paddingLeft: screenWidth * 0.2}}>
+          <Text style={{fontSize: screenWidth * 0.05, fontWeight: '700'}}>120g</Text>
+          <Text style={{fontSize: screenWidth * 0.04, fontWeight: '700'}}>Protien</Text>
+        </View>
 
-    </View>
+        <View style={{paddingLeft: screenWidth * 0.2}}>
+          <Text style={{fontSize: screenWidth * 0.05, fontWeight: '700'}}>50g</Text>
+          <Text style={{fontSize: screenWidth * 0.045, fontWeight: '700'}}>Fat</Text>
+        </View>
+
+      </View>
+
+      <Text style={{fontSize: screenWidth * 0.09, fontWeight: '500', paddingLeft: screenWidth * 0.1, paddingTop: 30}}>left...</Text>
+
+      <TouchableOpacity style={styles.button}>
+        <Text style={{color:'white', fontSize: 22.5, fontWeight: '600'}}>Close your rings</Text>
+        
+      </TouchableOpacity>
+    </SafeAreaView>
+    
 
    
       
@@ -174,6 +206,16 @@ const styles = StyleSheet.create({
         backgroundColor: "pink",
         width: screenWidth * 0.9,
         height: screenHeight * 0.4 
+      },
+      button:{
+        backgroundColor: 'blue',
+        width: screenWidth * 0.6,
+        height: screenHeight * 0.06,
+        borderRadius: 25,
+        justifyContent: 'center', 
+        alignItems: 'center',
+        marginLeft: screenWidth * 0.2,
+        marginTop: screenHeight * 0.05
       }
 
 })
