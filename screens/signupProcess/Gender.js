@@ -50,8 +50,7 @@ const Gender = () => {
               styles.genderButton,
               selectedGender === "female" && styles.selectedGenderButton,
             ]}
-            onPress={() => handleGenderSelection("female")}
-          >
+            onPress={() => handleGenderSelection("female")}>
             <Text style={styles.genderButtonText}>Female</Text>
           </Pressable>
 
@@ -60,8 +59,7 @@ const Gender = () => {
               styles.genderButton,
               selectedGender === "male" && styles.selectedGenderButton,
             ]}
-            onPress={() => handleGenderSelection("male")}
-          >
+            onPress={() => handleGenderSelection("male")}>
             <Text style={styles.genderButtonText}>Male</Text>
           </Pressable>
         </View>

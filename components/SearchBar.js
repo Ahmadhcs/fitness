@@ -1,11 +1,18 @@
-import { View, Text, TextInput, StyleSheet, Alert, FlatList, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Alert,
+  FlatList,
+  Dimensions,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import SearchFilter from "./SearchFilter";
 
 // Is this the recipe API? the link dont work for me - Mustafa
 const spoon = "https://api.spoonacular.com/recipes/complexSearch";
 const headerConfig = { headers: { Accept: "application/json" } };
-
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -67,8 +74,8 @@ const styles = StyleSheet.create({
   total: {
     width: screenWidth * 0.95,
   },
-  search:{
+  search: {
     color: "black",
-    height: screenHeight * 0.0225
-  }
+    height: screenHeight * 0.0225,
+  },
 });

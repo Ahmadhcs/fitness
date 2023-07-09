@@ -27,10 +27,8 @@ const Metrics = () => {
     value: i + 100,
   }));
 
-  const toggleWeightSwitch = () =>
-    setIsMetricWeight((previousState) => !previousState);
-  const toggleHeightSwitch = () =>
-    setIsMetricHeight((previousState) => !previousState);
+  const toggleWeightSwitch = () => setIsMetricWeight((previousState) => !previousState);
+  const toggleHeightSwitch = () => setIsMetricHeight((previousState) => !previousState);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -70,10 +68,7 @@ const Metrics = () => {
               />
             </View>
             <View style={styles.switchContainer}>
-              <Switch
-                onValueChange={toggleWeightSwitch}
-                value={isMetricWeight}
-              />
+              <Switch onValueChange={toggleWeightSwitch} value={isMetricWeight} />
               <Text>{isMetricWeight ? "kg" : "lbs"}</Text>
             </View>
           </View>
@@ -89,10 +84,7 @@ const Metrics = () => {
               />
             </View>
             <View style={styles.switchContainer}>
-              <Switch
-                onValueChange={toggleHeightSwitch}
-                value={isMetricHeight}
-              />
+              <Switch onValueChange={toggleHeightSwitch} value={isMetricHeight} />
               <Text>{isMetricHeight ? "cm" : "inches"}</Text>
             </View>
           </View>

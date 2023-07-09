@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   Text,
   StyleSheet,
@@ -9,7 +9,7 @@ import {
   Pressable,
   Modal,
   Touchable,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
@@ -94,22 +94,16 @@ const Nutrition = () => {
 
   const Modalpop = (props) => {
     const [showModal, setShowModal] = React.useState(props.visible);
-  
-  
-  
-   
-  
+
     return (
       <Modal transparent visible={showModal}>
         <View style={styles.modalBackground}>
-          <View
-            style={styles.modalContainer}>
+          <View style={styles.modalContainer}>
             {props.children}
             <TouchableOpacity onPress={() => setVisible(false)}>
-            <Text>Helloi</Text>
-          </TouchableOpacity>
+              <Text>Helloi</Text>
+            </TouchableOpacity>
           </View>
-         
         </View>
       </Modal>
     );
@@ -117,22 +111,19 @@ const Nutrition = () => {
 
   const [visible, setVisible] = useState(false);
 
-
   const goToLogMeal = () => {
-    setVisible(false)
-    navigation.navigate("LogMeal")
-  }
+    setVisible(false);
+    navigation.navigate("LogMeal");
+  };
 
-  const goToReco  = () =>{
-    setVisible(false)
-    navigation.navigate("Reco")
-  }
-
-  
+  const goToReco = () => {
+    setVisible(false);
+    navigation.navigate("Reco");
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{ flex: 1 }}>
         <View style={styles.header}>
           <Text style={styles.headerText}>My Nutrition</Text>
           <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
@@ -251,41 +242,45 @@ const Nutrition = () => {
           </View>
         </View>
 
-
-       
-
-        <View style={{paddingLeft: 20, paddingTop: 10}}>
-          <Text style={{fontSize: 20, fontWeight: "700", paddingLeft: 5}}>Logged Food</Text>
+        <View style={{ paddingLeft: 20, paddingTop: 10 }}>
+          <Text style={{ fontSize: 20, fontWeight: "700", paddingLeft: 5 }}>
+            Logged Food
+          </Text>
           <FoodLogged />
           <FoodLogged />
           <FoodLogged />
           <FoodLogged />
           <FoodLogged />
           <FoodLogged />
-
         </View>
 
-        <View style={{paddingTop: 10, paddingLeft: 10}}>
-          <Text style={{fontSize: 20, fontWeight: "700", paddingLeft: 15, paddingBottom: 10}} >Previous Food Logs</Text>
+        <View style={{ paddingTop: 10, paddingLeft: 10 }}>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "700",
+              paddingLeft: 15,
+              paddingBottom: 10,
+            }}>
+            Previous Food Logs
+          </Text>
           <WeekLogged />
         </View>
       </ScrollView>
 
       <Modalpop visible={visible}>
         <View>
-          <TouchableOpacity onPress={() => goToLogMeal() }>
+          <TouchableOpacity onPress={() => goToLogMeal()}>
             <Text>Log Meal</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => goToReco()}>
-          <Text>Generate Recipe</Text>
+            <Text>Generate Recipe</Text>
           </TouchableOpacity>
-
         </View>
-          
       </Modalpop>
 
-      <Pressable onPress={() =>  setVisible(true)} style={styles.button}>
+      <Pressable onPress={() => setVisible(true)} style={styles.button}>
         <Text style={styles.buttonText}>+</Text>
       </Pressable>
     </SafeAreaView>
@@ -354,19 +349,19 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     marginBottom: 3,
   },
-  modalContainer:{
+  modalContainer: {
     width: 0.9 * screenWidth,
     backgroundColor: "white",
     borderRadius: 20,
     marginTop: 10,
     height: screenHeight * 0.08,
   },
-  modalBackground:{
+  modalBackground: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignItems: "center",
-  }
+  },
 });
 
 export default Nutrition;

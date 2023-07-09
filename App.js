@@ -61,8 +61,6 @@ export default function App() {
             <Stack.Screen name="Reco" component={Reco} />
             <Stack.Screen name="LogMeal" component={LogMeal} />
             <Stack.Screen name="GeneratedMeals" component={GeneratedMeals} />
-
-
           </>
         ) : (
           // User isn't signed in

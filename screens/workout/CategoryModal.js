@@ -13,8 +13,6 @@ import axios from "axios";
 
 export default function CategoryModal({ visible, navigate, selectedCategory }) {
   const [data, setData] = useState([]);
-  let link = `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${selectedCategory}`;
-  console.log(link);
 
   useEffect(() => {
     const fetchData = async () => {
