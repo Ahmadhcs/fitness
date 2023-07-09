@@ -2,9 +2,8 @@ import { View, Text, StyleSheet, FlatList, Pressable } from "react-native";
 import React from "react";
 
 const SearchFilter = ({ data, input, setInput }) => {
-
   const handleButtonPress = () => {
-    navigation.navigate('Reco', { action: 'doSomething' });
+    navigation.navigate("Reco", { action: "doSomething" });
   };
   return (
     <View style={styles.filter}>

@@ -1,16 +1,21 @@
-import { View, Text, TextInput, StyleSheet, Dimensions, Modal, TouchableOpacity, Button} from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Dimensions,
+  Modal,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 import React, { useLayoutEffect, useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProgressChart } from "react-native-chart-kit";
 import { Feather } from "@expo/vector-icons";
 
-
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
-
-
-
 
 const SearchLog = (props) => {
   const navigation = useNavigation();
@@ -18,7 +23,7 @@ const SearchLog = (props) => {
 
   const data = {
     labels: ["Protien"], // optional
-    data: [ props.protein/ 250],
+    data: [props.protein / 250],
     colors: ["red"],
   };
 
@@ -52,7 +57,7 @@ const SearchLog = (props) => {
 
   const dataF = {
     labels: ["Fats"], // optional
-    data: [props.fat/ 250],
+    data: [props.fat / 250],
     colors: ["blue"],
   };
 
@@ -67,25 +72,17 @@ const SearchLog = (props) => {
     useShadowColorFromDataset: false, // optional,
   };
 
-
-const Modalpop = (props) => {
+  const Modalpop = (props) => {
     const [showModal, setShowModal] = React.useState(props.visible);
-  
 
     return (
       <Modal transparent visible={showModal}>
         <View style={styles.modalBackground}>
-          <View
-            style={styles.modalContainer}>
-            {props.children}
-          </View>
+          <View style={styles.modalContainer}>{props.children}</View>
         </View>
       </Modal>
     );
   };
-
-
-
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -95,42 +92,53 @@ const Modalpop = (props) => {
 
   return (
     <View style={styles.container}>
-     <View style={{ flexDirection: "row", alignItems: "center" }}>
-  <Text
-    style={{
-      flex: 1,
-      paddingLeft: 15,
-      paddingTop: 15,
-      fontSize: 18,
-      fontWeight: "500",
-    }}
-  >
-    {props.FoodName}
-  </Text>
-  <TouchableOpacity style={styles.addButton} onPress={() => setVisible(true)}>
-    <Feather name="plus" color="white" size={20} />
-  </TouchableOpacity>
-</View>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Text
+          style={{
+            flex: 1,
+            paddingLeft: 15,
+            paddingTop: 15,
+            fontSize: 18,
+            fontWeight: "500",
+          }}>
+          {props.FoodName}
+        </Text>
+        <TouchableOpacity style={styles.addButton} onPress={() => setVisible(true)}>
+          <Feather name="plus" color="white" size={20} />
+        </TouchableOpacity>
+      </View>
 
-        <Text style={{ paddingLeft: 15, fontWeight: "400", paddingTop: 10, width: '60%' }}>{props.serving} Grams </Text>
+      <Text style={{ paddingLeft: 15, fontWeight: "400", paddingTop: 10, width: "60%" }}>
+        {props.serving} Grams{" "}
+      </Text>
 
-        <Modalpop  visible={visible}>
-            <View style={{flexDirection: 'row'}}>
-                <Text style={{width: "70%", fontSize: 20, fontWeight: '500'}}>Food Name</Text>
-                <TouchableOpacity onPress={()=> setVisible(false)} style={{backgroundColor: 'blue', width: screenWidth * 0.2, height: screenHeight * 0.05, borderRadius: 15, flex: 1, justifyContent: 'center', alignItems: 'center',}}>
-                    <Text style={{fontSize: 18, color:'white', fontWeight: '700'}}>Log</Text>
-                </TouchableOpacity>
-            </View>
+      <Modalpop visible={visible}>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={{ width: "70%", fontSize: 20, fontWeight: "500" }}>Food Name</Text>
+          <TouchableOpacity
+            onPress={() => setVisible(false)}
+            style={{
+              backgroundColor: "blue",
+              width: screenWidth * 0.2,
+              height: screenHeight * 0.05,
+              borderRadius: 15,
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}>
+            <Text style={{ fontSize: 18, color: "white", fontWeight: "700" }}>Log</Text>
+          </TouchableOpacity>
+        </View>
 
-            <View style={{paddingTop: 30, flexDirection: 'row'}}>
-                <Text style={{fontSize: 18, fontWeight: '400', width: '80%'}}>Serving</Text>
-                <Text style={{fontSize: 18, fontWeight: '500'}}>{props.serving}g</Text>
-            </View>
+        <View style={{ paddingTop: 30, flexDirection: "row" }}>
+          <Text style={{ fontSize: 18, fontWeight: "400", width: "80%" }}>Serving</Text>
+          <Text style={{ fontSize: 18, fontWeight: "500" }}>{props.serving}g</Text>
+        </View>
 
-            <View style={{paddingTop: 20, flexDirection: 'row'}}>
-                <Text style={{fontSize: 18, fontWeight: '400', width: '70%'}}>Calories</Text>
-                <Text style={{fontSize: 18, fontWeight: '500'}}>{props.calories}kcal</Text>
-            </View>
+        <View style={{ paddingTop: 20, flexDirection: "row" }}>
+          <Text style={{ fontSize: 18, fontWeight: "400", width: "70%" }}>Calories</Text>
+          <Text style={{ fontSize: 18, fontWeight: "500" }}>{props.calories}kcal</Text>
+        </View>
 
         <View style={{ flexDirection: "row", paddingTop: 5, paddingLeft: 12.5 }}>
           <View style={{ textAlign: "center", paddingTop: 10 }}>
@@ -217,55 +225,51 @@ const Modalpop = (props) => {
             </View>
           </View>
         </View>
-
-    
-        </Modalpop>
-        
+      </Modalpop>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    container:{
-        backgroundColor: 'white',
-        width: screenWidth * 0.9,
-        height: screenHeight * 0.1,
-        borderRadius: 20,
-        marginVertical: 5
-
-    },
-    modalBackground: {
-        flex: 1,
-        backgroundColor: "rgba(0,0,0,0.5)",
-        justifyContent: "center",
-        alignItems: "center",
-      },
-      modalContainer: {
-        width: screenWidth * 0.85,
-        height: screenHeight * 0.4,
-        backgroundColor: "white",
-        paddingHorizontal: 20,
-        paddingVertical: 25,
-        borderRadius: 20,
-      },
-      graph: {
-        paddingTop: 7,
-      },
-      addButtonWrapper: {
-        marginRight: 20,
-        marginTop: 10,
-      },
-      addButton: {
-        position: "absolute",
-        top: 20,
-        right: 20,
-        backgroundColor: "blue",
-        width: screenWidth * 0.1,
-        height: screenWidth * 0.1,
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: 25,
-      },
+  container: {
+    backgroundColor: "white",
+    width: screenWidth * 0.9,
+    height: screenHeight * 0.1,
+    borderRadius: 20,
+    marginVertical: 5,
+  },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContainer: {
+    width: screenWidth * 0.85,
+    height: screenHeight * 0.4,
+    backgroundColor: "white",
+    paddingHorizontal: 20,
+    paddingVertical: 25,
+    borderRadius: 20,
+  },
+  graph: {
+    paddingTop: 7,
+  },
+  addButtonWrapper: {
+    marginRight: 20,
+    marginTop: 10,
+  },
+  addButton: {
+    position: "absolute",
+    top: 20,
+    right: 20,
+    backgroundColor: "blue",
+    width: screenWidth * 0.1,
+    height: screenWidth * 0.1,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 25,
+  },
 });
 
 export default SearchLog;

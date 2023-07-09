@@ -3,7 +3,7 @@ import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DayLogged from "./DayLogged";
- 
+
 const WeekLogged = () => {
   const navigation = useNavigation();
 
@@ -15,21 +15,22 @@ const WeekLogged = () => {
 
   return (
     <View>
-        <ScrollView showsHorizontalScrollIndicator={false} horizontal style={styles.container}>
-            <DayLogged />
-            <DayLogged />
-            <DayLogged />
-            <DayLogged />
-        </ScrollView>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        horizontal
+        style={styles.container}>
+        <DayLogged />
+        <DayLogged />
+        <DayLogged />
+        <DayLogged />
+      </ScrollView>
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-   
   },
 
   input: {},
