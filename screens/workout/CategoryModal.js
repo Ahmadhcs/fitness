@@ -11,14 +11,16 @@ import {
 import { Feather } from "@expo/vector-icons";
 import axios from "axios";
 
-export default function CategoryModal({ visible, navigate }) {
+export default function CategoryModal({ visible, navigate, selectedCategory }) {
   const [data, setData] = useState([]);
+  let link = `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${selectedCategory}`;
+  console.log(link);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://exercisedb.p.rapidapi.com/exercises/target/calves",
+          `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${selectedCategory}`,
           {
             headers: {
               "x-rapidapi-key": "da649500b0mshb1e7de48cddfd80p1378b5jsnb0aa765842fe",
@@ -33,8 +35,8 @@ export default function CategoryModal({ visible, navigate }) {
     };
 
     fetchData();
-  }, []);
-  console.log(data);
+  }, [selectedCategory]);
+  console.log;
 
   // Function to close the CategoryModal
   const handleCloseModal = () => {

@@ -17,8 +17,8 @@ export default function AddExerciseModal({ visible, navigate }) {
   const [categories, setCategories] = useState([]);
 
   // Function to handle the opening of Category Modal
-  const handleOpenCategoryModal = () => {
-    navigate("exerciseModal", "categoryModal");
+  const handleOpenCategoryModal = (category) => {
+    navigate("exerciseModal", "categoryModal", "", category);
   };
 
   useEffect(() => {
@@ -86,7 +86,7 @@ export default function AddExerciseModal({ visible, navigate }) {
                 <View key={category} style={{ width: "100%" }}>
                   <TouchableOpacity
                     style={styles.categoryButton}
-                    onPress={handleOpenCategoryModal}>
+                    onPress={() => handleOpenCategoryModal(category)}>
                     <Text style={styles.categoryButtonText}>{category}</Text>
                     <Text style={styles.arrow}>{">"}</Text>
                   </TouchableOpacity>
