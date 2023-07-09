@@ -28,7 +28,65 @@ let videoSearchArray = [
   "Workout Outside",
 ];
 
-let search = `https://www.googleapis.com/youtube/v3/search?key=${utubeAPIKEY}&q=pull day&type=video&maxResults=3&part=snippet`;
+let utubeAPIKEY = 'AIzaSyCEuZka21EnXBF0yM217BQRw7mpAertXEs'
+let videoSearchArray = [
+  'CBUM workout routine', 
+  'CBUM diet plan', 
+  'Fitness influencers workout', 
+  'Best bodybuilding exercises', 
+  'Shoulder day workout', 
+  'CBUM training tips', 
+  'Fitness influencer transformations', 
+  'Bodybuilding motivational videos', 
+  'Nutrition tips for bodybuilders', 
+  'Muscle recovery techniques', 
+  'Leg Day', 
+  'Back Day', 
+  'Cutting and Bulking Strategies', 
+  'Fitness Influencer Challenge', 
+  'HIIT Workouts', 
+  'Protein-rich recipes for bodybuilders', 
+  'Strength training workouts', 
+  'CBUM lifestyle', 
+  'Bodybuilding competitions', 
+  'Bodybuilding poses tutorial', 
+  'CBUM supplement routine', 
+  'Bodybuilding meal prep', 
+  'Best gym equipment for bodybuilding', 
+  'Bodybuilding myths debunked', 
+  'Bodybuilder day in the life', 
+  'Bodybuilding documentary', 
+  'Female fitness influencers', 
+  'Bodybuilding motivation', 
+  'Bodybuilder interview', 
+  'Fitness influencer gym routine', 
+  'How to start bodybuilding', 
+  'Bodybuilding vs Powerlifting', 
+  'Bodybuilding tips for beginners', 
+  'Fitness influencers cardio routine', 
+  'CrossFit workouts', 
+  'Bodybuilding home workouts', 
+  'Fitness influencers Q&A', 
+  'Bodybuilder vlogs', 
+  'Bodybuilder travel routine', 
+  'Workout playlists', 
+  'Fitness model workout routine', 
+  'How to become a fitness influencer', 
+  'Bodybuilder skincare routine', 
+  'Fitness influencers diet', 
+  'Bodybuilding grocery haul', 
+  'Bodybuilding stretching routine', 
+  'Pre-workout vs Post-workout meals', 
+  'Bodybuilder workout and diet', 
+  'Bodybuilding cooking tips', 
+  'Bodybuilder workout music'
+  ];
+
+
+let search = `https://www.googleapis.com/youtube/v3/search?key=${utubeAPIKEY}&q=pull day&type=video&maxResults=5&part=snippet`
+
+
+
 
 let hardCodedPlaylists = [
   {
@@ -82,10 +140,14 @@ const chooseGymplaylist = () => {
     copiedArr.splice(randomIndex, 1); // Splice out the selected item from the copied array
   }
 
-  return result;
-};
+
+
+  return result
+}
+
 
 const Dashboard = (props) => {
+  const [url, setUrl] = useState('');
   const [videos, setVideos] = useState([]);
 
   const navigation = useNavigation();
@@ -102,20 +164,29 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     const fetchVideos = async () => {
-      console.log("in");
-      try {
-        const response = await fetch(search);
-        const json = await response.json();
-        setVideos(json.items);
-        await AsyncStorage.setItem("videos", JSON.stringify(json.items));
-      } catch (error) {
-        console.error(error);
+      const randomTopics = getRandomTopics(videoSearchArray, 5);
+
+      for (let i = 0; i < randomTopics.length; i++) {
+        const currentTopic = randomTopics[i];
+        const apiUrl = `https://www.googleapis.com/youtube/v3/search?key=${utubeAPIKEY}&q=${currentTopic}&type=video&maxResults=1&part=snippet`;
+
+        try {
+          const response = await fetch(apiUrl);
+          const json = await response.json();
+
+          if (json.items && json.items.length > 0) {
+            setVideos((prevVideos) => [...prevVideos, json.items[0]]);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+
       }
     };
 
     const retrieveVideos = async () => {
       try {
-        const storedVideos = await AsyncStorage.getItem("videos");
+        const storedVideos = await AsyncStorage.getItem('videos');
         if (storedVideos) {
           setVideos(JSON.parse(storedVideos));
         } else {
@@ -129,11 +200,11 @@ const Dashboard = (props) => {
     const scheduleVideoUpdate = () => {
       const now = new Date();
       const targetTime = new Date(now);
-      targetTime.setHours(12, 30, 0); // Set the target time to 12:30 PM today
+      targetTime.setHours(23, 50, 0); // Set the target time to 11:32:30 PM today
 
       let timeDiff = targetTime.getTime() - now.getTime();
       if (timeDiff < 0) {
-        // If the target time has already passed, move it to 12:30 PM tomorrow
+        // If the target time has already passed, move it to 11:32:30 PM tomorrow
         targetTime.setDate(targetTime.getDate() + 1);
         timeDiff = targetTime.getTime() - now.getTime();
       }
@@ -148,7 +219,32 @@ const Dashboard = (props) => {
     scheduleVideoUpdate();
   }, []);
 
-  const gymPlaylistArray = props.gymPlaylistArray;
+  useEffect(() => {
+    const storeVideos = async () => {
+      try {
+        await AsyncStorage.setItem('videos', JSON.stringify(videos));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    storeVideos();
+  }, [videos]);
+
+  const getRandomTopics = (array, count) => {
+    const shuffledArray = array.sort(() => 0.5 - Math.random());
+    return shuffledArray.slice(0, count);
+  };
+
+  const gymPlaylistArray = props.gymPlaylistArray
+
+
+
+
+  
+
+
+
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -228,21 +324,17 @@ const Dashboard = (props) => {
         showsHorizontalScrollIndicator={false}
         style={styles.videoSection}>
         {videos.map((video) => (
-          <View style={styles.videoCard}>
-            <Image
-              source={{ uri: video.snippet.thumbnails.medium.url }}
-              style={{
-                width: 240,
-                height: 120,
-                top: -10,
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
-              }}
-            />
-          </View>
-        ))}
+        <View style={styles.videoCard}>
+          <Image
+            source={{ uri: video.snippet.thumbnails.medium.url }}
+            style={{ width: 240, height: 120 ,top :-10, borderTopLeftRadius: 20,  borderTopRightRadius: 20}}
+          />
+          <Text style={{width: '90%', paddingLeft: 15}}>{video.snippet.title}</Text>
+        </View>
+      ))}
 
-        {/* <TouchableOpacity activeOpacity={1} style={styles.videoCard} onPress={() => handleClick('https://google.com')}>
+      {/* <TouchableOpacity activeOpacity={1} style={styles.videoCard} onPress={() => handleClick('https://google.com')}>
+
           <Image
             source={require("../images/place.jpg")}
             style={{ width: 240, height: 120 ,top :-10, borderTopLeftRadius: 20,  borderTopRightRadius: 20}}
