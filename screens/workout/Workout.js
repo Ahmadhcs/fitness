@@ -33,10 +33,6 @@ function FloatingButton({ onPress, navigate }) {
 
 // Main Workout component
 function Workout({ newBoxes, navigate }) {
-  // Modal state management
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedDay, setSelectedDay] = useState(null);
-
   // Calculating the list of boxes only when newBoxes change
   const boxes = useMemo(() => newBoxes, [newBoxes]);
 
@@ -67,80 +63,62 @@ function Workout({ newBoxes, navigate }) {
 
   return (
     <View style={styles.outerView}>
-      <>
-        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-          {/* Calendaer Day Modal */}
-          <Modal animationType="fade" transparent={true} visible={modalVisible}>
-            <View style={styles.modalOverlay}>
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>{selectedDay}</Text>
-                <TouchableOpacity
-                  style={styles.buttonClose}
-                  onPress={() => setModalVisible(!modalVisible)}>
-                  <Text style={styles.textStyle}>Hide Modal</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
-        </TouchableWithoutFeedback>
-        {/* Main Workout Page */}
-        <ScrollView style={styles.scrollView}>
-          <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
-              <Image style={styles.pfp} source={require("../../images/cole.jpeg")} />
-              <Text style={styles.headerText}>My Workout</Text>
-            </View>
-            <View>
-              <TouchableOpacity style={styles.editButton}>
-                <Feather name="edit" size={24} color="black" />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.calendarContainer}>
-              <View style={styles.calendar}>
-                {nextDays.map((day, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    style={[styles.day, index === 2 && styles.today]}
-                    onPress={() => {
-                      setSelectedDay(day);
-                      setModalVisible(true);
-                    }}>
-                    <Text style={styles.dayText}>{day}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </View>
-            <View style={styles.listContainer}>
-              {boxes.length === 0 && (
-                <Text style={styles.noWorkoutsText}>
-                  You have no workouts, create a new template or generate one!
-                </Text>
-              )}
-              {boxes.map((box, index) => (
-                // For each 'box', a TouchableOpacity is rendered with a unique 'key' prop (for performance)
+      {/* Main Workout Page */}
+      <ScrollView style={styles.scrollView}>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.header}>
+            <Image style={styles.pfp} source={require("../../images/cole.jpeg")} />
+            <Text style={styles.headerText}>My Workout</Text>
+          </View>
+          <View>
+            <TouchableOpacity style={styles.editButton}>
+              <Feather name="edit" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.calendarContainer}>
+            <View style={styles.calendar}>
+              {nextDays.map((day, index) => (
                 <TouchableOpacity
                   key={index}
-                  style={
-                    boxes.length % 2 !== 0 && index === boxes.length - 1
-                      ? styles.oddBoxContainer
-                      : styles.evenBoxContainer
-                  }
-                  onPress={handleGoToWorkoutView}>
-                  <Text style={styles.boxText}>{box}</Text>
+                  style={[styles.day, index === 2 && styles.today]}
+                  onPress={() => {
+                    navigate("workout", "calendarModal", day);
+                  }}>
+                  <Text style={styles.dayText}>{day}</Text>
                 </TouchableOpacity>
               ))}
-              <TouchableOpacity style={styles.aiButton}>
-                <Text style={styles.buttonText}>Generate a Workout</Text>
-              </TouchableOpacity>
-              <View style={{ height: 100 }} />
             </View>
-          </SafeAreaView>
-        </ScrollView>
-        <View style={styles.floatingButtonContainer}>
-          <FloatingButton onPress={handleGoToAddWorkout} navigate={navigate} />
-        </View>
-        <Navbar />
-      </>
+          </View>
+          <View style={styles.listContainer}>
+            {boxes.length === 0 && (
+              <Text style={styles.noWorkoutsText}>
+                You have no workouts, create a new template or generate one!
+              </Text>
+            )}
+            {boxes.map((box, index) => (
+              // For each 'box', a TouchableOpacity is rendered with a unique 'key' prop (for performance)
+              <TouchableOpacity
+                key={index}
+                style={
+                  boxes.length % 2 !== 0 && index === boxes.length - 1
+                    ? styles.oddBoxContainer
+                    : styles.evenBoxContainer
+                }
+                onPress={handleGoToWorkoutView}>
+                <Text style={styles.boxText}>{box}</Text>
+              </TouchableOpacity>
+            ))}
+            <TouchableOpacity style={styles.aiButton}>
+              <Text style={styles.buttonText}>Generate a Workout</Text>
+            </TouchableOpacity>
+            <View style={{ height: 100 }} />
+          </View>
+        </SafeAreaView>
+      </ScrollView>
+      <View style={styles.floatingButtonContainer}>
+        <FloatingButton onPress={handleGoToAddWorkout} navigate={navigate} />
+      </View>
+      <Navbar />
     </View>
   );
 }
