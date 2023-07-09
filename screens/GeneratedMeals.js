@@ -7,6 +7,7 @@ import {
     TextInput,
     TouchableOpacity,
     Pressable,
+    ScrollView
   } from "react-native";
   import React, { useLayoutEffect, useState } from "react";
   import { useNavigation } from "@react-navigation/native";
@@ -16,6 +17,24 @@ import FoodCard from "../components/FoodCard";
   
   const GeneratedMeals = () => {
     const navigation = useNavigation();
+
+    const testArray = [
+        {
+            protein: 90,
+            carbs : 98, 
+            fats: 21
+        },
+        {
+            protein: 81,
+            carbs : 120, 
+            fats: 12
+        },
+        {
+            protein: 10,
+            carbs : 10, 
+            fats: 50
+        }
+    ]
   
   
     useLayoutEffect(() => {
@@ -24,21 +43,26 @@ import FoodCard from "../components/FoodCard";
       });
     }, [navigation]); // re-run effect if navigation object changes
   
-    const handleAdd = () => {
-      //Handle the add by sending back to backend etc
-      navigation.navigate("Weight", { TodayWeight: weight });
-    };
+  
     return (
-      <SafeAreaView>
-        <View style={{flexDirection: 'row'}}>
-            <Text style={{paddingLeft: screenWidth * 0.08, paddingTop: screenHeight * 0.04 , fontSize: screenWidth * 0.075, fontWeight: '700'}}>Meal 1</Text>
-        </View>
-        <View style={{paddingLeft: screenWidth *0.07, paddingTop: screenHeight * 0.025}}>
-            <FoodCard />
-        </View>
-
-        
-      </SafeAreaView>
+        <ScrollView style={{paddingTop: 10, paddingBottom: 10}}>
+        {testArray.map((meal, index) => (
+          <><View key={index} style={{ flexDirection: 'row' }}>
+                <Text
+                    style={{
+                        paddingLeft: screenWidth * 0.08,
+                        paddingTop: screenHeight * 0.04,
+                        fontSize: screenWidth * 0.075,
+                        fontWeight: '700'
+                    }}
+                >
+                    Meal {index + 1}
+                </Text>
+            </View><View style={{ paddingLeft: screenWidth * 0.07, paddingTop: screenHeight * 0.025 }}>
+                    <FoodCard protein={meal.protein} carbs={meal.carbs} fats={meal.fats} />
+                </View></>
+        ))}
+      </ScrollView>
     );
   };
   const styles = StyleSheet.create({
