@@ -21,7 +21,6 @@ const Credentials = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -31,7 +30,6 @@ const Credentials = () => {
   const handleCredentials = () => {
     navigation.navigate("Dashboard");
   };
-
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
