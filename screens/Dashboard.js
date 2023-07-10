@@ -196,7 +196,7 @@ const Dashboard = (props) => {
     const scheduleVideoUpdate = () => {
       const now = new Date();
       const targetTime = new Date(now);
-      targetTime.setHours(23, 50, 30); // Set the target time to 11:32:30 PM today
+      targetTime.setHours(0, 5, 40); // Set the target time to 11:32:30 PM today
 
       let timeDiff = targetTime.getTime() - now.getTime();
       if (timeDiff < 0) {

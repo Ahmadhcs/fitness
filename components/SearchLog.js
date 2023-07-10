@@ -112,7 +112,7 @@ const Modalpop = (props) => {
   </TouchableOpacity>
 </View>
 
-        <Text style={{ paddingLeft: 15, fontWeight: "400", paddingTop: 10 }}>{props.serving} Grams </Text>
+        <Text style={{ paddingLeft: 15, fontWeight: "400", paddingTop: 10, width: '60%' }}>{props.serving} Grams </Text>
 
         <Modalpop  visible={visible}>
             <View style={{flexDirection: 'row'}}>

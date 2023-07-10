@@ -13,6 +13,11 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AntDesign } from "@expo/vector-icons";
+
+// Screen dimensions
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
 
 const Name = () => {
   const navigation = useNavigation();
@@ -48,7 +53,10 @@ const Name = () => {
 
               {/* Back button */}
               <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-                <Text style={styles.backButtonText}>&lt; Back</Text>
+                <View style={{backgroundColor: 'blue', width: screenWidth * 0.1, height:  screenWidth * 0.1, justifyContent: 'center', alignItems: 'center', borderRadius: '50%'}}>
+                    <AntDesign name="arrowleft" style={{color: 'white', fontSize: 20}} />
+                </View>
+
               </Pressable>
 
               {/* Prompt */}
@@ -67,6 +75,7 @@ const Name = () => {
                   placeholder="Full Name"
                   style={styles.textbox}
                   onChangeText={setName}
+                  placeholderTextColor="black"
                   autoFocus={true}
                 />
               </View>
@@ -108,8 +117,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 30,
     textAlign: "center",
-    paddingLeft: 15,
-    paddingTop: 10,
+    paddingTop: 140,
   },
   cont: {
     backgroundColor: "blue",
@@ -121,14 +129,14 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   textbox: {
-    backgroundColor: "white",
+    backgroundColor: "rgb(220,220,220)",
     width: "80%",
-    padding: 10,
-    borderRadius: 6,
-    borderWidth: 0.7,
+    padding: 20,
     borderColor: "gray",
     alignSelf: "center",
     marginVertical: 5,
+    borderRadius: "20%",
+    fontSize: 15
   },
   main: {
     width: "100%",
@@ -147,7 +155,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     alignSelf: "flex-start",
-    padding: 10,
+    paddingLeft: 15
   },
   backButtonText: {
     fontSize: 18,

@@ -10,6 +10,9 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import RNPickerSelect from "react-native-picker-select";
+import { AntDesign } from "@expo/vector-icons";
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
 
 const Metrics = () => {
   const navigation = useNavigation();
@@ -54,9 +57,11 @@ const Metrics = () => {
 
       {/* Back button */}
       <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>&lt; Back</Text>
-      </Pressable>
+                <View style={{backgroundColor: 'blue', width: screenWidth * 0.1, height:  screenWidth * 0.1, justifyContent: 'center', alignItems: 'center', borderRadius: '50%'}}>
+                    <AntDesign name="arrowleft" style={{color: 'white', fontSize: 20}} />
+                </View>
 
+              </Pressable>
       <View style={styles.content}>
         <View style={styles.measureContainer}>
           {/* Weight input */}
@@ -135,7 +140,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     alignSelf: "flex-start",
-    padding: 10,
+    paddingLeft: 15
   },
   backButtonText: {
     fontSize: 18,
