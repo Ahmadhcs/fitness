@@ -23,7 +23,6 @@ const Credentials = () => {
       headerShown: false,
     });
   }, []);
-
   const handleCredentials = () => {
     navigation.navigate("Dashboard");
   };
