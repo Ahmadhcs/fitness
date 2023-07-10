@@ -8,7 +8,16 @@ import {
   StyleSheet,
 } from "react-native";
 
-function CalendarModal({ visible, onModalClose, selectedDay }) {
+function CalendarModal({ visible, onModalClose, selectedDay, workoutSplit }) {
+  const dayMap = {
+    Su: "Sunday",
+    M: "Monday",
+    Tu: "Tuesday",
+    W: "Wednesday",
+    Th: "Thursday",
+    F: "Friday",
+    Sa: "Saturday",
+  };
   return (
     <Modal
       animationType="fade"
@@ -18,6 +27,10 @@ function CalendarModal({ visible, onModalClose, selectedDay }) {
       <SafeAreaView style={styles.modalSafeArea}>
         <View style={styles.modalView}>
           <Text style={styles.modalText}>{selectedDay}</Text>
+          <Text style={styles.modalText}>
+            Workout:{" "}
+            {(workoutSplit && selectedDay && workoutSplit[dayMap[selectedDay]]) || "test"}
+          </Text>
           <TouchableOpacity style={styles.buttonClose} onPress={onModalClose}>
             <Text style={styles.textStyle}>Hide Modal</Text>
           </TouchableOpacity>
