@@ -27,7 +27,6 @@ const Credentials = () => {
   const handleCredentials = () => {
     navigation.navigate("Dashboard");
   };
-
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
