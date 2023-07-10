@@ -18,7 +18,6 @@ const Credentials = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
