@@ -9,12 +9,18 @@ import {
   SafeAreaView,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import ExerciseCard from "../../components/ExerciseCard";
 
-function AddWorkout({ navigate, onAddNewBox }) {
-  // Local states for workout name and notes
-  const [workoutName, setWorkoutName] = useState("");
-  const [note, setNote] = useState("");
-
+function AddWorkout({
+  navigate,
+  onAddNewBox,
+  exercises,
+  onDeleteWorkout,
+  workoutName,
+  onWorkoutNameChange,
+  notes,
+  onNotesChange,
+}) {
   // State for delete modal visibility
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -35,7 +41,7 @@ function AddWorkout({ navigate, onAddNewBox }) {
 
   // Function to handle delete workout
   const handleDelete = () => {
-    setModalVisible(false); // Close delete modal
+    onDeleteWorkout();
     navigate("addWorkout", "workout");
   };
 
@@ -45,18 +51,7 @@ function AddWorkout({ navigate, onAddNewBox }) {
       // If there's a workout name, add a new box to the workout page
       onAddNewBox(workoutName);
     }
-    setWorkoutName(""); // Reset workout name
     navigate("addWorkout", "workout");
-  };
-
-  // Function to handle workout name change
-  const handleWorkoutNameChange = (text) => {
-    setWorkoutName(text);
-  };
-
-  // Function to handle note change
-  const handleNoteChange = (text) => {
-    setNote(text);
   };
 
   return (
@@ -74,7 +69,8 @@ function AddWorkout({ navigate, onAddNewBox }) {
         // Apply styles to the Workout Name text input based on condition
         style={[styles.workoutName, workoutName ? styles.active : styles.inactive]}
         placeholder="Workout Name"
-        onChangeText={handleWorkoutNameChange}
+        onChangeText={onWorkoutNameChange}
+        value={workoutName}
       />
       <TextInput
         style={[styles.notes, { height: 100 }]}
@@ -82,9 +78,13 @@ function AddWorkout({ navigate, onAddNewBox }) {
         multiline
         numberOfLines={4}
         maxLength={200}
-        onChangeText={handleNoteChange}
+        onChangeText={onNotesChange}
         scrollEnabled={false}
+        value={notes}
       />
+      {exercises.map((exercise) => (
+        <ExerciseCard key={exercise.id} name={exercise.name} />
+      ))}
       <TouchableOpacity style={styles.addButton} onPress={handleOpenExerciseModal}>
         <Text style={styles.addButtonText}>Add Exercise</Text>
       </TouchableOpacity>
@@ -118,8 +118,6 @@ function AddWorkout({ navigate, onAddNewBox }) {
     </SafeAreaView>
   );
 }
-
-export default AddWorkout;
 
 const styles = StyleSheet.create({
   container: {
@@ -292,3 +290,5 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
+
+export default AddWorkout;

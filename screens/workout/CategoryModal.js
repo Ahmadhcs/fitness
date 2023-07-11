@@ -11,7 +11,12 @@ import {
 import { Feather } from "@expo/vector-icons";
 import axios from "axios";
 
-export default function CategoryModal({ visible, navigate, selectedCategory }) {
+export default function CategoryModal({
+  visible,
+  navigate,
+  selectedCategory,
+  onAddExercise,
+}) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -41,6 +46,11 @@ export default function CategoryModal({ visible, navigate, selectedCategory }) {
     navigate("categoryModal", "exerciseModal");
   };
 
+  const handleExerciseSelect = (item) => {
+    onAddExercise(item);
+    navigate("categoryModal", "addWorkout");
+  };
+
   return (
     <Modal
       animationType="none"
@@ -57,7 +67,9 @@ export default function CategoryModal({ visible, navigate, selectedCategory }) {
           <FlatList
             data={data}
             renderItem={({ item }) => (
-              <Text style={styles.exerciseName}>{item.name}</Text>
+              <TouchableOpacity onPress={() => handleExerciseSelect(item)}>
+                <Text style={styles.exerciseName}>{item.name}</Text>
+              </TouchableOpacity>
             )}
             keyExtractor={(item) => item.id}
           />
