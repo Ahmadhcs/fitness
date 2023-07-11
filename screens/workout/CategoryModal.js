@@ -11,6 +11,13 @@ import {
 import { Feather } from "@expo/vector-icons";
 import axios from "axios";
 
+const categoryApiMapping = {
+  legs: ["upper%20legs", "lower%20legs"],
+  arms: ["upper%20arms", "lower%20arms"],
+  abs: ["waist"],
+  other: ["neck"],
+};
+
 export default function CategoryModal({
   visible,
   navigate,
@@ -22,16 +29,23 @@ export default function CategoryModal({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${selectedCategory}`,
-          {
-            headers: {
-              "x-rapidapi-key": "da649500b0mshb1e7de48cddfd80p1378b5jsnb0aa765842fe",
-              "x-rapidapi-host": "exercisedb.p.rapidapi.com",
-            },
-          }
-        );
-        setData(response.data);
+        const apiCategories = categoryApiMapping[selectedCategory] || [selectedCategory];
+        let allData = [];
+
+        for (const apiCategory of apiCategories) {
+          const response = await axios.get(
+            `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${apiCategory}`,
+            {
+              headers: {
+                "x-rapidapi-key": "da649500b0mshb1e7de48cddfd80p1378b5jsnb0aa765842fe",
+                "x-rapidapi-host": "exercisedb.p.rapidapi.com",
+              },
+            }
+          );
+          allData = [...allData, ...response.data];
+        }
+
+        setData(allData);
       } catch (error) {
         console.error(error);
       }
@@ -39,7 +53,6 @@ export default function CategoryModal({
 
     fetchData();
   }, [selectedCategory]);
-  console.log;
 
   // Function to close the CategoryModal
   const handleCloseModal = () => {
