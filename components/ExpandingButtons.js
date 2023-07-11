@@ -1,4 +1,11 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Animated } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -103,10 +110,8 @@ const ExpandingButtons = (props) => {
         style={[styles.circle, { transform: [{ rotate: plusButtonRotation }] }]}
         onPress={() => {
           pop === false ? popIn() : popOut();
-         
         }}
-        activeOpacity={1}
-      >
+        activeOpacity={1}>
         <Animated.View>
           <Icon name="plus" size={25} color="white" />
         </Animated.View>
@@ -126,6 +131,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: 20,
   },
 });
 

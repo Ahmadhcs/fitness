@@ -14,7 +14,6 @@ import { AntDesign } from "@expo/vector-icons";
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
-
 const Gender = () => {
   const navigation = useNavigation();
   const [selectedGender, setSelectedGender] = useState(null);
@@ -45,12 +44,18 @@ const Gender = () => {
 
       {/* Back button */}
       <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-                <View style={{backgroundColor: 'blue', width: screenWidth * 0.1, height:  screenWidth * 0.1, justifyContent: 'center', alignItems: 'center', borderRadius: '50%'}}>
-                    <AntDesign name="arrowleft" style={{color: 'white', fontSize: 20}} />
-                </View>
-
-              </Pressable>
-
+        <View
+          style={{
+            backgroundColor: "blue",
+            width: screenWidth * 0.1,
+            height: screenWidth * 0.1,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: "50%",
+          }}>
+          <AntDesign name="arrowleft" style={{ color: "white", fontSize: 20 }} />
+        </View>
+      </Pressable>
 
       <View style={styles.content}>
         {/* Gender buttons */}
@@ -111,7 +116,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     alignSelf: "flex-start",
-    paddingLeft: 15
+    paddingLeft: 15,
   },
   backButtonText: {
     fontSize: 18,

@@ -18,7 +18,6 @@ const screenWidth = Dimensions.get("window").width;
 const GeneratedMeals = () => {
   const navigation = useNavigation();
 
-
   const testArray = [
     {
       protein: 90,
@@ -36,7 +35,6 @@ const GeneratedMeals = () => {
       fats: 50,
     },
   ];
-
 
   useLayoutEffect(() => {
     navigation.setOptions({

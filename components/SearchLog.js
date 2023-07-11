@@ -18,7 +18,6 @@ import { Feather } from "@expo/vector-icons";
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
-
 const SearchLog = (props) => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);

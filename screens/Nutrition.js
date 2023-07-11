@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import WeekLogged from "../components/WeekLogged";
 import ExpandingButtons from "../components/ExpandingButtons";
 import FoodLogged from "../components/FoodLogged";
+import { StatusBar } from "react-native";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -92,13 +93,14 @@ const chartConfigFat = {
 const Nutrition = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
+      <SafeAreaView>
         <View style={styles.header}>
           <Text style={styles.headerText}>My Nutrition</Text>
           <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
         </View>
-
+      </SafeAreaView>
+      <ScrollView style={{ flex: 1 }}>
         <View
           style={{
             flexDirection: "row",
@@ -240,7 +242,7 @@ const Nutrition = () => {
       <View>
         <ExpandingButtons />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
