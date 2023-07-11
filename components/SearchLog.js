@@ -13,16 +13,19 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProgressChart } from "react-native-chart-kit";
 
+import { Feather } from "@expo/vector-icons";
+
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
-const SearchLog = () => {
+
+const SearchLog = (props) => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
 
   const data = {
     labels: ["Protien"], // optional
-    data: [200 / 250],
+    data: [props.protein / 250],
     colors: ["red"],
   };
 
@@ -39,7 +42,7 @@ const SearchLog = () => {
 
   const dataC = {
     labels: ["Carbs"], // optional
-    data: [39 / 250],
+    data: [props.carbs / 250],
     colors: ["green"],
   };
 
@@ -56,7 +59,7 @@ const SearchLog = () => {
 
   const dataF = {
     labels: ["Fats"], // optional
-    data: [89 / 250],
+    data: [props.fat / 250],
     colors: ["blue"],
   };
 
@@ -91,36 +94,31 @@ const SearchLog = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Text
           style={{
-            paddingLeft: 10,
-            paddingTop: 12.5,
-            fontSize: 16,
+            flex: 1,
+            paddingLeft: 15,
+            paddingTop: 15,
+            fontSize: 18,
             fontWeight: "500",
           }}>
-          {" "}
-          Name of the Food
+          {props.FoodName}
         </Text>
-        <TouchableOpacity onPress={() => setVisible(true)}>
-          <Text
-            style={{
-              textAlign: "right",
-              paddingTop: 30,
-              paddingLeft: 130,
-              color: "#42a5f5",
-              fontWeight: "bold",
-            }}>
-            BUTTON
-          </Text>
+        <TouchableOpacity style={styles.addButton} onPress={() => setVisible(true)}>
+          <Feather name="plus" color="white" size={20} />
         </TouchableOpacity>
       </View>
-      <Text style={{ paddingLeft: 15, fontWeight: "300" }}>Serving: 300G </Text>
+
+      <Text style={{ paddingLeft: 15, fontWeight: "400", paddingTop: 10, width: "60%" }}>
+        {props.serving} Grams{" "}
+      </Text>
 
       <Modalpop visible={visible}>
         <View style={{ flexDirection: "row" }}>
           <Text style={{ width: "70%", fontSize: 20, fontWeight: "500" }}>Food Name</Text>
           <TouchableOpacity
+            onPress={() => setVisible(false)}
             style={{
               backgroundColor: "blue",
               width: screenWidth * 0.2,
@@ -136,12 +134,12 @@ const SearchLog = () => {
 
         <View style={{ paddingTop: 30, flexDirection: "row" }}>
           <Text style={{ fontSize: 18, fontWeight: "400", width: "80%" }}>Serving</Text>
-          <Text style={{ fontSize: 18, fontWeight: "500" }}>400G</Text>
+          <Text style={{ fontSize: 18, fontWeight: "500" }}>{props.serving}g</Text>
         </View>
 
         <View style={{ paddingTop: 20, flexDirection: "row" }}>
           <Text style={{ fontSize: 18, fontWeight: "400", width: "70%" }}>Calories</Text>
-          <Text style={{ fontSize: 18, fontWeight: "500" }}>1500kcal</Text>
+          <Text style={{ fontSize: 18, fontWeight: "500" }}>{props.calories}kcal</Text>
         </View>
 
         <View style={{ flexDirection: "row", paddingTop: 5, paddingLeft: 12.5 }}>
@@ -168,7 +166,7 @@ const SearchLog = () => {
                   paddingLeft: 10,
                   fontSize: 12.5,
                 }}>
-                33/290g
+                {Math.floor(props.protein)}/290g
               </Text>
             </View>
           </View>
@@ -196,7 +194,7 @@ const SearchLog = () => {
                   paddingLeft: 15,
                   fontSize: 12.5,
                 }}>
-                33/290g
+                {Math.floor(props.carbs)}/290g
               </Text>
             </View>
           </View>
@@ -224,7 +222,7 @@ const SearchLog = () => {
                   paddingLeft: 10,
                   fontSize: 12.5,
                 }}>
-                33/290g
+                {Math.floor(props.fat)}/290g
               </Text>
             </View>
           </View>
@@ -240,6 +238,7 @@ const styles = StyleSheet.create({
     width: screenWidth * 0.9,
     height: screenHeight * 0.1,
     borderRadius: 20,
+    marginVertical: 5,
   },
   modalBackground: {
     flex: 1,
@@ -257,6 +256,21 @@ const styles = StyleSheet.create({
   },
   graph: {
     paddingTop: 7,
+  },
+  addButtonWrapper: {
+    marginRight: 20,
+    marginTop: 10,
+  },
+  addButton: {
+    position: "absolute",
+    top: 20,
+    right: 20,
+    backgroundColor: "blue",
+    width: screenWidth * 0.1,
+    height: screenWidth * 0.1,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 25,
   },
 });
 

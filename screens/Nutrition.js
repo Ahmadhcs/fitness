@@ -14,7 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import WeekLogged from "../components/WeekLogged";
-
+import ExpandingButtons from "../components/ExpandingButtons";
 import FoodLogged from "../components/FoodLogged";
 
 const screenHeight = Dimensions.get("window").height;
@@ -91,36 +91,6 @@ const chartConfigFat = {
 
 const Nutrition = () => {
   const navigation = useNavigation();
-
-  const Modalpop = (props) => {
-    const [showModal, setShowModal] = React.useState(props.visible);
-
-    return (
-      <Modal transparent visible={showModal}>
-        <View style={styles.modalBackground}>
-          <View style={styles.modalContainer}>
-            {props.children}
-            <TouchableOpacity onPress={() => setVisible(false)}>
-              <Text>Helloi</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-    );
-  };
-
-  const [visible, setVisible] = useState(false);
-
-  const goToLogMeal = () => {
-    setVisible(false);
-    navigation.navigate("LogMeal");
-  };
-
-  const goToReco = () => {
-    setVisible(false);
-    navigation.navigate("Reco");
-  };
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={{ flex: 1 }}>
@@ -267,22 +237,9 @@ const Nutrition = () => {
           <WeekLogged />
         </View>
       </ScrollView>
-
-      <Modalpop visible={visible}>
-        <View>
-          <TouchableOpacity onPress={() => goToLogMeal()}>
-            <Text>Log Meal</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => goToReco()}>
-            <Text>Generate Recipe</Text>
-          </TouchableOpacity>
-        </View>
-      </Modalpop>
-
-      <Pressable onPress={() => setVisible(true)} style={styles.button}>
-        <Text style={styles.buttonText}>+</Text>
-      </Pressable>
+      <View>
+        <ExpandingButtons />
+      </View>
     </SafeAreaView>
   );
 };

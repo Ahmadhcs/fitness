@@ -13,22 +13,22 @@ import {
 } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
 
+const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
 const Credentials = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, []);
-
   const handleCredentials = () => {
     navigation.navigate("Dashboard");
   };
-
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -48,7 +48,10 @@ const Credentials = () => {
 
               {/* Back button */}
               <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-                <Text style={styles.backButtonText}>&lt; Back</Text>
+                <View style={{backgroundColor: 'blue', width: screenWidth * 0.1, height:  screenWidth * 0.1, justifyContent: 'center', alignItems: 'center', borderRadius: '50%'}}>
+                    <AntDesign name="arrowleft" style={{color: 'white', fontSize: 20}} />
+                </View>
+
               </Pressable>
 
               {/* Prompt */}
@@ -154,7 +157,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     alignSelf: "flex-start",
-    padding: 10,
+    paddingLeft: 15,
   },
   backButtonText: {
     fontSize: 18,

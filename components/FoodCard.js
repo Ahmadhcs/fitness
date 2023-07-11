@@ -9,6 +9,8 @@ import {
 import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ProgressChart } from "react-native-chart-kit";
+
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
@@ -20,6 +22,57 @@ const FoodCard = (props) => {
       headerShown: false,
     });
   }, []);
+
+  const data = {
+    labels: ["Protien"], // optional
+    data: [props.protein / 250],
+    colors: ["red"],
+  };
+
+  const chartConfig = {
+    backgroundGradientFrom: "white",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "white",
+    backgroundGradientToOpacity: 0,
+    color: (opacity = 1, _index) => `rgba(255,0,0,0.2)`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.35,
+    useShadowColorFromDataset: false, // optional,
+  };
+
+  const dataC = {
+    labels: ["Carbs"], // optional
+    data: [props.carbs / 250],
+    colors: ["green"],
+  };
+
+  const chartConfigCarbs = {
+    backgroundGradientFrom: "white",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "white",
+    backgroundGradientToOpacity: 0,
+    color: (opacity = 1, _index) => `rgba(0,255,0,0.2)`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.35,
+    useShadowColorFromDataset: false, // optional,
+  };
+
+  const dataF = {
+    labels: ["Fats"], // optional
+    data: [props.fats / 250],
+    colors: ["blue"],
+  };
+
+  const chartConfigFat = {
+    backgroundGradientFrom: "white",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "white",
+    backgroundGradientToOpacity: 0,
+    color: (opacity = 1, _index) => `rgba(0,0,255,.2)`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.35,
+    useShadowColorFromDataset: false, // optional,
+  };
 
   return (
     <View>
@@ -68,7 +121,7 @@ const FoodCard = (props) => {
 const styles = StyleSheet.create({
   container: {
     width: screenWidth * 0.85,
-    height: screenHeight * 0.35,
+    height: screenHeight * 0.37,
     backgroundColor: "white",
     paddingHorizontal: 20,
     paddingVertical: 25,
