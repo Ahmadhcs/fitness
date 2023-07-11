@@ -5,6 +5,8 @@ import AddExerciseModal from "./AddExerciseModal";
 import CategoryModal from "./CategoryModal";
 import WorkoutView from "./WorkoutView";
 import CalendarModal from "./CalendarModal";
+import WorkoutSplitModal from "./WorkoutSplitModal";
+import ExerciseCard from "../../components/ExerciseCard";
 
 export default function WorkoutManager() {
   // State management for the visibility of each component
@@ -14,9 +16,25 @@ export default function WorkoutManager() {
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
   const [workoutViewVisible, setWorkoutViewVisible] = useState(false);
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
+  const [workoutSplitModalVisible, setWorkoutSplitModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
+  const [workoutName, setWorkoutName] = useState("");
+  const [notes, setNotes] = useState("");
+
+  const [workoutSplit, setWorkoutSplit] = useState({
+    Sun: "Rest",
+    Mon: "Rest",
+    Tue: "Rest",
+    Wed: "Rest",
+    Thu: "Rest",
+    Fri: "Rest",
+    Sat: "Rest",
+  });
+
+  const [addedExercises, setAddedExercises] = useState([]);
 
   // State management for the workout boxes in the Workout component
   const [newBoxes, setNewBoxes] = useState([]);
@@ -43,6 +61,9 @@ export default function WorkoutManager() {
       case "calendarModal":
         setCalendarModalVisible(false);
         break;
+      case "workoutSplitModal":
+        setWorkoutSplitModalVisible(false);
+        break;
     }
 
     switch (target) {
@@ -67,6 +88,9 @@ export default function WorkoutManager() {
         setWorkoutVisible(true);
         setSelectedDay(day);
         break;
+      case "workoutSplitModal":
+        setWorkoutSplitModalVisible(true);
+        break;
     }
   };
 
@@ -75,13 +99,57 @@ export default function WorkoutManager() {
     if (newBox) {
       setNewBoxes((prevBoxes) => [...prevBoxes, newBox]);
     }
+    setWorkoutName("");
+    setNotes("");
+    setAddedExercises([]);
+  };
+
+  const handleUpdateSplit = (newSplit) => {
+    setWorkoutSplit(newSplit);
+    setWorkoutSplitModalVisible(false);
+    setWorkoutVisible(true);
+  };
+
+  const handleAddExercise = (exercise) => {
+    setAddedExercises((prevExercises) => [...prevExercises, exercise]);
+  };
+
+  const handleDeleteWorkout = () => {
+    setModalVisible(false);
+    setWorkoutName("");
+    setNotes("");
+    setAddedExercises([]);
+  };
+
+  const handleWorkoutNameChange = (name) => {
+    setWorkoutName(name);
+  };
+
+  const handleNotesChange = (notes) => {
+    setNotes(notes);
   };
 
   return (
     <>
-      {workoutVisible && <Workout newBoxes={newBoxes} navigate={handleNavigate} />}
+      {workoutVisible && (
+        <Workout
+          newBoxes={newBoxes}
+          navigate={handleNavigate}
+          workoutSplit={workoutSplit}
+          onAddExercise={handleAddExercise}
+        />
+      )}
       {addWorkoutVisible && (
-        <AddWorkout navigate={handleNavigate} onAddNewBox={handleAddNewBox} />
+        <AddWorkout
+          navigate={handleNavigate}
+          onAddNewBox={handleAddNewBox}
+          exercises={addedExercises}
+          onDeleteWorkout={handleDeleteWorkout}
+          workoutName={workoutName}
+          onWorkoutNameChange={handleWorkoutNameChange}
+          notes={notes}
+          onNotesChange={handleNotesChange}
+        />
       )}
       {addExerciseModalVisible && (
         <AddExerciseModal visible={addExerciseModalVisible} navigate={handleNavigate} />
@@ -91,6 +159,7 @@ export default function WorkoutManager() {
           visible={categoryModalVisible}
           navigate={handleNavigate}
           selectedCategory={selectedCategory}
+          onAddExercise={handleAddExercise}
         />
       )}
       {workoutViewVisible && <WorkoutView boxName={newBoxes} navigate={handleNavigate} />}
@@ -98,6 +167,12 @@ export default function WorkoutManager() {
         visible={calendarModalVisible}
         onModalClose={() => handleNavigate("calendarModal", "workout")}
         selectedDay={selectedDay}
+        workoutSplit={workoutSplit}
+      />
+      <WorkoutSplitModal
+        visible={workoutSplitModalVisible}
+        onModalClose={() => handleNavigate("workoutSplitModal", "workout")}
+        onSplitUpdate={handleUpdateSplit}
       />
     </>
   );

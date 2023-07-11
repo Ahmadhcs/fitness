@@ -32,7 +32,7 @@ function FloatingButton({ onPress, navigate }) {
 }
 
 // Main Workout component
-function Workout({ newBoxes, navigate }) {
+function Workout({ newBoxes, navigate, workoutSplit }) {
   // Calculating the list of boxes only when newBoxes change
   const boxes = useMemo(() => newBoxes, [newBoxes]);
 
@@ -43,6 +43,10 @@ function Workout({ newBoxes, navigate }) {
 
   const handleGoToWorkoutView = () => {
     navigate("workout", "workoutView");
+  };
+
+  const handleGoToWorkoutSplit = () => {
+    navigate("workout", "workoutSplitModal");
   };
 
   // Creating a new Date object for today's date
@@ -71,7 +75,7 @@ function Workout({ newBoxes, navigate }) {
             <Text style={styles.headerText}>My Workout</Text>
           </View>
           <View>
-            <TouchableOpacity style={styles.editButton}>
+            <TouchableOpacity style={styles.editButton} onPress={handleGoToWorkoutSplit}>
               <Feather name="edit" size={24} color="black" />
             </TouchableOpacity>
           </View>

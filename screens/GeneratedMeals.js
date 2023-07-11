@@ -18,6 +18,7 @@ const screenWidth = Dimensions.get("window").width;
 const GeneratedMeals = () => {
   const navigation = useNavigation();
 
+
   const testArray = [
     {
       protein: 90,
@@ -36,12 +37,12 @@ const GeneratedMeals = () => {
     },
   ];
 
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, [navigation]); // re-run effect if navigation object changes
-
   return (
     <ScrollView style={{ paddingTop: 10, paddingBottom: 10 }}>
       {testArray.map((meal, index) => (

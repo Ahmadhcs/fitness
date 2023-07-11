@@ -91,7 +91,6 @@ const chartConfigFat = {
 
 const Nutrition = () => {
   const navigation = useNavigation();
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={{ flex: 1 }}>
@@ -238,7 +237,6 @@ const Nutrition = () => {
           <WeekLogged />
         </View>
       </ScrollView>
-
       <View>
         <ExpandingButtons />
       </View>

@@ -12,10 +12,12 @@ import React, { useLayoutEffect, useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProgressChart } from "react-native-chart-kit";
+
 import { Feather } from "@expo/vector-icons";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
+
 
 const SearchLog = (props) => {
   const navigation = useNavigation();

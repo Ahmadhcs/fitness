@@ -3,102 +3,59 @@ import {
   View,
   Text,
   TouchableOpacity,
-  TextInput,
   Modal,
   SafeAreaView,
   StyleSheet,
   ScrollView,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import axios from "axios";
+
+const categories = [
+  "Chest",
+  "Back",
+  "Legs",
+  "Arms",
+  "Shoulders",
+  "Abs",
+  "Cardio",
+  "Other",
+];
 
 export default function AddExerciseModal({ visible, navigate }) {
-  const [searchText, setSearchText] = useState("");
-  const [categories, setCategories] = useState([]);
-
   // Function to handle the opening of Category Modal
   const handleOpenCategoryModal = (category) => {
-    navigate("exerciseModal", "categoryModal", "", category);
+    navigate("exerciseModal", "categoryModal", "", category.toLowerCase());
   };
 
-  useEffect(() => {
-    axios
-      .get("https://exercisedb.p.rapidapi.com/exercises/bodyPartList", {
-        headers: {
-          "x-rapidapi-key": "da649500b0mshb1e7de48cddfd80p1378b5jsnb0aa765842fe",
-          "x-rapidapi-host": "exercisedb.p.rapidapi.com",
-        },
-      })
-      .then((response) => {
-        setCategories(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
   return (
-    <>
-      <Modal
-        animationType="none"
-        transparent={true}
-        visible={visible}
-        onRequestClose={() => navigate("exerciseModal", "addWorkout")}>
-        <SafeAreaView style={styles.modalSafeArea}>
-          <View style={styles.exerciseModal}>
-            <ScrollView>
-              <View style={styles.exerciseModalHeader}>
-                <TouchableOpacity
-                  style={styles.backButton}
-                  onPress={() => navigate("exerciseModal", "addWorkout")}>
-                  <Feather name="x" size={24} color="white" />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    /* Implement logic for the Add button */
-                  }}>
-                  <Text style={styles.exerciseModalAdd}> Add </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.searchBarContainer}>
-                <TextInput
-                  style={styles.exerciseModalSearchBar}
-                  placeholder="Search"
-                  onChangeText={setSearchText}
-                  value={searchText}
-                />
-                <TouchableOpacity style={styles.filterButton}>
-                  <Text style={styles.filterButtonText}> Filter </Text>
-                </TouchableOpacity>
-              </View>
-              {/* If no search text has been entered, show the recent exercises section */}
-              {!searchText && (
-                <>
-                  <Text style={styles.recentSection}> Recent exercises </Text>
-                  <TouchableOpacity style={styles.exerciseButton}>
-                    {/* Hardcoded for now */}
-                    <Text style={styles.exerciseButtonText}> Bench Press </Text>
-                  </TouchableOpacity>
-                  <View style={styles.separator} />
-                </>
-              )}
+    <Modal
+      animationType="none"
+      transparent={true}
+      visible={visible}
+      onRequestClose={() => navigate("exerciseModal", "addWorkout")}>
+      <SafeAreaView style={styles.modalSafeArea}>
+        <View style={styles.exerciseModal}>
+          <ScrollView>
+            <View style={styles.exerciseModalHeader}>
+              <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => navigate("exerciseModal", "addWorkout")}>
+                <Feather name="x" size={24} color="white" />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.listContainer}>
               {categories.map((category, index) => (
-                <View key={category} style={{ width: "100%" }}>
-                  <TouchableOpacity
-                    style={styles.categoryButton}
-                    onPress={() => handleOpenCategoryModal(category)}>
-                    <Text style={styles.categoryButtonText}>{category}</Text>
-                    <Text style={styles.arrow}>{">"}</Text>
-                  </TouchableOpacity>
-                  {/* If this is not the last category in the array, add a line */}
-                  {index < categories.length - 1 && <View style={styles.separator} />}
-                </View>
+                <TouchableOpacity
+                  style={styles.boxContainer}
+                  onPress={() => handleOpenCategoryModal(category)}>
+                  <Text style={styles.boxText}>{category}</Text>
+                </TouchableOpacity>
               ))}
-            </ScrollView>
-          </View>
-        </SafeAreaView>
-      </Modal>
-    </>
+            </View>
+          </ScrollView>
+        </View>
+      </SafeAreaView>
+    </Modal>
   );
 }
 
@@ -124,77 +81,28 @@ const styles = StyleSheet.create({
   },
   exerciseModalHeader: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
   },
-  exerciseModalAdd: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "blue",
-  },
-  searchBarContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
-  exerciseModalSearchBar: {
-    height: 40,
+  listContainer: {
     flex: 1,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 4,
-    paddingHorizontal: 10,
-    marginTop: 20,
-    marginRight: 10,
-  },
-  filterButton: {
     flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
     alignItems: "center",
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 4,
-    padding: 10,
-    marginTop: 20,
-    backgroundColor: "gray",
   },
-  filterButtonText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "white",
-  },
-  recentSection: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginTop: 20,
-  },
-  exerciseButton: {
-    marginTop: 10,
-  },
-  exerciseButtonText: {
-    fontSize: 18,
-  },
-  separator: {
-    borderBottomColor: "black",
-    borderBottomWidth: 1,
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  categoryButton: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  boxContainer: {
+    justifyContent: "center",
     alignItems: "center",
-    borderWidth: 0,
-    width: "100%",
-    paddingHorizontal: 10,
-    paddingVertical: 10,
+    backgroundColor: "#f0f0f0",
+    width: "45%",
+    height: "45%",
+    aspectRatio: 1,
+    margin: "2.5%",
+    borderRadius: 12,
   },
-  categoryButtonText: {
-    fontSize: 20,
-  },
-  arrow: {
-    fontSize: 20,
+  boxText: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
