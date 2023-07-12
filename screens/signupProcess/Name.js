@@ -53,10 +53,17 @@ const Name = () => {
 
               {/* Back button */}
               <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-                <View style={{backgroundColor: 'blue', width: screenWidth * 0.1, height:  screenWidth * 0.1, justifyContent: 'center', alignItems: 'center', borderRadius: '50%'}}>
-                    <AntDesign name="arrowleft" style={{color: 'white', fontSize: 20}} />
+                <View
+                  style={{
+                    backgroundColor: "blue",
+                    width: screenWidth * 0.1,
+                    height: screenWidth * 0.1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "50%",
+                  }}>
+                  <AntDesign name="arrowleft" style={{ color: "white", fontSize: 20 }} />
                 </View>
-
               </Pressable>
 
               {/* Prompt */}
@@ -136,7 +143,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginVertical: 5,
     borderRadius: "20%",
-    fontSize: 15
+    fontSize: 15,
   },
   main: {
     width: "100%",
@@ -155,7 +162,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     alignSelf: "flex-start",
-    paddingLeft: 15
+    paddingLeft: 15,
   },
   backButtonText: {
     fontSize: 18,

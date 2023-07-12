@@ -36,10 +36,8 @@ const Metrics = () => {
     value: i + 100,
   }));
 
-  const toggleWeightSwitch = () =>
-    setIsMetricWeight((previousState) => !previousState);
-  const toggleHeightSwitch = () =>
-    setIsMetricHeight((previousState) => !previousState);
+  const toggleWeightSwitch = () => setIsMetricWeight((previousState) => !previousState);
+  const toggleHeightSwitch = () => setIsMetricHeight((previousState) => !previousState);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -63,11 +61,18 @@ const Metrics = () => {
 
       {/* Back button */}
       <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-                <View style={{backgroundColor: 'blue', width: screenWidth * 0.1, height:  screenWidth * 0.1, justifyContent: 'center', alignItems: 'center', borderRadius: '50%'}}>
-                    <AntDesign name="arrowleft" style={{color: 'white', fontSize: 20}} />
-                </View>
-
-              </Pressable>
+        <View
+          style={{
+            backgroundColor: "blue",
+            width: screenWidth * 0.1,
+            height: screenWidth * 0.1,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: "50%",
+          }}>
+          <AntDesign name="arrowleft" style={{ color: "white", fontSize: 20 }} />
+        </View>
+      </Pressable>
       <View style={styles.content}>
         <View style={styles.measureContainer}>
           {/* Weight input */}
@@ -81,10 +86,7 @@ const Metrics = () => {
               />
             </View>
             <View style={styles.switchContainer}>
-              <Switch
-                onValueChange={toggleWeightSwitch}
-                value={isMetricWeight}
-              />
+              <Switch onValueChange={toggleWeightSwitch} value={isMetricWeight} />
               <Text>{isMetricWeight ? "kg" : "lbs"}</Text>
             </View>
           </View>
@@ -100,10 +102,7 @@ const Metrics = () => {
               />
             </View>
             <View style={styles.switchContainer}>
-              <Switch
-                onValueChange={toggleHeightSwitch}
-                value={isMetricHeight}
-              />
+              <Switch onValueChange={toggleHeightSwitch} value={isMetricHeight} />
               <Text>{isMetricHeight ? "cm" : "inches"}</Text>
             </View>
           </View>
@@ -146,7 +145,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     alignSelf: "flex-start",
-    paddingLeft: 15
+    paddingLeft: 15,
   },
   backButtonText: {
     fontSize: 18,

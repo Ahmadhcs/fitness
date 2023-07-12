@@ -76,10 +76,17 @@ const Credentials = () => {
 
               {/* Back button */}
               <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-                <View style={{backgroundColor: 'blue', width: screenWidth * 0.1, height:  screenWidth * 0.1, justifyContent: 'center', alignItems: 'center', borderRadius: '50%'}}>
-                    <AntDesign name="arrowleft" style={{color: 'white', fontSize: 20}} />
+                <View
+                  style={{
+                    backgroundColor: "blue",
+                    width: screenWidth * 0.1,
+                    height: screenWidth * 0.1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "50%",
+                  }}>
+                  <AntDesign name="arrowleft" style={{ color: "white", fontSize: 20 }} />
                 </View>
-
               </Pressable>
 
               {/* Prompt */}

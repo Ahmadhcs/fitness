@@ -14,7 +14,6 @@ import { AntDesign } from "@expo/vector-icons";
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
-
 const Gender = () => {
   const route = useRoute();
   const { userName } = route.params;
@@ -55,6 +54,7 @@ const Gender = () => {
          </Pressable>
 
 
+
       <View style={styles.content}>
         {/* Gender buttons */}
         <View style={styles.buttonContainer}>
@@ -63,8 +63,7 @@ const Gender = () => {
               styles.genderButton,
               selectedGender === "female" && styles.selectedGenderButton,
             ]}
-            onPress={() => handleGenderSelection("female")}
-          >
+            onPress={() => handleGenderSelection("female")}>
             <Text style={styles.genderButtonText}>Female</Text>
           </Pressable>
 
@@ -73,8 +72,7 @@ const Gender = () => {
               styles.genderButton,
               selectedGender === "male" && styles.selectedGenderButton,
             ]}
-            onPress={() => handleGenderSelection("male")}
-          >
+            onPress={() => handleGenderSelection("male")}>
             <Text style={styles.genderButtonText}>Male</Text>
           </Pressable>
         </View>
@@ -116,7 +114,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     alignSelf: "flex-start",
-    paddingLeft: 15
+    paddingLeft: 15,
   },
   backButtonText: {
     fontSize: 18,

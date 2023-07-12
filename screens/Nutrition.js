@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   Text,
   StyleSheet,
@@ -9,13 +9,14 @@ import {
   Pressable,
   Modal,
   Touchable,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import WeekLogged from "../components/WeekLogged";
 import ExpandingButtons from "../components/ExpandingButtons";
 import FoodLogged from "../components/FoodLogged";
+import { StatusBar } from "react-native";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -91,16 +92,15 @@ const chartConfigFat = {
 
 const Nutrition = () => {
   const navigation = useNavigation();
-
-
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
+      <SafeAreaView>
         <View style={styles.header}>
           <Text style={styles.headerText}>My Nutrition</Text>
           <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
         </View>
-
+      </SafeAreaView>
+      <ScrollView style={{ flex: 1 }}>
         <View
           style={{
             flexDirection: "row",
@@ -214,32 +214,35 @@ const Nutrition = () => {
           </View>
         </View>
 
-
-       
-
-        <View style={{paddingLeft: 20, paddingTop: 10}}>
-          <Text style={{fontSize: 20, fontWeight: "700", paddingLeft: 5}}>Logged Food</Text>
+        <View style={{ paddingLeft: 20, paddingTop: 10 }}>
+          <Text style={{ fontSize: 20, fontWeight: "700", paddingLeft: 5 }}>
+            Logged Food
+          </Text>
           <FoodLogged />
           <FoodLogged />
           <FoodLogged />
           <FoodLogged />
           <FoodLogged />
           <FoodLogged />
-
         </View>
 
-        <View style={{paddingTop: 10, paddingLeft: 10}}>
-          <Text style={{fontSize: 20, fontWeight: "700", paddingLeft: 15, paddingBottom: 10}} >Previous Food Logs</Text>
+        <View style={{ paddingTop: 10, paddingLeft: 10 }}>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "700",
+              paddingLeft: 15,
+              paddingBottom: 10,
+            }}>
+            Previous Food Logs
+          </Text>
           <WeekLogged />
         </View>
       </ScrollView>
-
       <View>
-      
         <ExpandingButtons />
       </View>
-
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -305,19 +308,19 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     marginBottom: 3,
   },
-  modalContainer:{
+  modalContainer: {
     width: 0.9 * screenWidth,
     backgroundColor: "white",
     borderRadius: 20,
     marginTop: 10,
     height: screenHeight * 0.08,
   },
-  modalBackground:{
+  modalBackground: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignItems: "center",
-  }
+  },
 });
 
 export default Nutrition;

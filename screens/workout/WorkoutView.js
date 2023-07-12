@@ -1,15 +1,14 @@
-import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  SafeAreaView,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import ExerciseCard from "../../components/ExerciseCard";
 
 function WorkoutView({ boxName, navigate }) {
+  const [exercises, setExercises] = useState([
+    { id: 1, name: "Exercise 1", sets: [1, 2] },
+    { id: 2, name: "Exercise 2", sets: [1, 2, 3] },
+  ]);
+
   const handleGoBack = () => {
     navigate("workoutView", "workout");
   };
@@ -26,6 +25,31 @@ function WorkoutView({ boxName, navigate }) {
     // Start workout functionality here
   };
 
+  const handleDeleteSet = (exerciseId, setId) => {
+    setExercises(
+      exercises.map((exercise) => {
+        if (exercise.id === exerciseId) {
+          return { ...exercise, sets: exercise.sets.filter((set) => set !== setId) };
+        }
+        return exercise;
+      })
+    );
+  };
+
+  const handleAddSet = (exerciseId) => {
+    setExercises(
+      exercises.map((exercise) => {
+        if (exercise.id === exerciseId) {
+          return {
+            ...exercise,
+            sets: [...exercise.sets, Math.max(...exercise.sets) + 1],
+          };
+        }
+        return exercise;
+      })
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -37,36 +61,23 @@ function WorkoutView({ boxName, navigate }) {
           <Feather name="download" size={24} color="black" />
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.scrollView}>
-        {[1, 2].map((item, index) => (
-          <View key={index} style={styles.exerciseBox}>
-            <Text style={styles.exerciseName}>Exercise Name</Text>
-            <View style={styles.detailsContainer}>
-              <View style={styles.detailBox}>
-                <Text>Sets</Text>
-                <TouchableOpacity style={styles.infoBox}>
-                  <Text>Info</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.detailBox}>
-                <Text>Reps</Text>
-                <TouchableOpacity style={styles.infoBox}>
-                  <Text>Info</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.detailBox}>
-                <Text>Previous</Text>
-                <TouchableOpacity style={styles.infoBox}>
-                  <Text>Info</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        ))}
-      </ScrollView>
-      <TouchableOpacity style={styles.addExerciseButton} onPress={handleAddExercise}>
-        <Text style={styles.buttonText}>Add Exercise</Text>
-      </TouchableOpacity>
+      {exercises.map((exercise) => (
+        <View key={exercise.id} style={styles.card}>
+          <Text style={styles.cardTitle}>{exercise.name}</Text>
+          {exercise.sets.map((setId) => (
+            <ExerciseCard
+              key={setId}
+              data={`Set ${setId}`}
+              onDelete={() => handleDeleteSet(exercise.id, setId)}
+            />
+          ))}
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => handleAddSet(exercise.id)}>
+            <Text style={styles.addButtonText}>Add Set</Text>
+          </TouchableOpacity>
+        </View>
+      ))}
       <TouchableOpacity style={styles.startWorkoutButton} onPress={handleStartWorkout}>
         <Text style={styles.buttonText}>Start Workout</Text>
       </TouchableOpacity>
@@ -78,6 +89,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: "#2a2727",
   },
   header: {
     flexDirection: "row",
@@ -88,46 +100,30 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "500",
+    color: "#fff",
   },
-  scrollView: {
-    marginBottom: 20,
-  },
-  exerciseBox: {
-    width: "90%",
-    alignSelf: "center",
-    padding: 20,
+  card: {
+    backgroundColor: "#000",
     borderRadius: 10,
-    backgroundColor: "#eeeeee",
+    padding: 20,
     marginBottom: 20,
   },
-  exerciseName: {
-    fontSize: 24,
+  cardTitle: {
+    color: "#fff",
+    fontSize: 16,
     fontWeight: "bold",
+    marginBottom: 10,
   },
-  detailsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  addButton: {
+    alignItems: "center",
+    padding: 10,
+    borderRadius: 5,
+    borderColor: "#fff",
+    borderWidth: 1,
     marginTop: 10,
   },
-  detailBox: {
-    alignItems: "center",
-  },
-  infoBox: {
-    width: 30,
-    height: 30,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ddd",
-    marginTop: 5,
-    borderRadius: 5,
-  },
-  addExerciseButton: {
-    padding: 15,
-    borderRadius: 5,
-    backgroundColor: "blue",
-    margin: 10,
-    width: "90%",
-    alignSelf: "center",
+  addButtonText: {
+    color: "#fff",
   },
   startWorkoutButton: {
     padding: 15,

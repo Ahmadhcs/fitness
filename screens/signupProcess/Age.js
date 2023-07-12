@@ -60,6 +60,7 @@ const AgeSelection = () => {
 
               </Pressable>
 
+
       <View style={styles.content}>
         {/* Age selector */}
         <View style={styles.ageSelectorContainer}>

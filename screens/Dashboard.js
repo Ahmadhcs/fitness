@@ -7,7 +7,7 @@ import {
   ScrollView,
   Pressable,
   TouchableOpacity,
-  Linking
+  Linking,
 } from "react-native";
 import React, { useLayoutEffect, useEffect, useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -21,118 +21,107 @@ import { AuthContext } from "../context/auth";
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
-
-let utubeAPIKEY = 'AIzaSyCEuZka21EnXBF0yM217BQRw7mpAertXEs'
+let utubeAPIKEY = "AIzaSyCEuZka21EnXBF0yM217BQRw7mpAertXEs";
 let videoSearchArray = [
-  'CBUM workout routine', 
-  'CBUM diet plan', 
-  'Fitness influencers workout', 
-  'Best bodybuilding exercises', 
-  'Shoulder day workout', 
-  'CBUM training tips', 
-  'Fitness influencer transformations', 
-  'Bodybuilding motivational videos', 
-  'Nutrition tips for bodybuilders', 
-  'Muscle recovery techniques', 
-  'Leg Day', 
-  'Back Day', 
-  'Cutting and Bulking Strategies', 
-  'Fitness Influencer Challenge', 
-  'HIIT Workouts', 
-  'Protein-rich recipes for bodybuilders', 
-  'Strength training workouts', 
-  'CBUM lifestyle', 
-  'Bodybuilding competitions', 
-  'Bodybuilding poses tutorial', 
-  'CBUM supplement routine', 
-  'Bodybuilding meal prep', 
-  'Best gym equipment for bodybuilding', 
-  'Bodybuilding myths debunked', 
-  'Bodybuilder day in the life', 
-  'Bodybuilding documentary', 
-  'Female fitness influencers', 
-  'Bodybuilding motivation', 
-  'Bodybuilder interview', 
-  'Fitness influencer gym routine', 
-  'How to start bodybuilding', 
-  'Bodybuilding vs Powerlifting', 
-  'Bodybuilding tips for beginners', 
-  'Fitness influencers cardio routine', 
-  'CrossFit workouts', 
-  'Bodybuilding home workouts', 
-  'Fitness influencers Q&A', 
-  'Bodybuilder vlogs', 
-  'Bodybuilder travel routine', 
-  'Workout playlists', 
-  'Fitness model workout routine', 
-  'How to become a fitness influencer', 
-  'Bodybuilder skincare routine', 
-  'Fitness influencers diet', 
-  'Bodybuilding grocery haul', 
-  'Bodybuilding stretching routine', 
-  'Pre-workout vs Post-workout meals', 
-  'Bodybuilder workout and diet', 
-  'Bodybuilding cooking tips', 
-  'Bodybuilder workout music'
-  ];
+  "CBUM workout routine",
+  "CBUM diet plan",
+  "Fitness influencers workout",
+  "Best bodybuilding exercises",
+  "Shoulder day workout",
+  "CBUM training tips",
+  "Fitness influencer transformations",
+  "Bodybuilding motivational videos",
+  "Nutrition tips for bodybuilders",
+  "Muscle recovery techniques",
+  "Leg Day",
+  "Back Day",
+  "Cutting and Bulking Strategies",
+  "Fitness Influencer Challenge",
+  "HIIT Workouts",
+  "Protein-rich recipes for bodybuilders",
+  "Strength training workouts",
+  "CBUM lifestyle",
+  "Bodybuilding competitions",
+  "Bodybuilding poses tutorial",
+  "CBUM supplement routine",
+  "Bodybuilding meal prep",
+  "Best gym equipment for bodybuilding",
+  "Bodybuilding myths debunked",
+  "Bodybuilder day in the life",
+  "Bodybuilding documentary",
+  "Female fitness influencers",
+  "Bodybuilding motivation",
+  "Bodybuilder interview",
+  "Fitness influencer gym routine",
+  "How to start bodybuilding",
+  "Bodybuilding vs Powerlifting",
+  "Bodybuilding tips for beginners",
+  "Fitness influencers cardio routine",
+  "CrossFit workouts",
+  "Bodybuilding home workouts",
+  "Fitness influencers Q&A",
+  "Bodybuilder vlogs",
+  "Bodybuilder travel routine",
+  "Workout playlists",
+  "Fitness model workout routine",
+  "How to become a fitness influencer",
+  "Bodybuilder skincare routine",
+  "Fitness influencers diet",
+  "Bodybuilding grocery haul",
+  "Bodybuilding stretching routine",
+  "Pre-workout vs Post-workout meals",
+  "Bodybuilder workout and diet",
+  "Bodybuilding cooking tips",
+  "Bodybuilder workout music",
+];
 
-
-let search = `https://www.googleapis.com/youtube/v3/search?key=${utubeAPIKEY}&q=pull day&type=video&maxResults=5&part=snippet`
-
-
-
+let search = `https://www.googleapis.com/youtube/v3/search?key=${utubeAPIKEY}&q=pull day&type=video&maxResults=5&part=snippet`;
 
 let hardCodedPlaylists = [
   {
-    image:'https://i.scdn.co/image/ab67706c0000da841aeb5e4c64f71bb6dc97dd1c',
-    url: 'https://open.spotify.com/playlist/6hwjHl90iQXO8JdBAbA3ky'
+    image: "https://i.scdn.co/image/ab67706c0000da841aeb5e4c64f71bb6dc97dd1c",
+    url: "https://open.spotify.com/playlist/6hwjHl90iQXO8JdBAbA3ky",
   },
   {
-    image:'https://i.scdn.co/image/ab67706c0000da842f2eff7da6b035f1fb1ea4f7',
-    url:'https://open.spotify.com/playlist/7kfohPIiBUM4tF2B8YEn85'
+    image: "https://i.scdn.co/image/ab67706c0000da842f2eff7da6b035f1fb1ea4f7",
+    url: "https://open.spotify.com/playlist/7kfohPIiBUM4tF2B8YEn85",
   },
   {
-    image: 'https://i.scdn.co/image/ab67706c0000da8444b3ae92f2d4e13759ff819d',
-    url:'https://open.spotify.com/playlist/4zbcJeMb3ERz7IXg8GrlMB'
+    image: "https://i.scdn.co/image/ab67706c0000da8444b3ae92f2d4e13759ff819d",
+    url: "https://open.spotify.com/playlist/4zbcJeMb3ERz7IXg8GrlMB",
   },
   {
-    image: "https://i.scdn.co/image/ab67706c0000da842284acb61f89ef8ab9775c8f" ,
-    url: "https://open.spotify.com/playlist/0Ss1MAeS8AiwQylR6C21cj"
+    image: "https://i.scdn.co/image/ab67706c0000da842284acb61f89ef8ab9775c8f",
+    url: "https://open.spotify.com/playlist/0Ss1MAeS8AiwQylR6C21cj",
   },
   {
-    image:"https://i.scdn.co/image/ab67706c0000da84bea7dd2872555605bf4860c7" , 
-    url: "https://open.spotify.com/playlist/1BelNbncQam23oXyJBICsy"
+    image: "https://i.scdn.co/image/ab67706c0000da84bea7dd2872555605bf4860c7",
+    url: "https://open.spotify.com/playlist/1BelNbncQam23oXyJBICsy",
   },
   {
     image: "https://i.scdn.co/image/ab67706c0000da84a2d8311f2300d23baac12f0e",
-    url: "https://open.spotify.com/playlist/3iPLJ8T1TRjElEPOsNUISN"
+    url: "https://open.spotify.com/playlist/3iPLJ8T1TRjElEPOsNUISN",
   },
   {
     image: "https://i.scdn.co/image/ab67706c0000da84622c36e105af4aac83c34e77",
-    url: "https://open.spotify.com/playlist/7JIGfa0KkCTDxUPOQySODP"
+    url: "https://open.spotify.com/playlist/7JIGfa0KkCTDxUPOQySODP",
   },
-  
-
-]
-
-
-
+];
 
 handleClick = (link) => {
-    Linking.canOpenURL(`${link}`).then(supported => {
-      if (supported) {
-        Linking.openURL(`${link}`);
-      } else {
-        console.log("Don't know how to open URI: " + "https://google.com");
-      }
-    });
-}
+  Linking.canOpenURL(`${link}`).then((supported) => {
+    if (supported) {
+      Linking.openURL(`${link}`);
+    } else {
+      console.log("Don't know how to open URI: " + "https://google.com");
+    }
+  });
+};
 
-const chooseGymplaylist = () =>{
+const chooseGymplaylist = () => {
   const result = [];
   const copiedArr = [...hardCodedPlaylists];
 
-  
   for (let i = 0; i < 3; i++) {
     const randomIndex = Math.floor(Math.random() * copiedArr.length);
     const randomItem = copiedArr[randomIndex];
@@ -140,13 +129,11 @@ const chooseGymplaylist = () =>{
     copiedArr.splice(randomIndex, 1); // Splice out the selected item from the copied array
   }
 
-
-
-  return result
-}
+  return result;
+};
 
 const Dashboard = (props) => {
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
   const [videos, setVideos] = useState([]);
   const [name, setName] = useState("");
   const [state, setState] = useContext(AuthContext);
@@ -195,7 +182,7 @@ const Dashboard = (props) => {
 
     const retrieveVideos = async () => {
       try {
-        const storedVideos = await AsyncStorage.getItem('videos');
+        const storedVideos = await AsyncStorage.getItem("videos");
         if (storedVideos) {
           setVideos(JSON.parse(storedVideos));
         } else {
@@ -231,7 +218,7 @@ const Dashboard = (props) => {
   useEffect(() => {
     const storeVideos = async () => {
       try {
-        await AsyncStorage.setItem('videos', JSON.stringify(videos));
+        await AsyncStorage.setItem("videos", JSON.stringify(videos));
       } catch (error) {
         console.error(error);
       }
@@ -245,28 +232,21 @@ const Dashboard = (props) => {
     return shuffledArray.slice(0, count);
   };
 
-  const gymPlaylistArray = props.gymPlaylistArray
-
-
-
-
-  
-
+  const gymPlaylistArray = props.gymPlaylistArray;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {/* Profle Picture */}
       <View style={styles.user}>
-        <Image
-          style={styles.pfp}
-          source={require("../images/cole.jpeg")}
-        ></Image>
+        <Image style={styles.pfp} source={require("../images/cole.jpeg")}></Image>
 
         {/* Welcome Text and Date */}
         <View style={styles.innerText}>
           <Text style={styles.userText}>Welcome, {name}!</Text>
 
-          <Text style={styles.date}>{currentDate.slice(4,10)},{currentDate.slice(10)}</Text>
+          <Text style={styles.date}>
+            {currentDate.slice(4, 10)},{currentDate.slice(10)}
+          </Text>
         </View>
       </View>
 
@@ -283,43 +263,71 @@ const Dashboard = (props) => {
         </Text>
       </Pressable> */}
 
-      <Text style={{fontSize: 18, fontWeight: "600", paddingLeft: 20, paddingTop: 10, paddingBottom: 10}}>Recommended Gym Playlists</Text>
+      <Text
+        style={{
+          fontSize: 18,
+          fontWeight: "600",
+          paddingLeft: 20,
+          paddingTop: 10,
+          paddingBottom: 10,
+        }}>
+        Recommended Gym Playlists
+      </Text>
       <View style={styles.playListSection}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: "row" }}>
           <TouchableOpacity onPress={() => handleClick(gymPlaylistArray[0].url)}>
-            <Image style={styles.playlistPicture}  source={{uri: gymPlaylistArray[0].image}}></Image>
+            <Image
+              style={styles.playlistPicture}
+              source={{ uri: gymPlaylistArray[0].image }}></Image>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => handleClick(gymPlaylistArray[1].url)}> 
-          <Image style={styles.playlistPicture}  source={{uri: gymPlaylistArray[1].image}}></Image>
+          <TouchableOpacity onPress={() => handleClick(gymPlaylistArray[1].url)}>
+            <Image
+              style={styles.playlistPicture}
+              source={{ uri: gymPlaylistArray[1].image }}></Image>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => handleClick(gymPlaylistArray[2].url)}>
-          <Image style={styles.playlistPicture}  source={{uri: gymPlaylistArray[2].image}}></Image>
+            <Image
+              style={styles.playlistPicture}
+              source={{ uri: gymPlaylistArray[2].image }}></Image>
           </TouchableOpacity>
-
         </View>
-
       </View>
 
+      {/*THis is the video sextion*/}
+      <Text
+        style={{
+          fontSize: 18,
+          fontWeight: "600",
+          paddingLeft: 20,
+          paddingBottom: 5,
+          paddingTop: 5,
+        }}>
+        Fitness Videos
+      </Text>
 
-
-
-      {/*THis is the video sextion*/ }
-      <Text style={{fontSize: 18, fontWeight: "600", paddingLeft: 20, paddingBottom: 5, paddingTop: 5}}>Fitness Videos</Text>
-
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.videoSection}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.videoSection}>
         {videos.map((video) => (
-        <View style={styles.videoCard}>
-          <Image
-            source={{ uri: video.snippet.thumbnails.medium.url }}
-            style={{ width: 240, height: 120 ,top :-10, borderTopLeftRadius: 20,  borderTopRightRadius: 20}}
-          />
-          <Text style={{width: '90%', paddingLeft: 15}}>{video.snippet.title}</Text>
-        </View>
-      ))}
+          <View style={styles.videoCard}>
+            <Image
+              source={{ uri: video.snippet.thumbnails.medium.url }}
+              style={{
+                width: 240,
+                height: 120,
+                top: -10,
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+              }}
+            />
+            <Text style={{ width: "90%", paddingLeft: 15 }}>{video.snippet.title}</Text>
+          </View>
+        ))}
 
-      {/* <TouchableOpacity activeOpacity={1} style={styles.videoCard} onPress={() => handleClick('https://google.com')}>
+        {/* <TouchableOpacity activeOpacity={1} style={styles.videoCard} onPress={() => handleClick('https://google.com')}>
           <Image
             source={require("../images/place.jpg")}
             style={{ width: 240, height: 120 ,top :-10, borderTopLeftRadius: 20,  borderTopRightRadius: 20}}
@@ -345,13 +353,10 @@ const Dashboard = (props) => {
                   <Text style={{paddingLeft: 10,  paddingRight: 10, fontSize: 14, fontWeight: '400', paddingTop: 8}}>Push Day with Mustafa the BUM ej fww !</Text>
 
         </View> */}
-
-
-
       </ScrollView>
 
       {/* Log Button */}
-    
+
       {/* I commented this out because I declared it in the App.js so we can
       choose which pages got a navbar
       <View style={styles.bottom}>
@@ -362,8 +367,6 @@ const Dashboard = (props) => {
 };
 
 const gymPlaylistArray = chooseGymplaylist();
-
-
 
 const styles = StyleSheet.create({
   user: {
@@ -381,8 +384,8 @@ const styles = StyleSheet.create({
   date: {
     paddingLeft: 21,
     paddingTop: 5,
-    color: 'gray',
-    fontWeight: "500"
+    color: "gray",
+    fontWeight: "500",
   },
   userText: {
     paddingLeft: 20,
@@ -422,38 +425,36 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginLeft: 20,
   },
-  videoSection:{
+  videoSection: {
     paddingLeft: 8.5,
-    height: screenHeight * 0.3
-
+    height: screenHeight * 0.3,
   },
-  videoCard:{
+  videoCard: {
     borderRadius: 20,
     marginHorizontal: 7.5,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     paddingTop: 10,
     width: 240,
     height: screenHeight * 0.225,
     marginTop: 10,
     borderTopStartRadius: 300,
     borderTopEndRadius: 300,
-    shadowOffset: {width: -5, height: 3},
-    shadowColor: 'gray',
+    shadowOffset: { width: -5, height: 3 },
+    shadowColor: "gray",
     shadowOpacity: 0.5,
-    shadowRadius: 3
+    shadowRadius: 3,
   },
-  playListSection:{
+  playListSection: {
     height: screenHeight * 0.15,
     paddingLeft: 15,
     paddingTop: 5,
   },
-  playlistPicture:{
+  playlistPicture: {
     width: screenWidth * 0.275,
     height: screenWidth * 0.275,
     borderRadius: 25,
-    marginHorizontal: 7.5
-
-  }
+    marginHorizontal: 7.5,
+  },
 });
 
 export default (chooseGymplaylist) => <Dashboard gymPlaylistArray={gymPlaylistArray} />;
