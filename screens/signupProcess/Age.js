@@ -7,14 +7,17 @@ import {
   Pressable,
   Dimensions,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import RNPickerSelect from "react-native-picker-select";
 import { AntDesign } from "@expo/vector-icons";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
-
 const AgeSelection = () => {
+  const route = useRoute();
+  const { userInfo, userGender } = route.params;
+
+  console.log(userInfo);
   const navigation = useNavigation();
   const [selectedAge, setSelectedAge] = useState(null);
 
@@ -35,7 +38,11 @@ const AgeSelection = () => {
   };
 
   const handleContinue = () => {
-    navigation.navigate("Metrics");
+    navigation.navigate("Metrics", {
+      userName: userInfo,
+      userGender: userGender,
+      userAge: selectedAge,
+    });
   };
 
   return (
@@ -62,6 +69,7 @@ const AgeSelection = () => {
           <AntDesign name="arrowleft" style={{ color: "white", fontSize: 20 }} />
         </View>
       </Pressable>
+
       <View style={styles.content}>
         {/* Age selector */}
         <View style={styles.ageSelectorContainer}>
@@ -147,16 +155,14 @@ const styles = StyleSheet.create({
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
+    backgroundColor: "rgb(225,225,225)",
+    width: "15%",
+    padding: 20,
     borderColor: "gray",
-    borderRadius: 4,
-    color: "black",
-    paddingRight: 30,
-    width: "80%",
     alignSelf: "center",
+    marginVertical: 5,
+    borderRadius: "20%",
+    fontSize: 15,
   },
 });
 

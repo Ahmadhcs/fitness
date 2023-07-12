@@ -31,7 +31,7 @@ const Name = () => {
   }, []);
 
   const handleName = () => {
-    navigation.navigate("Gender");
+    navigation.navigate("Gender", {userName: name});
   };
 
   return (

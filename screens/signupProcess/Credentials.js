@@ -11,23 +11,51 @@ import {
   Keyboard,
   Dimensions,
 } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { useLayoutEffect, useState, useContext } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
+import axios from "axios";
+// import a from "@ant-design/react-native/lib/modal/alert";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { json } from "d3";
+import { AuthContext } from "../../context/auth";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 const Credentials = () => {
+  const route = useRoute();
+
+  const {userInfo, userGender, userAge, userHeight, userWeight, heightUnit, weightUnit} =route.params
+
+
+
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [state, setState] = useContext(AuthContext)
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, []);
-  const handleCredentials = () => {
-    navigation.navigate("Dashboard");
+  const handleCredentials = async () => {
+    try {
+      const resp = await axios.post('http://localhost:8000/api/signup', {name: userInfo, email, password, gender:userGender, weight: userWeight, height: userHeight, age: userAge, heightUnit: heightUnit, weightUnit: weightUnit  });
+      console.log(resp.data.error);
+      if (resp.data.error) {
+        alert(resp.data.error);
+      } else {
+        setState(resp.data)
+        await AsyncStorage.setItem('auth-rn', JSON.stringify(resp.data))
+        alert("Nice");
+        navigation.navigate("Dashboard");
+
+      }
+      
+    } catch (error) {
+      console.error("An error occurred:", error.message);
+      // Handle the error case
+    }
   };
   return (
     <SafeAreaView style={styles.container}>

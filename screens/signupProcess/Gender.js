@@ -7,7 +7,7 @@ import {
   Pressable,
   Dimensions,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 
 // Screen dimensions
@@ -15,6 +15,9 @@ const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
 const Gender = () => {
+  const route = useRoute();
+  const { userName } = route.params;
+
   const navigation = useNavigation();
   const [selectedGender, setSelectedGender] = useState(null);
 
@@ -29,7 +32,7 @@ const Gender = () => {
   };
 
   const handleContinue = () => {
-    navigation.navigate("Age");
+    navigation.navigate("Age", { userInfo: userName, userGender: selectedGender });
   };
 
   return (
