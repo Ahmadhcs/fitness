@@ -7,7 +7,7 @@ import {
   Pressable,
   Dimensions,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute} from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 
 // Screen dimensions
@@ -16,6 +16,10 @@ const screenWidth = Dimensions.get("window").width;
 
 
 const Gender = () => {
+  const route = useRoute();
+  const { userName } = route.params;
+
+
   const navigation = useNavigation();
   const [selectedGender, setSelectedGender] = useState(null);
 
@@ -30,7 +34,7 @@ const Gender = () => {
   };
 
   const handleContinue = () => {
-    navigation.navigate("Age");
+    navigation.navigate("Age", {userInfo: userName, userGender: selectedGender});
   };
 
   return (
@@ -47,9 +51,8 @@ const Gender = () => {
       <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
                 <View style={{backgroundColor: 'blue', width: screenWidth * 0.1, height:  screenWidth * 0.1, justifyContent: 'center', alignItems: 'center', borderRadius: '50%'}}>
                     <AntDesign name="arrowleft" style={{color: 'white', fontSize: 20}} />
-                </View>
-
-              </Pressable>
+               </View>
+         </Pressable>
 
 
       <View style={styles.content}>

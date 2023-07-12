@@ -2,6 +2,8 @@ import { View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import { AuthProvider } from "./context/auth";
+
 // Screens
 import LoginRegister from "./screens/LoginRegister";
 import Dashboard from "./screens/Dashboard";
@@ -39,6 +41,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
+    <AuthProvider>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {/* Conditional rendering of screens based on sign-in state */}
         {isSignedIn ? (
@@ -62,7 +65,7 @@ export default function App() {
             <Stack.Screen name="LogMeal" component={LogMeal} />
             <Stack.Screen name="GeneratedMeals" component={GeneratedMeals} />
 
-
+          
           </>
         ) : (
           // User isn't signed in
@@ -75,7 +78,9 @@ export default function App() {
             <Stack.Screen name="Credentials" component={Credentials} />
           </>
         )}
+        
       </Stack.Navigator>
+      </AuthProvider>
     </NavigationContainer>
   );
 }

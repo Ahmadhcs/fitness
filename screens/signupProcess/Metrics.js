@@ -8,13 +8,19 @@ import {
   Dimensions,
   Switch,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import RNPickerSelect from "react-native-picker-select";
 import { AntDesign } from "@expo/vector-icons";
+
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
 const Metrics = () => {
+  const route = useRoute();
+  const {userName, userGender, userAge} =route.params
+
+
+
   const navigation = useNavigation();
   const [weight, setWeight] = useState(null);
   const [height, setHeight] = useState(null);
@@ -42,7 +48,7 @@ const Metrics = () => {
   }, []);
 
   const handleMeasure = () => {
-    navigation.navigate("Credentials");
+    navigation.navigate("Credentials",{userInfo: userName, userGender: userGender, userAge: userAge, userHeight: height, userWeight: weight, heightUnit: isMetricHeight, weightUnit: isMetricWeight});
   };
 
   return (
