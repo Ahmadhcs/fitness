@@ -3,6 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+import { AuthProvider } from "./context/auth";
+
 // Screens
 import LoginRegister from "./screens/LoginRegister";
 import Dashboard from "./screens/Dashboard";
@@ -39,8 +41,10 @@ export default function App() {
   const isSignedIn = true;
 
   return (
+
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
+         <AuthProvider>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {/* Conditional rendering of screens based on sign-in state */}
           {isSignedIn ? (
@@ -76,6 +80,7 @@ export default function App() {
             </>
           )}
         </Stack.Navigator>
+        </AuthProvider>
       </NavigationContainer>
     </GestureHandlerRootView>
   );

@@ -9,11 +9,13 @@ import {
   TouchableOpacity,
   Linking,
 } from "react-native";
-import React, { useLayoutEffect, useEffect, useState } from "react";
+import React, { useLayoutEffect, useEffect, useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Navbar from "../components/Navbar";
 import { Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { AuthContext } from "../context/auth";
 
 // Screen dimensions
 const screenHeight = Dimensions.get("window").height;
@@ -133,8 +135,19 @@ const chooseGymplaylist = () => {
 const Dashboard = (props) => {
   const [url, setUrl] = useState("");
   const [videos, setVideos] = useState([]);
+  const [name, setName] = useState("");
+  const [state, setState] = useContext(AuthContext);
+  
+  useEffect(() => {
+    console.log("THISSSS" ,state.user)
 
+    if (state) {
+      const { name, email, gender, weight, height, age } = state.user;
+      setName(name);
+    }
+  }, [state]);
   const navigation = useNavigation();
+
 
   // Date details
   const today = new Date();
@@ -229,7 +242,7 @@ const Dashboard = (props) => {
 
         {/* Welcome Text and Date */}
         <View style={styles.innerText}>
-          <Text style={styles.userText}>Welcome, Ahmad!</Text>
+          <Text style={styles.userText}>Welcome, {name}!</Text>
 
           <Text style={styles.date}>
             {currentDate.slice(4, 10)},{currentDate.slice(10)}
@@ -445,3 +458,4 @@ const styles = StyleSheet.create({
 });
 
 export default (chooseGymplaylist) => <Dashboard gymPlaylistArray={gymPlaylistArray} />;
+

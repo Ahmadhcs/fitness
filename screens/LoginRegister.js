@@ -1,13 +1,16 @@
-import React, { useState, useLayoutEffect } from "react";
+import axios from "axios";
+import React, { useState, useLayoutEffect, useContext } from "react";
 import { StyleSheet, Text, View, Pressable, TextInput, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../context/auth";
 
 const LoginRegister = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const slideAnim = useState(new Animated.Value(300))[0]; // Initial value for right-to-left animation
-
+  const [state, setState] = useContext(AuthContext)
   const openModal = () => {
     setModalVisible(true);
     Animated.timing(slideAnim, {
@@ -26,8 +29,28 @@ const LoginRegister = ({ navigation }) => {
     }).start();
   };
 
-  const login = () => {
-    // Authenticate user
+  const handleLogin = async () => {
+    if(email === '' || password === ''){
+      alert("all fields are required")
+      return;
+    }
+
+    try {
+      const resp = await axios.post('http://localhost:8000/api/signin', { email, password });
+      if (resp.data.error) {
+        alert(resp.data.error);
+      } else {
+        setState(resp.data)
+        console.log("This" , resp.data)
+        await AsyncStorage.setItem('auth-rn', JSON.stringify(resp.data))
+        navigation.navigate("Dashboard");
+      }
+      
+  
+    } catch (error) {
+      console.error("An error occurred:", error.message);
+    }
+
   };
 
   useLayoutEffect(() => {
@@ -87,7 +110,7 @@ const LoginRegister = ({ navigation }) => {
           />
           <Pressable
             style={styles.loginButton}
-            onPress={() => navigation.navigate("Dashboard")}>
+            onPress={() => handleLogin()}>
             <Text style={styles.loginButtonText}>Log In</Text>
           </Pressable>
         </Animated.View>
