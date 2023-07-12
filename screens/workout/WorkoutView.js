@@ -3,10 +3,33 @@ import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from "react-na
 import { Feather } from "@expo/vector-icons";
 import ExerciseCard from "../../components/ExerciseCard";
 
+function createUUID() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
 function WorkoutView({ boxName, navigate }) {
   const [exercises, setExercises] = useState([
-    { id: 1, name: "Exercise 1", sets: [1, 2] },
-    { id: 2, name: "Exercise 2", sets: [1, 2, 3] },
+    {
+      id: createUUID(),
+      name: "Exercise 1",
+      sets: [
+        { id: createUUID(), name: "Set 1" },
+        { id: createUUID(), name: "Set 2" },
+      ],
+    },
+    {
+      id: createUUID(),
+      name: "Exercise 2",
+      sets: [
+        { id: createUUID(), name: "Set 1" },
+        { id: createUUID(), name: "Set 2" },
+        { id: createUUID(), name: "Set 3" },
+      ],
+    },
   ]);
 
   const handleGoBack = () => {
@@ -29,7 +52,7 @@ function WorkoutView({ boxName, navigate }) {
     setExercises(
       exercises.map((exercise) => {
         if (exercise.id === exerciseId) {
-          return { ...exercise, sets: exercise.sets.filter((set) => set !== setId) };
+          return { ...exercise, sets: exercise.sets.filter((set) => set.id !== setId) };
         }
         return exercise;
       })
@@ -40,10 +63,8 @@ function WorkoutView({ boxName, navigate }) {
     setExercises(
       exercises.map((exercise) => {
         if (exercise.id === exerciseId) {
-          return {
-            ...exercise,
-            sets: [...exercise.sets, Math.max(...exercise.sets) + 1],
-          };
+          const newSet = { id: createUUID(), name: `Set ${exercise.sets.length + 1}` };
+          return { ...exercise, sets: [...exercise.sets, newSet] };
         }
         return exercise;
       })
@@ -64,11 +85,11 @@ function WorkoutView({ boxName, navigate }) {
       {exercises.map((exercise) => (
         <View key={exercise.id} style={styles.card}>
           <Text style={styles.cardTitle}>{exercise.name}</Text>
-          {exercise.sets.map((setId) => (
+          {exercise.sets.map((set) => (
             <ExerciseCard
-              key={setId}
-              data={`Set ${setId}`}
-              onDelete={() => handleDeleteSet(exercise.id, setId)}
+              key={set.id}
+              data={set.name}
+              onDelete={() => handleDeleteSet(exercise.id, set.id)}
             />
           ))}
           <TouchableOpacity
