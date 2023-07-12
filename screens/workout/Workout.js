@@ -9,10 +9,12 @@ import {
   Modal,
   ScrollView,
   TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import Navbar from "../../components/Navbar";
+import Box from "../../components/Box";
 
 // Constants for dimensions and weekdays
 const screenWidth = Dimensions.get("window").width;
@@ -32,7 +34,7 @@ function FloatingButton({ onPress, navigate }) {
 }
 
 // Main Workout component
-function Workout({ newBoxes, navigate, workoutSplit }) {
+function Workout({ newBoxes, navigate, workoutSplit, deleteBox }) {
   // Calculating the list of boxes only when newBoxes change
   const boxes = useMemo(() => newBoxes, [newBoxes]);
 
@@ -47,6 +49,10 @@ function Workout({ newBoxes, navigate, workoutSplit }) {
 
   const handleGoToWorkoutSplit = () => {
     navigate("workout", "workoutSplitModal");
+  };
+
+  const onDeleteHandler = (index) => {
+    deleteBox(index);
   };
 
   // Creating a new Date object for today's date
@@ -101,16 +107,13 @@ function Workout({ newBoxes, navigate, workoutSplit }) {
             )}
             {boxes.map((box, index) => (
               // For each 'box', a TouchableOpacity is rendered with a unique 'key' prop (for performance)
-              <TouchableOpacity
+              <Box
+                box={box}
                 key={index}
-                style={
-                  boxes.length % 2 !== 0 && index === boxes.length - 1
-                    ? styles.oddBoxContainer
-                    : styles.evenBoxContainer
-                }
-                onPress={() => handleGoToWorkoutView(box)}>
-                <Text style={styles.boxText}>{box}</Text>
-              </TouchableOpacity>
+                isLastBox={boxes.length % 2 !== 0 && index === boxes.length - 1}
+                handleGoToWorkoutView={() => handleGoToWorkoutView(box)}
+                onDeleteBox={() => onDeleteHandler(index)}
+              />
             ))}
             <TouchableOpacity style={styles.aiButton}>
               <Text style={styles.buttonText}>Generate a Workout</Text>
@@ -285,5 +288,10 @@ const styles = StyleSheet.create({
     aspectRatio: 2,
     margin: "2%",
     borderRadius: 12,
+  },
+  deleteBox: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

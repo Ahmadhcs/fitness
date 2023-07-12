@@ -20,7 +20,6 @@ export default function WorkoutManager() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const [boxName, setBoxName] = useState("");
-
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
   const [workoutName, setWorkoutName] = useState("");
@@ -40,6 +39,10 @@ export default function WorkoutManager() {
 
   // State management for the workout boxes in the Workout component
   const [newBoxes, setNewBoxes] = useState([]);
+
+  const deleteBox = (index) => {
+    setNewBoxes((prevBoxes) => prevBoxes.filter((_, i) => i !== index));
+  };
 
   // A function that manages the navigation between components.
   // It takes the current component and the target component as parameters and sets their visibility accordingly.
@@ -140,6 +143,7 @@ export default function WorkoutManager() {
           navigate={handleNavigate}
           workoutSplit={workoutSplit}
           onAddExercise={handleAddExercise}
+          deleteBox={deleteBox}
         />
       )}
       {addWorkoutVisible && (
@@ -147,6 +151,7 @@ export default function WorkoutManager() {
           navigate={handleNavigate}
           onAddNewBox={handleAddNewBox}
           exercises={addedExercises}
+          setExercises={setAddedExercises}
           onDeleteWorkout={handleDeleteWorkout}
           workoutName={workoutName}
           onWorkoutNameChange={handleWorkoutNameChange}

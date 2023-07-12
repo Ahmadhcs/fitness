@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -20,6 +20,7 @@ function AddWorkout({
   onWorkoutNameChange,
   notes,
   onNotesChange,
+  setExercises,
 }) {
   // State for delete modal visibility
   const [modalVisible, setModalVisible] = useState(false);
@@ -54,6 +55,10 @@ function AddWorkout({
     navigate("addWorkout", "workout");
   };
 
+  const handleDeleteExercise = (exerciseId) => {
+    setExercises(exercises.filter((exercise) => exercise.id !== exerciseId));
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -83,7 +88,11 @@ function AddWorkout({
         value={notes}
       />
       {exercises.map((exercise) => (
-        <ExerciseCard key={exercise.id} name={exercise.name} />
+        <ExerciseCard
+          key={exercise.id}
+          name={exercise.name}
+          onDelete={() => handleDeleteExercise(exercise.id)}
+        />
       ))}
       <TouchableOpacity style={styles.addButton} onPress={handleOpenExerciseModal}>
         <Text style={styles.addButtonText}>Add Exercise</Text>

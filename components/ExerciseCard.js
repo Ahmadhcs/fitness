@@ -14,7 +14,7 @@ const LIST_ITEM_HEIGHT = 50;
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.3;
 
-function ExerciseCard({ data, onDelete }) {
+function ExerciseCard({ name, onDelete }) {
   const translateX = useSharedValue(0);
 
   const panGesture = useAnimatedGestureHandler({
@@ -53,7 +53,7 @@ function ExerciseCard({ data, onDelete }) {
       </Animated.View>
       <PanGestureHandler onGestureEvent={panGesture}>
         <Animated.View style={[styles.task, rStyle]}>
-          <Text style={styles.taskTitle}>{data}</Text>
+          <Text style={styles.taskTitle}>{name}</Text>
         </Animated.View>
       </PanGestureHandler>
     </Animated.View>
