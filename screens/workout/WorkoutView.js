@@ -74,11 +74,11 @@ function WorkoutView({ boxName, navigate }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleGoBack}>
+        <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
           <Feather name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
         <Text style={styles.title}>Your {boxName} Routine</Text>
-        <TouchableOpacity onPress={handleExport}>
+        <TouchableOpacity style={styles.exportButton} onPress={handleExport}>
           <Feather name="download" size={24} color="black" />
         </TouchableOpacity>
       </View>
@@ -159,6 +159,12 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+  },
+  backButton: {
+    marginLeft: 10,
+  },
+  exportButton: {
+    marginRight: 10,
   },
 });
 

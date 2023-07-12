@@ -41,8 +41,8 @@ function Workout({ newBoxes, navigate, workoutSplit }) {
     navigate("workout", "addWorkout");
   };
 
-  const handleGoToWorkoutView = () => {
-    navigate("workout", "workoutView");
+  const handleGoToWorkoutView = (boxName) => {
+    navigate("workout", "workoutView", null, null, boxName);
   };
 
   const handleGoToWorkoutSplit = () => {
@@ -108,7 +108,7 @@ function Workout({ newBoxes, navigate, workoutSplit }) {
                     ? styles.oddBoxContainer
                     : styles.evenBoxContainer
                 }
-                onPress={handleGoToWorkoutView}>
+                onPress={() => handleGoToWorkoutView(box)}>
                 <Text style={styles.boxText}>{box}</Text>
               </TouchableOpacity>
             ))}

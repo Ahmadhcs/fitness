@@ -19,6 +19,8 @@ export default function WorkoutManager() {
   const [workoutSplitModalVisible, setWorkoutSplitModalVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
+  const [boxName, setBoxName] = useState("");
+
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
   const [workoutName, setWorkoutName] = useState("");
@@ -41,7 +43,7 @@ export default function WorkoutManager() {
 
   // A function that manages the navigation between components.
   // It takes the current component and the target component as parameters and sets their visibility accordingly.
-  const handleNavigate = (current, target, day, category) => {
+  const handleNavigate = (current, target, day, category, boxName) => {
     switch (current) {
       case "workout":
         setWorkoutVisible(false);
@@ -82,6 +84,7 @@ export default function WorkoutManager() {
         break;
       case "workoutView":
         setWorkoutViewVisible(true);
+        setBoxName(boxName);
         break;
       case "calendarModal":
         setCalendarModalVisible(true);
@@ -162,7 +165,7 @@ export default function WorkoutManager() {
           onAddExercise={handleAddExercise}
         />
       )}
-      {workoutViewVisible && <WorkoutView boxName={newBoxes} navigate={handleNavigate} />}
+      {workoutViewVisible && <WorkoutView boxName={boxName} navigate={handleNavigate} />}
       <CalendarModal
         visible={calendarModalVisible}
         onModalClose={() => handleNavigate("calendarModal", "workout")}
