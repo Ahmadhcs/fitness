@@ -11,9 +11,9 @@ const screenWidth = Dimensions.get("window").width;
 const WeightBar = (props) => {
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: "row", paddingTop: 8, paddingLeft: 8 }}>
-        <Text style={styles.dateText}>1 Aug, 2020</Text>
-        <Text style={styles.actualWeight}>63 kg</Text>
+      <View style={{ flexDirection: "row", paddingTop: 10, paddingLeft: 17.5 }}>
+        <Text style={styles.dateText}>{props.date}</Text>
+        <Text style={styles.actualWeight}>{props.weight}</Text>
       </View>
       <Text style={styles.weightChange}>1 kg</Text>
     </View>
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 2.5 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
-    borderRadius: 6,
+    borderRadius: 20,
     backgroundColor: "white",
   },
   dateText: {
@@ -40,11 +40,12 @@ const styles = StyleSheet.create({
   weightChange: {
     fontSize: 15,
     fontWeight: "300",
-    paddingTop: 14,
-    paddingLeft: 10,
+
+    paddingLeft: 18,
   },
   actualWeight: {
-    marginLeft: screenWidth * 0.4,
+    marginLeft: screenWidth * 0.45,
+    marginTop: 15,
     fontSize: 18,
     fontWeight: "500",
   },

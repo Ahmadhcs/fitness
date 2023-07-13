@@ -71,7 +71,7 @@ const Credentials = () => {
                 <View style={styles.progressBar}>
                   <View style={styles.progress} />
                 </View>
-                <Text style={styles.progressText}>X of X</Text>
+                <Text style={styles.progressText}>5 of 5</Text>
               </View>
 
               {/* Back button */}
@@ -213,11 +213,13 @@ const styles = StyleSheet.create({
   },
   progress: {
     height: "100%",
-    width: `${(1 / 4) * 100}%`,
+    width: `${(5/ 5) * 100}%`,
     borderRadius: 5,
     backgroundColor: "blue",
   },
-  progressText: {},
+  progressText: {
+    marginRight: 7.5
+  },
 });
 
 export default Credentials;

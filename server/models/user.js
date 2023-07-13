@@ -41,7 +41,17 @@ const userSchema = new Schema({
       weightUnit:{
         type: Boolean, 
         required: true
-      }
+      },
+      weightHistory: [{
+        weight: {
+          type: Number,
+          required: true,
+        },
+        date: {
+          type: String,
+          required: true,
+        },
+      }],
 
   });
 

@@ -48,7 +48,7 @@ const Name = () => {
                 <View style={styles.progressBar}>
                   <View style={styles.progress} />
                 </View>
-                <Text style={styles.progressText}>X of X</Text>
+                <Text style={styles.progressText}>1 of 5</Text>
               </View>
 
               {/* Back button */}
@@ -187,7 +187,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: "blue",
   },
-  progressText: {},
+  progressText: {
+    marginRight: 10
+  },
 });
 
 export default Name;

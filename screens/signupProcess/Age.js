@@ -49,7 +49,7 @@ const AgeSelection = () => {
         <View style={styles.progressBar}>
           <View style={styles.progress} />
         </View>
-        <Text style={styles.progressText}>X of X</Text>
+        <Text style={styles.progressText}>3 of 5</Text>
       </View>
 
       {/* Back button */}
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   progress: {
     height: "100%",
-    width: `${(1 / 4) * 100}%`,
+    width: `${(3 / 5) * 100}%`,
     borderRadius: 5,
     backgroundColor: "blue",
   },
@@ -142,6 +142,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
+  progressText:{
+    marginRight: 8
+  }
 });
 
 const pickerSelectStyles = StyleSheet.create({

@@ -5,6 +5,8 @@ const router = express.Router()
 
 //controllers
 const {signup, signin} = require("../controllers/auth")
+const {addWeight} = require("../controllers/weight")
+
 
 
 router.get("/", (req, res) =>{
@@ -16,6 +18,8 @@ router.get("/", (req, res) =>{
 
 router.post('/signup', signup)
 router.post('/signin', signin)
+router.post("/addWeight", addWeight);
+
 
 
 export default router
