@@ -4,6 +4,7 @@ import { Feather } from "@expo/vector-icons";
 import ExerciseCard from "../../components/ExerciseCard";
 import { useNavigation } from "@react-navigation/native";
 
+// forget for now but also move this function util
 function createUUID() {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0;

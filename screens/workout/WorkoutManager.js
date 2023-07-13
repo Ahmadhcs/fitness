@@ -141,8 +141,9 @@ export default function WorkoutManager() {
         <Workout
           newBoxes={newBoxes}
           navigate={handleNavigate}
+          onAddExercise={handleAddExercise} // Brought this back
           deleteBox={deleteBox}
-          calendarModalVisible={calendarModalVisible}
+          calendarModalVisible={calendarModalVisible} // Added this
         />
       )}
       {addWorkoutVisible && (

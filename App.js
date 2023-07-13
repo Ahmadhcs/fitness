@@ -25,6 +25,9 @@ import GeneratedWorkout from "./screens/workout/GeneratedWorkout";
 // Workout Manager
 import WorkoutManager from "./screens/workout/WorkoutManager";
 
+// New Changes
+import AddWorkout from "./screens/workout/AddWorkout";
+
 const withNavbar = (Component) => {
   return (props) => (
     <View style={{ flex: 1, justifyContent: "space-between" }}>
@@ -67,6 +70,9 @@ export default function App() {
               <Stack.Screen name="GeneratedMeals" component={GeneratedMeals} />
               <Stack.Screen name="Loading" component={Loading} />
               <Stack.Screen name="GeneratedWorkout" component={GeneratedWorkout} />
+
+              {/* New CHanges */}
+              <Stack.Screen name="AddWorkout" component={AddWorkout} />
             </>
           ) : (
             // User isn't signed in

@@ -2,16 +2,12 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import ExerciseCard from "../../components/ExerciseCard";
+import { createUUID } from "../../utils/generateUUID";
 
-function createUUID() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0;
-    const v = c === "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-}
-
+// boxName is passed from workoutmanager that is passed from workout to display the workoutName
+// navigate is passed from workoutmanager to navigate
 function WorkoutView({ boxName, navigate }) {
+  // exercises should also be passed in from workoutmanager to show the exercises that are saved
   const [exercises, setExercises] = useState([
     {
       id: createUUID(),
@@ -32,22 +28,22 @@ function WorkoutView({ boxName, navigate }) {
     },
   ]);
 
+  // close the modal
   const handleGoBack = () => {
     navigate("workoutView", "workout");
   };
 
-  const handleExport = () => {
-    //  Export functionality here
-  };
-
+  // if edit button no need for this
   const handleAddExercise = () => {
     navigate("workoutView", "exerciseModal");
   };
 
+  // still need to implement this
   const handleStartWorkout = () => {
     // Start workout functionality here
   };
 
+  //  if edit button no need for this
   const handleDeleteSet = (exerciseId, setId) => {
     setExercises(
       exercises.map((exercise) => {
@@ -78,7 +74,7 @@ function WorkoutView({ boxName, navigate }) {
           <Feather name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
         <Text style={styles.title}>Your {boxName} Routine</Text>
-        <TouchableOpacity style={styles.exportButton} onPress={handleExport}>
+        <TouchableOpacity style={styles.exportButton}>
           <Feather name="download" size={24} color="black" />
         </TouchableOpacity>
       </View>
