@@ -19,6 +19,8 @@ import Credentials from "./screens/signupProcess/Credentials";
 import Metrics from "./screens/signupProcess/Metrics";
 import Gender from "./screens/signupProcess/Gender";
 import Age from "./screens/signupProcess/Age";
+import Loading from "./screens/Loading";
+import GeneratedWorkout from "./screens/workout/GeneratedWorkout";
 
 // Workout Manager
 import WorkoutManager from "./screens/workout/WorkoutManager";
@@ -63,6 +65,8 @@ export default function App() {
               <Stack.Screen name="Reco" component={Reco} />
               <Stack.Screen name="LogMeal" component={LogMeal} />
               <Stack.Screen name="GeneratedMeals" component={GeneratedMeals} />
+              <Stack.Screen name="Loading" component={Loading} />
+              <Stack.Screen name="GeneratedWorkout" component={GeneratedWorkout} />
             </>
           ) : (
             // User isn't signed in

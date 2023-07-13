@@ -15,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import Navbar from "../../components/Navbar";
 import Box from "../../components/Box";
+import { useNavigation } from "@react-navigation/native";
 
 // Constants for dimensions and weekdays
 const screenWidth = Dimensions.get("window").width;
@@ -35,6 +36,7 @@ function FloatingButton({ onPress, navigate }) {
 
 // Main Workout component
 function Workout({ newBoxes, navigate, workoutSplit, deleteBox }) {
+  const navigation = useNavigation();
   // Calculating the list of boxes only when newBoxes change
   const boxes = useMemo(() => newBoxes, [newBoxes]);
 
@@ -115,7 +117,9 @@ function Workout({ newBoxes, navigate, workoutSplit, deleteBox }) {
                 onDeleteBox={() => onDeleteHandler(index)}
               />
             ))}
-            <TouchableOpacity style={styles.aiButton}>
+            <TouchableOpacity
+              style={styles.aiButton}
+              onPress={() => navigation.navigate("Loading")}>
               <Text style={styles.buttonText}>Generate a Workout</Text>
             </TouchableOpacity>
             <View style={{ height: 100 }} />
