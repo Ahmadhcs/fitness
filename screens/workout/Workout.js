@@ -1,54 +1,47 @@
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import {
   View,
   Text,
   Image,
-  Dimensions,
   StyleSheet,
   TouchableOpacity,
-  Modal,
   ScrollView,
-  TouchableWithoutFeedback,
-  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
-import Navbar from "../../components/Navbar";
-import Box from "../../components/Box";
 import { useNavigation } from "@react-navigation/native";
+import Navbar from "../../components/Navbar";
+import Boxes from "../../components/Box";
+import LogButton from "../../components/LogButton";
+import Calendar from "../../components/CalendarContainer";
 
-// Constants for dimensions and weekdays
-const screenWidth = Dimensions.get("window").width;
-const days = ["Su", "M", "Tu", "W", "Th", "F", "Sa"];
-
-function FloatingButton({ onPress, navigate }) {
-  return (
-    <TouchableOpacity
-      style={styles.floatingButton}
-      onPress={() => {
-        onPress();
-        navigate("workout", "addWorkout"); // Direct navigation from WorkoutManager to AddWorkout
-      }}>
-      <Feather name="plus" size={30} color="#FFF" />
-    </TouchableOpacity>
-  );
-}
-
-// Main Workout component
-function Workout({ newBoxes, navigate, workoutSplit, deleteBox }) {
+// newBoxes is imported from workoutmanager to render number of boxes
+// deletBox is exported to workoutmanager to notify to delete a box
+// this page navigates to 3 modals, calendarModal, workoutSplitModal, and workoutView, and to page Add Workout and GeneratedWorkout
+function Workout({ newBoxes, navigate, deleteBox, calendarModalVisible }) {
   const navigation = useNavigation();
-  // Calculating the list of boxes only when newBoxes change
   const boxes = useMemo(() => newBoxes, [newBoxes]);
 
-  // Handler for navigating to the AddWorkout page
   const handleGoToAddWorkout = () => {
-    navigate("workout", "addWorkout");
+    // should receive the workoutName and notes from AddWorkout
+    navigation.navigate("addWorkout");
   };
 
+  const handleGoToGeneratedWorkout = () => {
+    navigation.navigate("Loading");
+  };
+
+  // WorkoutView is Modal should be handled by WorkoutManager
   const handleGoToWorkoutView = (boxName) => {
     navigate("workout", "workoutView", null, null, boxName);
   };
 
+  // Calendar is a Modal should be handled by WorkoutManager
+  const handleGoToCalendar = () => {
+    navigate("workout", "calendarModal");
+  };
+
+  // WorkoutSplit is Modal should be handled by WorkoutManager
   const handleGoToWorkoutSplit = () => {
     navigate("workout", "workoutSplitModal");
   };
@@ -57,25 +50,8 @@ function Workout({ newBoxes, navigate, workoutSplit, deleteBox }) {
     deleteBox(index);
   };
 
-  // Creating a new Date object for today's date
-  const today = new Date();
-  // Using getDay method to get the current day of the week as a number (0-6, where 0 is Sunday)
-  const currentDay = today.getDay();
-  // Calculating the previous two days based on the current day. The "+ 7" and "% 7" operations ensure the day number always stays within the 0-6 range.
-  const prevTwoDays = [days[(currentDay - 2 + 7) % 7], days[(currentDay - 1 + 7) % 7]];
-  // Creating an array of the next few days. It includes the previous two days and the current day, then the four days after that.
-  const nextDays = [
-    ...prevTwoDays,
-    days[(currentDay + 7) % 7],
-    days[(currentDay + 1) % 7],
-    days[(currentDay + 2) % 7],
-    days[(currentDay + 3) % 7],
-    days[(currentDay + 4) % 7],
-  ];
-
   return (
     <View style={styles.outerView}>
-      {/* Main Workout Page */}
       <ScrollView style={styles.scrollView}>
         <SafeAreaView style={styles.container}>
           <View style={styles.header}>
@@ -87,39 +63,19 @@ function Workout({ newBoxes, navigate, workoutSplit, deleteBox }) {
               <Feather name="edit" size={24} color="black" />
             </TouchableOpacity>
           </View>
-          <View style={styles.calendarContainer}>
-            <View style={styles.calendar}>
-              {nextDays.map((day, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={[styles.day, index === 2 && styles.today]}
-                  onPress={() => {
-                    navigate("workout", "calendarModal", day);
-                  }}>
-                  <Text style={styles.dayText}>{day}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
+          <Calendar
+            handleGoToCalendar={handleGoToCalendar}
+            calendarModalVisible={calendarModalVisible}
+          />
           <View style={styles.listContainer}>
-            {boxes.length === 0 && (
-              <Text style={styles.noWorkoutsText}>
-                You have no workouts, create a new template or generate one!
-              </Text>
-            )}
-            {boxes.map((box, index) => (
-              // For each 'box', a TouchableOpacity is rendered with a unique 'key' prop (for performance)
-              <Box
-                box={box}
-                key={index}
-                isLastBox={boxes.length % 2 !== 0 && index === boxes.length - 1}
-                handleGoToWorkoutView={() => handleGoToWorkoutView(box)}
-                onDeleteBox={() => onDeleteHandler(index)}
-              />
-            ))}
+            <Boxes
+              newBoxes={boxes}
+              handleGoToWorkoutView={handleGoToWorkoutView}
+              deleteBox={deleteBox}
+            />
             <TouchableOpacity
               style={styles.aiButton}
-              onPress={() => navigation.navigate("Loading")}>
+              onPress={handleGoToGeneratedWorkout}>
               <Text style={styles.buttonText}>Generate a Workout</Text>
             </TouchableOpacity>
             <View style={{ height: 100 }} />
@@ -127,15 +83,14 @@ function Workout({ newBoxes, navigate, workoutSplit, deleteBox }) {
         </SafeAreaView>
       </ScrollView>
       <View style={styles.floatingButtonContainer}>
-        <FloatingButton onPress={handleGoToAddWorkout} navigate={navigate} />
+        <LogButton onPress={handleGoToAddWorkout} navigate={navigate} />
       </View>
       <Navbar />
     </View>
   );
 }
 
-export default Workout;
-
+// edit styles later to remove all the unused styles
 const styles = StyleSheet.create({
   outerView: {
     flex: 1,
@@ -155,9 +110,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   headerText: {
-    fontSize: screenWidth * 0.08,
+    fontSize: 32,
     fontWeight: "bold",
-    marginLeft: screenWidth * 0.15,
+    marginLeft: 50,
   },
   pfp: {
     width: 60,
@@ -206,10 +161,6 @@ const styles = StyleSheet.create({
   today: {
     backgroundColor: "#5067FF",
   },
-  dayText: {
-    fontSize: screenWidth / 20,
-    fontWeight: "bold",
-  },
   listContainer: {
     width: "80%",
     flexDirection: "row",
@@ -241,15 +192,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
-  day: {
-    width: screenWidth / 9,
-    height: screenWidth / 9,
-    backgroundColor: "#f0f0f0",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 12,
-    margin: 5,
-  },
+
   floatingButtonContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
@@ -299,3 +242,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+export default Workout;
