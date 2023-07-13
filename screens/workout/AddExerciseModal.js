@@ -46,6 +46,7 @@ export default function AddExerciseModal({ visible, navigate }) {
             <View style={styles.listContainer}>
               {categories.map((category, index) => (
                 <TouchableOpacity
+                  key={index}
                   style={styles.boxContainer}
                   onPress={() => handleOpenCategoryModal(category)}>
                   <Text style={styles.boxText}>{category}</Text>
