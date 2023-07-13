@@ -58,7 +58,9 @@ const Box = ({ box, isLastBox, handleGoToWorkoutView, onDeleteBox }) => {
     ).start();
   };
 
-  const containerStyle = isLastBox ? styles.oddBoxContainer : styles.evenBoxContainer;
+  const containerStyle = isLastBox
+    ? [styles.oddBoxContainer, longPress ? styles.boxLongPress : null]
+    : [styles.evenBoxContainer, longPress ? styles.boxLongPress : null];
 
   return (
     <TouchableOpacity
@@ -66,9 +68,14 @@ const Box = ({ box, isLastBox, handleGoToWorkoutView, onDeleteBox }) => {
       onPress={handleGoToWorkoutView}
       onLongPress={onLongPress}
       delayLongPress={1000}>
-      <Animated.View style={{ transform: [{ translateX: shakeAnimation }] }}>
-        <Text style={styles.boxText}>{box}</Text>
-        {longPress && <Feather name="trash-2" size={24} />}
+      <Animated.View
+        style={{
+          transform: [{ translateX: shakeAnimation }],
+          justifyContent: "center",
+          alignItems: "center",
+        }}>
+        {!longPress && <Text style={styles.boxText}>{box}</Text>}
+        {longPress && <Feather name="trash-2" size={80} color="#fff" />}
       </Animated.View>
     </TouchableOpacity>
   );
@@ -92,6 +99,9 @@ const styles = StyleSheet.create({
     aspectRatio: 2,
     margin: "2%",
     borderRadius: 12,
+  },
+  boxLongPress: {
+    backgroundColor: "red",
   },
   boxText: {
     fontSize: 16,

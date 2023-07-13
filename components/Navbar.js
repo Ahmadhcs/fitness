@@ -1,62 +1,49 @@
-import { View, Text, TextInput, StyleSheet, Image } from "react-native";
-import React, { useLayoutEffect } from "react";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import React from "react";
+import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { IconButton, FAB } from "@react-native-material/core";
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import LinearGradient from "react-native-linear-gradient";
 
 const Navbar = () => {
   const navigation = useNavigation();
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
-  }, []);
+  const navigateToPage = (page) => {
+    navigation.navigate(page);
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
+      <View style={styles.navbar}>
         {/* Nutrition button */}
-        <IconButton
-          style={styles.image}
-          icon={(props) => (
-            <Icon style={[styles.icon, { fontSize: 30 }]} name="scale" {...props} />
-          )}
-          onPress={() => navigation.navigate("Nutrition")}
-        />
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => navigateToPage("Nutrition")}>
+          <Feather name="activity" size={24} color="#FFF" />
+          <Text style={styles.label}>Nutrition</Text>
+        </TouchableOpacity>
 
         {/* Home button */}
-        <IconButton
-          style={styles.image}
-          icon={(props) => (
-            <Icon style={[styles.icon, { fontSize: 30 }]} name="home" {...props} />
-          )}
-          onPress={() => navigation.navigate("Dashboard")}
-        />
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => navigateToPage("Dashboard")}>
+          <Feather name="home" size={24} color="#FFF" />
+          <Text style={styles.label}>Home</Text>
+        </TouchableOpacity>
 
         {/* Weight button */}
-        <IconButton
-          style={styles.image}
-          icon={(props) => (
-            <Icon style={[styles.icon, { fontSize: 30 }]} name="weight" {...props} />
-          )}
-          onPress={() => navigation.navigate("Weight")}
-        />
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => navigateToPage("Weight")}>
+          <Feather name="bar-chart-2" size={24} color="#FFF" />
+          <Text style={styles.label}>Weight</Text>
+        </TouchableOpacity>
 
         {/* Workout button */}
-        <IconButton
-          style={styles.image}
-          icon={(props) => (
-            <Icon
-              style={[styles.icon, { fontSize: 30 }]}
-              name="weight-lifter"
-              {...props}
-            />
-          )}
-          onPress={() => navigation.navigate("WorkoutManager")}
-        />
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => navigateToPage("WorkoutManager")}>
+          <Feather name="award" size={24} color="#FFF" />
+          <Text style={styles.label}>Workout</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -64,23 +51,30 @@ const Navbar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    backgroundColor: "rgb(119,167,196)", //119 167 196
-    height: 100,
-    borderTopLeftRadius: "25%",
-    borderTopRightRadius: "25%",
+    backgroundColor: "#00A3FF",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  icon: {
-    color: "white",
-  },
-  image: {
-    marginHorizontal: 20,
-  },
-  imageContainer: {
+  navbar: {
     flexDirection: "row",
-    flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "center",
+    paddingVertical: 20,
+  },
+  iconContainer: {
+    alignItems: "center",
+  },
+  label: {
+    marginTop: 5,
+    fontWeight: "bold",
+    color: "#FFF",
+    fontSize: 12,
   },
 });
 

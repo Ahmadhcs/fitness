@@ -93,12 +93,15 @@ function WorkoutView({ boxName, navigate }) {
             />
           ))}
           <TouchableOpacity
-            style={styles.addButton}
+            style={styles.addSetButton}
             onPress={() => handleAddSet(exercise.id)}>
-            <Text style={styles.addButtonText}>Add Set</Text>
+            <Text style={styles.addSetText}>Add Set</Text>
           </TouchableOpacity>
         </View>
       ))}
+      <TouchableOpacity style={styles.addExerciseButton} onPress={handleAddExercise}>
+        <Text style={styles.buttonText}>Add Exercise</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.startWorkoutButton} onPress={handleStartWorkout}>
         <Text style={styles.buttonText}>Start Workout</Text>
       </TouchableOpacity>
@@ -135,7 +138,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
   },
-  addButton: {
+  addSetButton: {
     alignItems: "center",
     padding: 10,
     borderRadius: 5,
@@ -143,8 +146,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 10,
   },
-  addButtonText: {
+  addSetText: {
     color: "#fff",
+  },
+  addExerciseButton: {
+    padding: 15,
+    borderRadius: 5,
+    backgroundColor: "blue",
+    margin: 10,
+    width: "90%",
+    alignSelf: "center",
   },
   startWorkoutButton: {
     padding: 15,
