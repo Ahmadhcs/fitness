@@ -9,11 +9,7 @@ import {
   Pressable,
 } from "react-native";
 import React, { useLayoutEffect, useState, useContext } from "react";
-import React, { useLayoutEffect, useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { AuthContext } from "../context/auth";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import { AuthContext } from "../context/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -33,7 +29,6 @@ const InputWeight = () => {
     });
   }, [navigation]); // re-run effect if navigation object changes
 
-  const handleAdd = async () => {
   const handleAdd = async () => {
     //Handle the add by sending back to backend etc
     if (weight === "") {

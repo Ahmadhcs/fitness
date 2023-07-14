@@ -9,14 +9,12 @@ import {
   Button,
   Pressable,
   Alert,
-  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { LinearGradient } from "expo-linear-gradient";
-import { AuthContext } from "../context/auth";
 import { AuthContext } from "../context/auth";
 
 import {
@@ -37,7 +35,6 @@ const screenWidth = Dimensions.get("window").width;
 const goToWeight = () => {
   console.log("in");
 };
-
 
 const weightTracking = () => {
   const navigation = useNavigation();
@@ -93,7 +90,6 @@ const weightTracking = () => {
         <LineChart
           data={{
             labels: labels,
-            labels: labels,
             datasets: [
               {
                 data: dataPoints,
@@ -141,7 +137,6 @@ const weightTracking = () => {
         </View>
       </ScrollView>
 
-      <Pressable onPress={() => handleInput()} style={styles.button}>
       <Pressable onPress={() => handleInput()} style={styles.button}>
         <Text style={styles.buttonText}>+</Text>
       </Pressable>

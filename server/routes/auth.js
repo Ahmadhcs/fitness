@@ -6,19 +6,12 @@ const router = express.Router();
 //controllers
 const { signup, signin } = require("../controllers/auth");
 const { addWeight } = require("../controllers/weight");
-router.post("/signup", signup);
-router.post("/signin", signin);
-router.post("/addWeight", addWeight);
 
 router.get("/", (req, res) => {
   return res.json({
     data: "Hello",
   });
 });
-
-router.post("/signup", signup);
-router.post("/signin", signin);
-router.post("/addWeight", addWeight);
 
 router.post("/signup", signup);
 router.post("/signin", signin);

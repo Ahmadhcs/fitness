@@ -17,6 +17,7 @@ const screenWidth = Dimensions.get("window").width;
 const Gender = () => {
   const route = useRoute();
   const { userName } = route.params;
+
   const navigation = useNavigation();
   const [selectedGender, setSelectedGender] = useState(null);
 
@@ -41,7 +42,6 @@ const Gender = () => {
         <View style={styles.progressBar}>
           <View style={styles.progress} />
         </View>
-        <Text style={styles.progressText}>2 of 5</Text>
         <Text style={styles.progressText}>2 of 5</Text>
       </View>
 
@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
   },
   progress: {
     height: "100%",
-    width: `${(2 / 5) * 100}%`,
     width: `${(2 / 5) * 100}%`,
     borderRadius: 5,
     backgroundColor: "blue",

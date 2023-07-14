@@ -49,7 +49,6 @@ const Name = () => {
                   <View style={styles.progress} />
                 </View>
                 <Text style={styles.progressText}>1 of 5</Text>
-                <Text style={styles.progressText}>1 of 5</Text>
               </View>
 
               {/* Back button */}

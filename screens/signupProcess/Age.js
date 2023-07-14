@@ -18,7 +18,6 @@ const AgeSelection = () => {
   const { userInfo, userGender } = route.params;
 
   console.log(userInfo);
-
   const navigation = useNavigation();
   const [selectedAge, setSelectedAge] = useState(null);
 
@@ -53,7 +52,6 @@ const AgeSelection = () => {
         <View style={styles.progressBar}>
           <View style={styles.progress} />
         </View>
-        <Text style={styles.progressText}>3 of 5</Text>
         <Text style={styles.progressText}>3 of 5</Text>
       </View>
 
@@ -115,7 +113,6 @@ const styles = StyleSheet.create({
   },
   progress: {
     height: "100%",
-    width: `${(3 / 5) * 100}%`,
     width: `${(3 / 5) * 100}%`,
     borderRadius: 5,
     backgroundColor: "blue",
