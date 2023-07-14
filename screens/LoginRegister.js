@@ -10,7 +10,9 @@ const LoginRegister = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const slideAnim = useState(new Animated.Value(300))[0]; // Initial value for right-to-left animation
+
   const [state, setState] = useContext(AuthContext);
+
   const openModal = () => {
     setModalVisible(true);
     Animated.timing(slideAnim, {
@@ -30,8 +32,10 @@ const LoginRegister = ({ navigation }) => {
   };
 
   const handleLogin = async () => {
+
     if (email === "" || password === "") {
       alert("all fields are required");
+
       return;
     }
 
@@ -109,7 +113,9 @@ const LoginRegister = ({ navigation }) => {
             textContentType="password"
             secureTextEntry
           />
+
           <Pressable style={styles.loginButton} onPress={() => handleLogin()}>
+
             <Text style={styles.loginButtonText}>Log In</Text>
           </Pressable>
         </Animated.View>

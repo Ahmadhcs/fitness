@@ -138,8 +138,6 @@ const Dashboard = (props) => {
   const [state, setState] = useContext(AuthContext);
   
   useEffect(() => {
-    console.log("THISSSS" ,state.user)
-
     if (state) {
       const { name, email, gender, weight, height, age } = state.user;
       setName(name);

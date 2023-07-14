@@ -17,9 +17,12 @@ const AgeSelection = () => {
   const route = useRoute();
   const { userInfo, userGender } = route.params;
 
+
   console.log(userInfo);
+
   const navigation = useNavigation();
   const [selectedAge, setSelectedAge] = useState(null);
+
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -38,11 +41,13 @@ const AgeSelection = () => {
   };
 
   const handleContinue = () => {
+
     navigation.navigate("Metrics", {
       userName: userInfo,
       userGender: userGender,
       userAge: selectedAge,
     });
+
   };
 
   return (
@@ -52,11 +57,12 @@ const AgeSelection = () => {
         <View style={styles.progressBar}>
           <View style={styles.progress} />
         </View>
-        <Text style={styles.progressText}>X of X</Text>
+        <Text style={styles.progressText}>3 of 5</Text>
       </View>
 
       {/* Back button */}
       <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
+
         <View
           style={{
             backgroundColor: "blue",
@@ -69,6 +75,7 @@ const AgeSelection = () => {
           <AntDesign name="arrowleft" style={{ color: "white", fontSize: 20 }} />
         </View>
       </Pressable>
+
 
       <View style={styles.content}>
         {/* Age selector */}
@@ -113,7 +120,7 @@ const styles = StyleSheet.create({
   },
   progress: {
     height: "100%",
-    width: `${(1 / 4) * 100}%`,
+    width: `${(3 / 5) * 100}%`,
     borderRadius: 5,
     backgroundColor: "blue",
   },
@@ -151,6 +158,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
+  progressText:{
+    marginRight: 8
+  }
 });
 
 const pickerSelectStyles = StyleSheet.create({

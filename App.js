@@ -46,6 +46,7 @@ export default function App() {
   const isSignedIn = true;
 
   return (
+
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <AuthProvider>
