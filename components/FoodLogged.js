@@ -59,7 +59,7 @@ const FoodLogged = (props) => {
   const [visible, setVisible] = useState(false);
   const data = {
     labels: ["Protien"], // optional
-    data: [200 / 250],
+    data: [props.protein / 250],
     colors: ["red"],
   };
 
@@ -76,7 +76,7 @@ const FoodLogged = (props) => {
 
   const dataC = {
     labels: ["Carbs"], // optional
-    data: [39 / 250],
+    data: [props.carbs / 250],
     colors: ["green"],
   };
 
@@ -93,7 +93,7 @@ const FoodLogged = (props) => {
 
   const dataF = {
     labels: ["Fats"], // optional
-    data: [89 / 250],
+    data: [props.fats / 250],
     colors: ["blue"],
   };
 
@@ -131,7 +131,7 @@ const FoodLogged = (props) => {
               width: "50%",
               textAlign: "right",
             }}>
-            300G
+            {props.serving}g
           </Text>
         </View>
         <View style={{ flexDirection: "row" }}>
@@ -146,7 +146,7 @@ const FoodLogged = (props) => {
               width: "50%",
               textAlign: "right",
             }}>
-            800kcal
+            {props.calories} kcal
           </Text>
         </View>
         <View style={{ flexDirection: "row", marginRight: 20, paddingTop: 5 }}>
@@ -173,7 +173,7 @@ const FoodLogged = (props) => {
                   paddingLeft: 20,
                   fontSize: 12.5,
                 }}>
-                33/290g
+                {props.protein}/290g
               </Text>
             </View>
           </View>
@@ -201,7 +201,7 @@ const FoodLogged = (props) => {
                   paddingLeft: 20,
                   fontSize: 12.5,
                 }}>
-                33/290g
+                {props.carbs}/290g
               </Text>
             </View>
           </View>
@@ -229,7 +229,7 @@ const FoodLogged = (props) => {
                   paddingLeft: 20,
                   fontSize: 12.5,
                 }}>
-                33/290g
+                {props.fats}/290g
               </Text>
             </View>
           </View>
@@ -239,27 +239,27 @@ const FoodLogged = (props) => {
         <View style={{ flexDirection: "row" }}>
           <Text
             style={{
-              paddingLeft: 10,
+              paddingLeft: 12,
               paddingTop: 12.5,
               fontSize: 16,
               fontWeight: "500",
+              width: '75%'
             }}>
-            {" "}
-            Name of the Food
+            {props.foodName}
+            
           </Text>
           <Text
             style={{
               textAlign: "right",
               paddingTop: 22.5,
-              paddingLeft: 125,
               color: "#42a5f5",
               fontWeight: "bold",
             }}>
-            1,500 Cals
+            {props.calories} kcal
           </Text>
         </View>
 
-        <Text style={{ paddingLeft: 14, fontWeight: "bold" }}>300G </Text>
+        <Text style={{ paddingLeft: 14, fontWeight: "bold" }}>Serving: {props.serving}G</Text>
       </TouchableOpacity>
     </View>
   );

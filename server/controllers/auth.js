@@ -39,7 +39,8 @@ export const signup = async(req, res) =>{
           age,
           heightUnit,
           weightUnit,
-          weightHistory: []
+          weightHistory: [],
+          dailyFood: []
         }).save();
 
         //creating signed token

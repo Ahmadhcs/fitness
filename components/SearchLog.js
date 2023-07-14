@@ -8,11 +8,13 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import React, { useLayoutEffect, useState, useEffect } from "react";
+import React, { useLayoutEffect, useState, useEffect, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProgressChart } from "react-native-chart-kit";
-
+import { AuthContext } from "../context/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import { Feather } from "@expo/vector-icons";
 
 const screenHeight = Dimensions.get("window").height;
@@ -21,6 +23,7 @@ const screenWidth = Dimensions.get("window").width;
 const SearchLog = (props) => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
+  const [state, setState] = useContext(AuthContext)
 
   const data = {
     labels: ["Protien"], // optional
@@ -73,6 +76,8 @@ const SearchLog = (props) => {
     useShadowColorFromDataset: false, // optional,
   };
 
+
+
   const Modalpop = (props) => {
     const [showModal, setShowModal] = React.useState(props.visible);
 
@@ -90,6 +95,38 @@ const SearchLog = (props) => {
       headerShown: false,
     });
   }, []);
+
+  const handleLog = async () =>{
+
+    const foodObject = {
+      foodName: props.foodObject.name,
+      protein: props.protein,
+      carbs: props.carbs, 
+      fats: props.fat,
+      servingAmount: props.serving,
+      calories: props.calories
+    }
+
+    try{
+      const resp = await axios.post('http://localhost:8000/api/addFood', {foodObject, id: state.user._id})
+      if(resp.data.error){
+        alert(resp.data.error)
+      }else{
+        setState(resp.data)
+        await AsyncStorage.setItem('auth-rn', JSON.stringify(resp.data))
+        setVisible(false)
+        navigation.navigate("Nutrition")
+
+
+      }
+    }catch (error) {
+      console.error("An error occurred:", error.message);
+    }
+
+
+
+  }
+  
 
   return (
     <View style={styles.container}>
@@ -117,7 +154,7 @@ const SearchLog = (props) => {
         <View style={{ flexDirection: "row" }}>
           <Text style={{ width: "70%", fontSize: 20, fontWeight: "500" }}>Food Name</Text>
           <TouchableOpacity
-            onPress={() => setVisible(false)}
+            onPress={() => handleLog()}
             style={{
               backgroundColor: "blue",
               width: screenWidth * 0.2,

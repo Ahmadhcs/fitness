@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { AuthContext } from "../context/auth";
 import {
   Text,
   StyleSheet,
@@ -91,7 +92,23 @@ const chartConfigFat = {
 };
 
 const Nutrition = () => {
+  const [state, setState] = useContext(AuthContext);
+  const [foodArray, setFoodArray] = useState([])
+
   const navigation = useNavigation();
+
+  console.log(foodArray)
+
+
+  useEffect(() => {
+
+    if (state) {
+      setFoodArray(state.user.dailyFood)
+
+      // console.log(weightArray)
+    }
+  }, [state]);
+
   return (
     <View style={{ flex: 1 }}>
       <SafeAreaView>
@@ -218,12 +235,9 @@ const Nutrition = () => {
           <Text style={{ fontSize: 20, fontWeight: "700", paddingLeft: 5 }}>
             Logged Food
           </Text>
-          <FoodLogged />
-          <FoodLogged />
-          <FoodLogged />
-          <FoodLogged />
-          <FoodLogged />
-          <FoodLogged />
+          {foodArray.map((item, index) => (
+            <FoodLogged  foodName={item.foodName} calories={item.calories} serving={item.servingAmount} protein={item.protein} carbs={item.carbs} fats={item.fats} />
+          ))}
         </View>
 
         <View style={{ paddingTop: 10, paddingLeft: 10 }}>

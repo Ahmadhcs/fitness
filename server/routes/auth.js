@@ -7,6 +7,7 @@ const router = express.Router()
 const {signup, signin} = require("../controllers/auth")
 const {addWeight} = require("../controllers/weight")
 
+const {addFood} = require("../controllers/nutrition.js")
 
 
 router.get("/", (req, res) =>{
@@ -19,6 +20,8 @@ router.get("/", (req, res) =>{
 router.post('/signup', signup)
 router.post('/signin', signin)
 router.post("/addWeight", addWeight);
+router.post("/addFood", addFood);
+
 
 
 

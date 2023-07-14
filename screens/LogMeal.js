@@ -146,7 +146,7 @@ const LogMeal = () => {
 
             return (
               <SearchLog
-                key={foodItem.id}
+                foodObject={foodItem}
                 FoodName={foodItem.name}
                 protein={proteinNutrient ? proteinNutrient.amount : 0}
                 carbs={carbNutrient ? carbNutrient.amount : 0}

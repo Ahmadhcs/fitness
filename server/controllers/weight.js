@@ -12,6 +12,7 @@ export const addWeight = async (req, res) => {
     // Find the user by ID
     const user = await User.findById(userId);
 
+
     if (!user) {
       return res.json({
         error: "User not found",
@@ -21,7 +22,9 @@ export const addWeight = async (req, res) => {
     // Push the weight and date object to the weightHistory array in the user document
     user.weightHistory.push({ weight, date });
 
-    console.log(user.weightHistory)
+    await user.save();
+
+
 
     // Save the updated user document
     user.password = undefined
