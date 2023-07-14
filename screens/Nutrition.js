@@ -23,7 +23,7 @@ const screenWidth = Dimensions.get("window").width;
 import { ProgressChart } from "react-native-chart-kit";
 
 const data = {
-  labels: ["Protien"], // optional
+  labels: ["Protein"], // optional
   data: [159 / 250],
   colors: ["red"],
 };

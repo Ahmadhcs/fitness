@@ -10,7 +10,7 @@ const LoginRegister = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const slideAnim = useState(new Animated.Value(300))[0]; // Initial value for right-to-left animation
-  const [state, setState] = useContext(AuthContext)
+  const [state, setState] = useContext(AuthContext);
   const openModal = () => {
     setModalVisible(true);
     Animated.timing(slideAnim, {
@@ -30,27 +30,27 @@ const LoginRegister = ({ navigation }) => {
   };
 
   const handleLogin = async () => {
-    if(email === '' || password === ''){
-      alert("all fields are required")
+    if (email === "" || password === "") {
+      alert("all fields are required");
       return;
     }
 
     try {
-      const resp = await axios.post('http://localhost:8000/api/signin', { email, password });
+      const resp = await axios.post("http://localhost:8000/api/signin", {
+        email,
+        password,
+      });
       if (resp.data.error) {
         alert(resp.data.error);
       } else {
-        setState(resp.data)
-        console.log("This" , resp.data)
-        await AsyncStorage.setItem('auth-rn', JSON.stringify(resp.data))
+        setState(resp.data);
+        console.log("This", resp.data);
+        await AsyncStorage.setItem("auth-rn", JSON.stringify(resp.data));
         navigation.navigate("Dashboard");
       }
-      
-  
     } catch (error) {
       console.error("An error occurred:", error.message);
     }
-
   };
 
   useLayoutEffect(() => {
@@ -108,9 +108,7 @@ const LoginRegister = ({ navigation }) => {
             textContentType="password"
             secureTextEntry
           />
-          <Pressable
-            style={styles.loginButton}
-            onPress={() => handleLogin()}>
+          <Pressable style={styles.loginButton} onPress={() => handleLogin()}>
             <Text style={styles.loginButtonText}>Log In</Text>
           </Pressable>
         </Animated.View>
