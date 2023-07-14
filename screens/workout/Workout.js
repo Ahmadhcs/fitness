@@ -72,12 +72,12 @@ function Workout({ newBoxes, navigate, deleteBox, calendarModalVisible }) {
                 You have no workouts, create a new template or generate one!
               </Text>
             )}
-            {boxes.map((workoutName, index) => (
+            {boxes.map((workout, index) => (
               <Boxes
-                box={workoutName}
-                key={index}
+                box={workout.workoutName}
+                key={workout._id}
                 isLastBox={boxes.length % 2 !== 0 && index === boxes.length - 1}
-                handleGoToWorkoutView={() => handleGoToWorkoutView(workoutName)}
+                handleGoToWorkoutView={() => handleGoToWorkoutView(workout.workoutName)}
                 onDeleteBox={() => deleteBox(index)}
               />
             ))}

@@ -44,13 +44,22 @@ export default function WorkoutManager() {
     fetch("http://localhost:8000/api/workouts")
       .then((response) => response.json())
       .then((data) => {
-        const workoutNames = data ? data.map((workout) => workout.workoutName) : [];
-        setNewBoxes(workoutNames);
+        // const workoutNames = data ? data.map((workout) => workout.workoutName) : [];
+        setNewBoxes(data);
       });
   }, []);
 
   const deleteBox = (index) => {
-    setNewBoxes((prevBoxes) => prevBoxes.filter((_, i) => i !== index));
+    const workoutToDelete = newBoxes[index];
+
+    fetch(`http://localhost:8000/api/workouts/${workoutToDelete._id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setNewBoxes((prevBoxes) => prevBoxes.filter((_, i) => i !== index));
+      })
+      .catch((error) => console.error("Error:", error));
   };
 
   // A function that manages the navigation between components.
@@ -121,7 +130,7 @@ export default function WorkoutManager() {
       })
         .then((response) => response.json())
         .then((data) => {
-          setNewBoxes((prevBoxes) => [...prevBoxes, data.workoutName]);
+          setNewBoxes((prevBoxes) => [...prevBoxes, data]);
           setWorkoutName("");
           setNotes("");
           setAddedExercises([]);

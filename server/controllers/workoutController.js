@@ -20,3 +20,19 @@ exports.createWorkout = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+exports.deleteWorkout = async (req, res) => {
+  try {
+    const workout = await Workout.findById(req.params.id);
+
+    if (!workout) {
+      return res.status(404).json({ error: "Workout not found" });
+    }
+
+    await workout.remove();
+    res.status(200).json({ message: "Workout deleted" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
