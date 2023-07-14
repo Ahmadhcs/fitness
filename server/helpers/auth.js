@@ -20,3 +20,4 @@ export const hashedPassword = (password) =>{
 export const comparePassword = (password, hashed) =>{
     return bcrypt.compare(password, hashed)
 }
+

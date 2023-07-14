@@ -34,6 +34,7 @@ const AuthProvider = ({children}) =>{
         }
     );
 
+
     useEffect(() => {
         const loadFromAsyncStorage = async () => {
             let data = await AsyncStorage.getItem('auth-rn');

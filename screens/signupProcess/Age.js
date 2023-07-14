@@ -17,7 +17,9 @@ const AgeSelection = () => {
   const route = useRoute();
   const { userInfo, userGender } = route.params;
 
-  console.log(userInfo)
+
+  console.log(userInfo);
+
   const navigation = useNavigation();
   const [selectedAge, setSelectedAge] = useState(null);
 
@@ -39,7 +41,13 @@ const AgeSelection = () => {
   };
 
   const handleContinue = () => {
-    navigation.navigate("Metrics", {userName: userInfo, userGender: userGender, userAge: selectedAge});
+
+    navigation.navigate("Metrics", {
+      userName: userInfo,
+      userGender: userGender,
+      userAge: selectedAge,
+    });
+
   };
 
   return (
@@ -54,11 +62,19 @@ const AgeSelection = () => {
 
       {/* Back button */}
       <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-                <View style={{backgroundColor: 'blue', width: screenWidth * 0.1, height:  screenWidth * 0.1, justifyContent: 'center', alignItems: 'center', borderRadius: '50%'}}>
-                    <AntDesign name="arrowleft" style={{color: 'white', fontSize: 20}} />
-                </View>
 
-              </Pressable>
+        <View
+          style={{
+            backgroundColor: "blue",
+            width: screenWidth * 0.1,
+            height: screenWidth * 0.1,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: "50%",
+          }}>
+          <AntDesign name="arrowleft" style={{ color: "white", fontSize: 20 }} />
+        </View>
+      </Pressable>
 
 
       <View style={styles.content}>
@@ -157,7 +173,6 @@ const pickerSelectStyles = StyleSheet.create({
     marginVertical: 5,
     borderRadius: "20%",
     fontSize: 15,
-    
   },
 });
 

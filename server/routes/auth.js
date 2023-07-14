@@ -23,3 +23,4 @@ router.post("/addWeight", addWeight);
 
 
 export default router
+

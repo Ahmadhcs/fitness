@@ -2,12 +2,19 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import ExerciseCard from "../../components/ExerciseCard";
-import { createUUID } from "../../utils/generateUUID";
+import { useNavigation } from "@react-navigation/native";
 
-// boxName is passed from workoutmanager that is passed from workout to display the workoutName
-// navigate is passed from workoutmanager to navigate
-function WorkoutView({ boxName, navigate }) {
-  // exercises should also be passed in from workoutmanager to show the exercises that are saved
+// forget for now but also move this function util
+function createUUID() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+function WorkoutView({ boxName }) {
+  const navigation = useNavigation();
   const [exercises, setExercises] = useState([
     {
       id: createUUID(),
@@ -28,22 +35,22 @@ function WorkoutView({ boxName, navigate }) {
     },
   ]);
 
-  // close the modal
   const handleGoBack = () => {
-    navigate("workoutView", "workout");
+    navigation.pop(2);
   };
 
-  // if edit button no need for this
+  const handleExport = () => {
+    //  Export functionality here
+  };
+
   const handleAddExercise = () => {
     navigate("workoutView", "exerciseModal");
   };
 
-  // still need to implement this
   const handleStartWorkout = () => {
     // Start workout functionality here
   };
 
-  //  if edit button no need for this
   const handleDeleteSet = (exerciseId, setId) => {
     setExercises(
       exercises.map((exercise) => {
@@ -74,7 +81,7 @@ function WorkoutView({ boxName, navigate }) {
           <Feather name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
         <Text style={styles.title}>Your {boxName} Routine</Text>
-        <TouchableOpacity style={styles.exportButton}>
+        <TouchableOpacity style={styles.exportButton} onPress={handleExport}>
           <Feather name="download" size={24} color="black" />
         </TouchableOpacity>
       </View>
@@ -89,15 +96,12 @@ function WorkoutView({ boxName, navigate }) {
             />
           ))}
           <TouchableOpacity
-            style={styles.addSetButton}
+            style={styles.addButton}
             onPress={() => handleAddSet(exercise.id)}>
-            <Text style={styles.addSetText}>Add Set</Text>
+            <Text style={styles.addButtonText}>Add Set</Text>
           </TouchableOpacity>
         </View>
       ))}
-      <TouchableOpacity style={styles.addExerciseButton} onPress={handleAddExercise}>
-        <Text style={styles.buttonText}>Add Exercise</Text>
-      </TouchableOpacity>
       <TouchableOpacity style={styles.startWorkoutButton} onPress={handleStartWorkout}>
         <Text style={styles.buttonText}>Start Workout</Text>
       </TouchableOpacity>
@@ -134,7 +138,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
   },
-  addSetButton: {
+  addButton: {
     alignItems: "center",
     padding: 10,
     borderRadius: 5,
@@ -142,16 +146,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 10,
   },
-  addSetText: {
+  addButtonText: {
     color: "#fff",
-  },
-  addExerciseButton: {
-    padding: 15,
-    borderRadius: 5,
-    backgroundColor: "blue",
-    margin: 10,
-    width: "90%",
-    alignSelf: "center",
   },
   startWorkoutButton: {
     padding: 15,

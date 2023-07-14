@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import React, { useLayoutEffect, useEffect, useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
-import Navbar from "../components/Navbar";
 import { Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -139,7 +138,6 @@ const Dashboard = (props) => {
   const [state, setState] = useContext(AuthContext);
   
   useEffect(() => {
-
     if (state) {
       const { name, email, gender, weight, height, age } = state.user;
       setName(name);
@@ -310,8 +308,9 @@ const Dashboard = (props) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.videoSection}>
+        {/* Each video should have a unique key to each child of the view shit so they pass it to key */}
         {videos.map((video) => (
-          <View style={styles.videoCard}>
+          <View key={video.id.videoId} style={styles.videoCard}>
             <Image
               source={{ uri: video.snippet.thumbnails.medium.url }}
               style={{

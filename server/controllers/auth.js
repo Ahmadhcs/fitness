@@ -78,6 +78,7 @@ export const signin = async (req, res) => {
       });
     }else{
         console.log("FOUND")
+
     }
 
     // check password
@@ -103,8 +104,10 @@ export const signin = async (req, res) => {
         user
       });
 
+
   } catch (err) {
     console.log(err);
     return res.status(400).send("Error. Try again.");
   }
 };
+
