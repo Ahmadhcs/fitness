@@ -6,7 +6,8 @@ import CategoryModal from "./CategoryModal";
 import WorkoutView from "./WorkoutView";
 import CalendarModal from "./CalendarModal";
 import WorkoutSplitModal from "./WorkoutSplitModal";
-import ExerciseCard from "../../components/ExerciseCard";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function WorkoutManager() {
   // State management for the visibility of each component
@@ -18,6 +19,7 @@ export default function WorkoutManager() {
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
   const [workoutSplitModalVisible, setWorkoutSplitModalVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   const [boxName, setBoxName] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -41,19 +43,33 @@ export default function WorkoutManager() {
   const [newBoxes, setNewBoxes] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/workouts")
-      .then((response) => response.json())
-      .then((data) => {
-        // const workoutNames = data ? data.map((workout) => workout.workoutName) : [];
-        setNewBoxes(data);
-      });
+    const fetchData = async () => {
+      try {
+        const authDataString = await AsyncStorage.getItem("auth-rn");
+        const authData = JSON.parse(authDataString);
+        const userId = authData.user._id;
+        const userWorkouts = authData.user.workouts;
+
+        setUserId(userId);
+        setNewBoxes(userWorkouts);
+        console.log(userWorkouts);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const deleteBox = (index) => {
+  const deleteBox = async (index) => {
     const workoutToDelete = newBoxes[index];
 
     fetch(`http://localhost:8000/api/workouts/${workoutToDelete._id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -126,7 +142,10 @@ export default function WorkoutManager() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ workoutName: newBox }),
+        body: JSON.stringify({
+          workoutName: newBox,
+          userId: userId,
+        }),
       })
         .then((response) => response.json())
         .then((data) => {
