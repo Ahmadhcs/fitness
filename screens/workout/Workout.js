@@ -26,8 +26,8 @@ function Workout({ newBoxes, navigate, deleteBox, calendarModalVisible }) {
   };
 
   // WorkoutView is Modal should be handled by WorkoutManager
-  const handleGoToWorkoutView = (boxName) => {
-    navigate("workout", "workoutView", null, null, boxName);
+  const handleGoToWorkoutView = (workoutName) => {
+    navigate("workout", "workoutView", null, null, workoutName);
   };
 
   // Calendar is a Modal should be handled by WorkoutManager
@@ -43,6 +43,10 @@ function Workout({ newBoxes, navigate, deleteBox, calendarModalVisible }) {
   //brought this back, edited the log component so that it accepts a onPress prop adn then passed this down
   const handleGoToAddWorkout = () => {
     navigate("workout", "addWorkout");
+  };
+
+  const onDeleteHandler = (index) => {
+    deleteBox(index);
   };
 
   return (
@@ -63,11 +67,20 @@ function Workout({ newBoxes, navigate, deleteBox, calendarModalVisible }) {
             calendarModalVisible={calendarModalVisible}
           />
           <View style={styles.listContainer}>
-            <Boxes
-              newBoxes={boxes}
-              handleGoToWorkoutView={handleGoToWorkoutView}
-              deleteBox={deleteBox}
-            />
+            {boxes.length === 0 && (
+              <Text style={styles.noWorkoutsText}>
+                You have no workouts, create a new template or generate one!
+              </Text>
+            )}
+            {boxes.map((workoutName, index) => (
+              <Boxes
+                box={workoutName}
+                key={index}
+                isLastBox={boxes.length % 2 !== 0 && index === boxes.length - 1}
+                handleGoToWorkoutView={() => handleGoToWorkoutView(workoutName)}
+                onDeleteBox={() => deleteBox(index)}
+              />
+            ))}
             <TouchableOpacity
               style={styles.aiButton}
               onPress={handleGoToGeneratedWorkout}>

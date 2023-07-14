@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Workout from "./Workout";
 import AddWorkout from "./AddWorkout";
 import AddExerciseModal from "./AddExerciseModal";
@@ -39,6 +39,15 @@ export default function WorkoutManager() {
 
   // State management for the workout boxes in the Workout component
   const [newBoxes, setNewBoxes] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/workouts")
+      .then((response) => response.json())
+      .then((data) => {
+        const workoutNames = data ? data.map((workout) => workout.workoutName) : [];
+        setNewBoxes(workoutNames);
+      });
+  }, []);
 
   const deleteBox = (index) => {
     setNewBoxes((prevBoxes) => prevBoxes.filter((_, i) => i !== index));
@@ -103,13 +112,23 @@ export default function WorkoutManager() {
   // A function that adds new workout boxes to the Workout component
   const handleAddNewBox = (newBox) => {
     if (newBox) {
-      setNewBoxes((prevBoxes) => [...prevBoxes, newBox]);
+      fetch("http://localhost:8000/api/workouts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ workoutName: newBox }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setNewBoxes((prevBoxes) => [...prevBoxes, data.workoutName]);
+          setWorkoutName("");
+          setNotes("");
+          setAddedExercises([]);
+        })
+        .catch((error) => console.error("Error:", error));
     }
-    setWorkoutName("");
-    setNotes("");
-    setAddedExercises([]);
   };
-
   const handleUpdateSplit = (newSplit) => {
     setWorkoutSplit(newSplit);
     setWorkoutSplitModalVisible(false);
@@ -141,9 +160,9 @@ export default function WorkoutManager() {
         <Workout
           newBoxes={newBoxes}
           navigate={handleNavigate}
-          onAddExercise={handleAddExercise} // Brought this back
+          onAddExercise={handleAddExercise}
           deleteBox={deleteBox}
-          calendarModalVisible={calendarModalVisible} // Added this
+          calendarModalVisible={calendarModalVisible}
         />
       )}
       {addWorkoutVisible && (

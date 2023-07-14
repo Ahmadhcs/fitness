@@ -96,6 +96,7 @@ const LoginRegister = ({ navigation }) => {
             style={styles.input}
             onChangeText={setEmail}
             value={email}
+            autoCapitalize="none"
             placeholder="Email"
             keyboardType="email-address"
             textContentType="emailAddress"

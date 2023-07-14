@@ -11,6 +11,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 import ExerciseCard from "../../components/ExerciseCard";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 //navigate passed from workoutmanager to navigate
 // onAddNewBox is passed to workoutmanager to add a new box when a workout is saved
