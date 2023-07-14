@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+// This component displays a modal that shows the categories of exercises (Chest, Back, Legs, Arms...).
+// When a user clicks on a category, the app navigates to the CategoryModal.
+import React from "react";
 import {
   View,
   Text,
@@ -10,6 +12,7 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
+// Different categories of exercises
 const categories = [
   "Chest",
   "Back",
@@ -21,10 +24,11 @@ const categories = [
   "Other",
 ];
 
-export default function AddExerciseModal({ visible, navigate }) {
+function AddExerciseModal({ visible, navigate }) {
   // Function to handle the opening of Category Modal
   const handleOpenCategoryModal = (category) => {
-    navigate("exerciseModal", "categoryModal", "", category.toLowerCase());
+    // lower case because of the API link call
+    navigate("exerciseModal", "categoryModal", null, category.toLowerCase());
   };
 
   return (
@@ -46,6 +50,7 @@ export default function AddExerciseModal({ visible, navigate }) {
             <View style={styles.listContainer}>
               {categories.map((category, index) => (
                 <TouchableOpacity
+                  key={index}
                   style={styles.boxContainer}
                   onPress={() => handleOpenCategoryModal(category)}>
                   <Text style={styles.boxText}>{category}</Text>
@@ -106,3 +111,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+export default AddExerciseModal;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Workout from "./Workout";
 import AddWorkout from "./AddWorkout";
 import AddExerciseModal from "./AddExerciseModal";
@@ -6,7 +6,8 @@ import CategoryModal from "./CategoryModal";
 import WorkoutView from "./WorkoutView";
 import CalendarModal from "./CalendarModal";
 import WorkoutSplitModal from "./WorkoutSplitModal";
-import ExerciseCard from "../../components/ExerciseCard";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function WorkoutManager() {
   // State management for the visibility of each component
@@ -18,7 +19,9 @@ export default function WorkoutManager() {
   const [calendarModalVisible, setCalendarModalVisible] = useState(false);
   const [workoutSplitModalVisible, setWorkoutSplitModalVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [userId, setUserId] = useState(null);
 
+  const [boxName, setBoxName] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
   const [workoutName, setWorkoutName] = useState("");
@@ -39,9 +42,45 @@ export default function WorkoutManager() {
   // State management for the workout boxes in the Workout component
   const [newBoxes, setNewBoxes] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const authDataString = await AsyncStorage.getItem("auth-rn");
+        const authData = JSON.parse(authDataString);
+        const userId = authData.user._id;
+        const userWorkouts = authData.user.workouts;
+
+        setUserId(userId);
+        setNewBoxes(userWorkouts);
+        console.log(userWorkouts);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const deleteBox = async (index) => {
+    const workoutToDelete = newBoxes[index];
+
+    fetch(`http://localhost:8000/api/workouts/${workoutToDelete._id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setNewBoxes((prevBoxes) => prevBoxes.filter((_, i) => i !== index));
+      })
+      .catch((error) => console.error("Error:", error));
+  };
+
   // A function that manages the navigation between components.
   // It takes the current component and the target component as parameters and sets their visibility accordingly.
-  const handleNavigate = (current, target, day, category) => {
+  const handleNavigate = (current, target, day, category, boxName) => {
     switch (current) {
       case "workout":
         setWorkoutVisible(false);
@@ -82,6 +121,7 @@ export default function WorkoutManager() {
         break;
       case "workoutView":
         setWorkoutViewVisible(true);
+        setBoxName(boxName);
         break;
       case "calendarModal":
         setCalendarModalVisible(true);
@@ -97,13 +137,26 @@ export default function WorkoutManager() {
   // A function that adds new workout boxes to the Workout component
   const handleAddNewBox = (newBox) => {
     if (newBox) {
-      setNewBoxes((prevBoxes) => [...prevBoxes, newBox]);
+      fetch("http://localhost:8000/api/workouts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          workoutName: newBox,
+          userId: userId,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setNewBoxes((prevBoxes) => [...prevBoxes, data]);
+          setWorkoutName("");
+          setNotes("");
+          setAddedExercises([]);
+        })
+        .catch((error) => console.error("Error:", error));
     }
-    setWorkoutName("");
-    setNotes("");
-    setAddedExercises([]);
   };
-
   const handleUpdateSplit = (newSplit) => {
     setWorkoutSplit(newSplit);
     setWorkoutSplitModalVisible(false);
@@ -135,8 +188,9 @@ export default function WorkoutManager() {
         <Workout
           newBoxes={newBoxes}
           navigate={handleNavigate}
-          workoutSplit={workoutSplit}
           onAddExercise={handleAddExercise}
+          deleteBox={deleteBox}
+          calendarModalVisible={calendarModalVisible}
         />
       )}
       {addWorkoutVisible && (
@@ -144,6 +198,7 @@ export default function WorkoutManager() {
           navigate={handleNavigate}
           onAddNewBox={handleAddNewBox}
           exercises={addedExercises}
+          setExercises={setAddedExercises}
           onDeleteWorkout={handleDeleteWorkout}
           workoutName={workoutName}
           onWorkoutNameChange={handleWorkoutNameChange}
@@ -162,7 +217,7 @@ export default function WorkoutManager() {
           onAddExercise={handleAddExercise}
         />
       )}
-      {workoutViewVisible && <WorkoutView boxName={newBoxes} navigate={handleNavigate} />}
+      {workoutViewVisible && <WorkoutView boxName={boxName} navigate={handleNavigate} />}
       <CalendarModal
         visible={calendarModalVisible}
         onModalClose={() => handleNavigate("calendarModal", "workout")}

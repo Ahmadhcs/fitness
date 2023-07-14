@@ -11,6 +11,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 import axios from "axios";
 
+// Mapping the hard-coded categories to the API categories
 const categoryApiMapping = {
   legs: ["upper%20legs", "lower%20legs"],
   arms: ["upper%20arms", "lower%20arms"],
@@ -18,14 +19,11 @@ const categoryApiMapping = {
   other: ["neck"],
 };
 
-export default function CategoryModal({
-  visible,
-  navigate,
-  selectedCategory,
-  onAddExercise,
-}) {
+function CategoryModal({ visible, navigate, selectedCategory, onAddExercise }) {
+  // State for the exercises fetched from the API
   const [data, setData] = useState([]);
 
+  // Fetching exercises from the API
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,6 +43,7 @@ export default function CategoryModal({
           allData = [...allData, ...response.data];
         }
 
+        // Update the state with the fetched data
         setData(allData);
       } catch (error) {
         console.error(error);
@@ -54,7 +53,6 @@ export default function CategoryModal({
     fetchData();
   }, [selectedCategory]);
 
-  // Function to close the CategoryModal
   const handleCloseModal = () => {
     navigate("categoryModal", "exerciseModal");
   };
@@ -122,3 +120,5 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+export default CategoryModal;

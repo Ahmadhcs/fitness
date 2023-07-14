@@ -19,6 +19,9 @@ const days = [
   "Saturday",
 ];
 
+// visible is passed by workoutmanager to show when its visible and when its not
+// onModalClose is exported to workoutmanager to close the modal
+// onSplitUpdate is passed to workoutmanager to update the split
 const WorkoutSplitModal = ({ visible, onModalClose, onSplitUpdate }) => {
   const [splits, setSplits] = useState({
     Sunday: "",

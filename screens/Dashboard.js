@@ -137,16 +137,14 @@ const Dashboard = (props) => {
   const [videos, setVideos] = useState([]);
   const [name, setName] = useState("");
   const [state, setState] = useContext(AuthContext);
-  
-  useEffect(() => {
 
+  useEffect(() => {
     if (state) {
       const { name, email, gender, weight, height, age } = state.user;
       setName(name);
     }
   }, [state]);
   const navigation = useNavigation();
-
 
   // Date details
   const today = new Date();
@@ -457,4 +455,3 @@ const styles = StyleSheet.create({
 });
 
 export default (chooseGymplaylist) => <Dashboard gymPlaylistArray={gymPlaylistArray} />;
-
