@@ -235,7 +235,7 @@ const Nutrition = () => {
           <Text style={{ fontSize: 20, fontWeight: "700", paddingLeft: 5 }}>
             Logged Food
           </Text>
-          {foodArray.map((item, index) => (
+          {foodArray && foodArray.length > 0 &&  foodArray.map((item, index) => (
             <FoodLogged  foodName={item.foodName} calories={item.calories} serving={item.servingAmount} protein={item.protein} carbs={item.carbs} fats={item.fats} />
           ))}
         </View>

@@ -6,6 +6,7 @@ export const addFood = async (req, res) =>{
         const foodObject = req.body.foodObject
         const userId = req.body.id
 
+
          // Find the user by ID
         const user = await User.findById(userId);
 

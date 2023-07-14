@@ -51,30 +51,11 @@ const userSchema = new Schema({
       date: {
         type: String,
         required: true,
-      },
-      age:{
-        type: Number, 
-        required: true
-      },
-      heightUnit:{
-        type: Boolean, 
-        required: true
-      },
-      weightUnit:{
-        type: Boolean, 
-        required: true
-      },
-      weightHistory: [{
-        weight: {
-          type: Number,
-          required: true,
-        },
-        date: {
-          type: String,
-          required: true,
-        },
-      }],
-      dailyFood: [{
+      }
+    
+    }],
+
+    dailyFood: [{
         servingAmount: {
             type: Number,
             required: true
@@ -100,14 +81,15 @@ const userSchema = new Schema({
             required: true 
         }
            
-    }]
-    },
-  ],
-  workouts: [
-    {
-      type: String,
-    },
-  ],
-});
+    }],
+    workouts: [
+        {
+          type: String,
+        },
+      ], 
+})
+
+
+  
 
 export default mongoose.model("User", userSchema);

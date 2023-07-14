@@ -138,11 +138,11 @@ const LogMeal = () => {
               (nutrient) => nutrient.name === "Fat"
             );
 
-            {
-              /* const calories = foodItem.nutrition.nutrients.find(
+            
+               const calories = foodItem.nutrition.nutrients.find(
                     (nutrient) => nutrient.name === 'Calories'
-                ); */
-            }
+                ); 
+            
 
             return (
               <SearchLog
@@ -155,7 +155,7 @@ const LogMeal = () => {
                 // carbs={200}
                 // fat={200}
                 serving={fixedAmount}
-                calories={365}
+                calories={calories ? calories.amount : 0}
               />
             );
           })}
