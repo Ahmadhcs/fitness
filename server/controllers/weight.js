@@ -1,13 +1,9 @@
-
 import User from "../models/user";
 
 export const addWeight = async (req, res) => {
   try {
-    const { weight, date} = req.body.weightToday;
-    const userId = req.body.id
-
-
-
+    const { weight, date } = req.body.weightToday;
+    const userId = req.body.id;
 
     // Find the user by ID
     const user = await User.findById(userId);
@@ -21,14 +17,14 @@ export const addWeight = async (req, res) => {
     // Push the weight and date object to the weightHistory array in the user document
     user.weightHistory.push({ weight, date });
 
-    console.log(user.weightHistory)
+    console.log(user.weightHistory);
 
     // Save the updated user document
-    user.password = undefined
-    user.secret = undefined
+    user.password = undefined;
+    user.secret = undefined;
     return res.json({
-        user
-      });
+      user,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({

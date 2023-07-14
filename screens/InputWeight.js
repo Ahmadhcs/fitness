@@ -9,7 +9,11 @@ import {
   Pressable,
 } from "react-native";
 import React, { useLayoutEffect, useState, useContext } from "react";
+import React, { useLayoutEffect, useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../context/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import { AuthContext } from "../context/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -19,8 +23,7 @@ const screenWidth = Dimensions.get("window").width;
 
 const InputWeight = () => {
   const navigation = useNavigation();
-  const [state, setState] = useContext(AuthContext)
-
+  const [state, setState] = useContext(AuthContext);
 
   const [weight, setWeight] = useState("");
 
@@ -31,9 +34,10 @@ const InputWeight = () => {
   }, [navigation]); // re-run effect if navigation object changes
 
   const handleAdd = async () => {
+  const handleAdd = async () => {
     //Handle the add by sending back to backend etc
-    if(weight === ''){
-      alert("Please Enter Your Weight")
+    if (weight === "") {
+      alert("Please Enter Your Weight");
       return;
     }
 
@@ -43,26 +47,25 @@ const InputWeight = () => {
 
     const weightToday = {
       weight: weight,
-      date: currentDate.slice(4, 10) + currentDate.slice(10) 
-    }
+      date: currentDate.slice(4, 10) + currentDate.slice(10),
+    };
 
-    try{
-      const resp = await axios.post('http://localhost:8000/api/addWeight', {weightToday , id: state.user._id});
+    try {
+      const resp = await axios.post("http://localhost:8000/api/addWeight", {
+        weightToday,
+        id: state.user._id,
+      });
       if (resp.data.error) {
         alert(resp.data.error);
       } else {
-        setState(resp.data)
-        console.log("This" , resp.data)
-        await AsyncStorage.setItem('auth-rn', JSON.stringify(resp.data))
+        setState(resp.data);
+        console.log("This", resp.data);
+        await AsyncStorage.setItem("auth-rn", JSON.stringify(resp.data));
         navigation.navigate("Weight");
       }
-
-
-    }catch (error) {
+    } catch (error) {
       console.error("An error occurred:", error.message);
     }
-
-
   };
   return (
     <SafeAreaView style={{ flex: 1, marginTop: screenHeight * 0.175 }}>

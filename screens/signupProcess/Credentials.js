@@ -25,14 +25,20 @@ const screenWidth = Dimensions.get("window").width;
 const Credentials = () => {
   const route = useRoute();
 
-  const {userInfo, userGender, userAge, userHeight, userWeight, heightUnit, weightUnit} =route.params
-
-
+  const {
+    userInfo,
+    userGender,
+    userAge,
+    userHeight,
+    userWeight,
+    heightUnit,
+    weightUnit,
+  } = route.params;
 
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [state, setState] = useContext(AuthContext)
+  const [state, setState] = useContext(AuthContext);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -40,18 +46,26 @@ const Credentials = () => {
   }, []);
   const handleCredentials = async () => {
     try {
-      const resp = await axios.post('http://localhost:8000/api/signup', {name: userInfo, email, password, gender:userGender, weight: userWeight, height: userHeight, age: userAge, heightUnit: heightUnit, weightUnit: weightUnit  });
+      const resp = await axios.post("http://localhost:8000/api/signup", {
+        name: userInfo,
+        email,
+        password,
+        gender: userGender,
+        weight: userWeight,
+        height: userHeight,
+        age: userAge,
+        heightUnit: heightUnit,
+        weightUnit: weightUnit,
+      });
       console.log(resp.data.error);
       if (resp.data.error) {
         alert(resp.data.error);
       } else {
-        setState(resp.data)
-        await AsyncStorage.setItem('auth-rn', JSON.stringify(resp.data))
+        setState(resp.data);
+        await AsyncStorage.setItem("auth-rn", JSON.stringify(resp.data));
         alert("Nice");
         navigation.navigate("Dashboard");
-
       }
-      
     } catch (error) {
       console.error("An error occurred:", error.message);
       // Handle the error case
@@ -213,12 +227,12 @@ const styles = StyleSheet.create({
   },
   progress: {
     height: "100%",
-    width: `${(5/ 5) * 100}%`,
+    width: `${(5 / 5) * 100}%`,
     borderRadius: 5,
     backgroundColor: "blue",
   },
   progressText: {
-    marginRight: 7.5
+    marginRight: 7.5,
   },
 });
 

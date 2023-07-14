@@ -42,6 +42,24 @@ const userSchema = new Schema({
     type: Boolean,
     required: true,
   },
+  weightHistory: [
+    {
+      weight: {
+        type: Number,
+        required: true,
+      },
+      date: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+  workouts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Workout",
+    },
+  ],
 });
 
 export default mongoose.model("User", userSchema);

@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,12 +9,14 @@ import {
   Button,
   Pressable,
   Alert,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { LinearGradient } from "expo-linear-gradient";
+import { AuthContext } from "../context/auth";
 import { AuthContext } from "../context/auth";
 
 import {
@@ -41,53 +43,44 @@ const weightTracking = () => {
   const navigation = useNavigation();
 
   const [state, setState] = useContext(AuthContext);
-  const [weightArray, setWeightArray] = useState([])
-  
-
-
-
- 
-
-
+  const [weightArray, setWeightArray] = useState([]);
 
   const handleInput = () => {
-
     const today = new Date();
     const currentDate = today.toDateString();
 
-
-    if( weightArray.length >0 && weightArray[weightArray.length - 1].date === (currentDate.slice(4, 10) + currentDate.slice(10))){
-      alert("Already Entered Today's Date")
-    }else{
-      navigation.navigate("InputWeight")
-
+    if (
+      weightArray.length > 0 &&
+      weightArray[weightArray.length - 1].date ===
+        currentDate.slice(4, 10) + currentDate.slice(10)
+    ) {
+      alert("Already Entered Today's Date");
+    } else {
+      navigation.navigate("InputWeight");
     }
+  };
 
-
-  }
-  
   useEffect(() => {
-
     if (state) {
-      setWeightArray(state.user.weightHistory)
+      setWeightArray(state.user.weightHistory);
 
       // console.log(weightArray)
     }
   }, [state]);
 
   let labels = [];
-let dataPoints = [];
+  let dataPoints = [];
 
-if (weightArray.length === 0) {
-  const today = new Date();
-  const currentDate = today.toDateString().slice(4, 10) + today.toDateString().slice(10);
-  labels = [currentDate];
-  dataPoints = [87];
-} else {
-  labels = weightArray.map(item => item.date.slice(0,6));
-  dataPoints = weightArray.map(item => item.weight);
-}
-
+  if (weightArray.length === 0) {
+    const today = new Date();
+    const currentDate =
+      today.toDateString().slice(4, 10) + today.toDateString().slice(10);
+    labels = [currentDate];
+    dataPoints = [87];
+  } else {
+    labels = weightArray.map((item) => item.date.slice(0, 6));
+    dataPoints = weightArray.map((item) => item.weight);
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -99,6 +92,7 @@ if (weightArray.length === 0) {
 
         <LineChart
           data={{
+            labels: labels,
             labels: labels,
             datasets: [
               {
@@ -137,13 +131,17 @@ if (weightArray.length === 0) {
         <View style={styles.weightHistory}>
           <Text style={styles.historyTitle}>Weight History</Text>
           <View style={styles.weightBars}>
-          {weightArray.slice().reverse().map((item, index) => (
-          <WeightBar date={item.date} weight={item.weight} />
-            ))}
+            {weightArray
+              .slice()
+              .reverse()
+              .map((item, index) => (
+                <WeightBar date={item.date} weight={item.weight} />
+              ))}
           </View>
         </View>
       </ScrollView>
 
+      <Pressable onPress={() => handleInput()} style={styles.button}>
       <Pressable onPress={() => handleInput()} style={styles.button}>
         <Text style={styles.buttonText}>+</Text>
       </Pressable>

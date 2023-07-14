@@ -31,7 +31,7 @@ const Name = () => {
   }, []);
 
   const handleName = () => {
-    navigation.navigate("Gender", {userName: name});
+    navigation.navigate("Gender", { userName: name });
   };
 
   return (
@@ -48,6 +48,7 @@ const Name = () => {
                 <View style={styles.progressBar}>
                   <View style={styles.progress} />
                 </View>
+                <Text style={styles.progressText}>1 of 5</Text>
                 <Text style={styles.progressText}>1 of 5</Text>
               </View>
 
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
     backgroundColor: "blue",
   },
   progressText: {
-    marginRight: 10
+    marginRight: 10,
   },
 });
 
