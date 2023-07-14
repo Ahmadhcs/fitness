@@ -18,7 +18,6 @@ const AgeSelection = () => {
   const { userInfo, userGender } = route.params;
 
   console.log(userInfo);
-
   const navigation = useNavigation();
   const [selectedAge, setSelectedAge] = useState(null);
 

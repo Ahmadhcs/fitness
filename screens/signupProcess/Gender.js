@@ -17,6 +17,7 @@ const screenWidth = Dimensions.get("window").width;
 const Gender = () => {
   const route = useRoute();
   const { userName } = route.params;
+
   const navigation = useNavigation();
   const [selectedGender, setSelectedGender] = useState(null);
 

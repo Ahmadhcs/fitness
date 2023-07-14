@@ -54,6 +54,12 @@ const userSchema = new Schema({
       },
     },
   ],
+  workouts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Workout",
+    },
+  ],
 });
 
 export default mongoose.model("User", userSchema);
