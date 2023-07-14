@@ -32,7 +32,6 @@ const LoginRegister = ({ navigation }) => {
   };
 
   const handleLogin = async () => {
-
     if (email === "" || password === "") {
       alert("all fields are required");
 
@@ -115,7 +114,6 @@ const LoginRegister = ({ navigation }) => {
           />
 
           <Pressable style={styles.loginButton} onPress={() => handleLogin()}>
-
             <Text style={styles.loginButtonText}>Log In</Text>
           </Pressable>
         </Animated.View>

@@ -45,6 +45,7 @@ exports.createWorkout = async (req, res) => {
   }
 };
 
+// Delete a workout
 exports.deleteWorkout = async (req, res) => {
   try {
     const workout = await Workout.findById(req.params.id);
