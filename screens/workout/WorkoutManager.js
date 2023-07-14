@@ -6,6 +6,7 @@ import CategoryModal from "./CategoryModal";
 import WorkoutView from "./WorkoutView";
 import CalendarModal from "./CalendarModal";
 import WorkoutSplitModal from "./WorkoutSplitModal";
+import axios from "axios";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -49,10 +50,8 @@ export default function WorkoutManager() {
         const authData = JSON.parse(authDataString);
         const userId = authData.user._id;
         const userWorkouts = authData.user.workouts;
-
         setUserId(userId);
         setNewBoxes(userWorkouts);
-        console.log(userWorkouts);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -64,18 +63,44 @@ export default function WorkoutManager() {
   const deleteBox = async (index) => {
     const workoutToDelete = newBoxes[index];
 
-    fetch(`http://localhost:8000/api/workouts/${workoutToDelete._id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userId }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    try {
+      const response = await axios.delete(`http://localhost:8000/api/workouts`, {
+        data: { workoutName: workoutToDelete, userId: userId },
+      });
+
+      if (response && response.status === 200) {
         setNewBoxes((prevBoxes) => prevBoxes.filter((_, i) => i !== index));
+      }
+    } catch (error) {
+      console.error("Error during the delete request:", error);
+    }
+  };
+
+  const handleAddNewBox = (newBox) => {
+    if (newBox) {
+      fetch("http://localhost:8000/api/workouts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          workoutName: newBox,
+          userId: userId,
+        }),
       })
-      .catch((error) => console.error("Error:", error));
+        .then((response) => response.json())
+        .then((data) => {
+          setNewBoxes((prevBoxes) => {
+            const updatedBoxes = [...prevBoxes, data.workoutName];
+            console.log(data);
+            return updatedBoxes;
+          });
+          setWorkoutName("");
+          setNotes("");
+          setAddedExercises([]);
+        })
+        .catch((error) => console.error("Error:", error));
+    }
   };
 
   // A function that manages the navigation between components.
@@ -134,29 +159,6 @@ export default function WorkoutManager() {
     }
   };
 
-  // A function that adds new workout boxes to the Workout component
-  const handleAddNewBox = (newBox) => {
-    if (newBox) {
-      fetch("http://localhost:8000/api/workouts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          workoutName: newBox,
-          userId: userId,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setNewBoxes((prevBoxes) => [...prevBoxes, data]);
-          setWorkoutName("");
-          setNotes("");
-          setAddedExercises([]);
-        })
-        .catch((error) => console.error("Error:", error));
-    }
-  };
   const handleUpdateSplit = (newSplit) => {
     setWorkoutSplit(newSplit);
     setWorkoutSplitModalVisible(false);

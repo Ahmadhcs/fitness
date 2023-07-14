@@ -1,68 +1,43 @@
-import Workout from "../models/Workout";
+import User from "../models/user";
 
-// Get all workouts
-exports.getAllWorkouts = async (req, res) => {
-  try {
-    const userId = req.params.userId;
-    const user = await User.findById(userId).populate("workouts");
-    res.status(200).json(user.workouts);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
-
-// I think that this method is unsecure and that in the future we need to get the user's id from a JWT
-// Create a new workout
-// Create a new workout
 exports.createWorkout = async (req, res) => {
   try {
-    // Here you should replace the spreading of the req.body with the specific fields
-    const workout = new Workout({
-      workoutName: req.body.workoutName,
-      user: req.body.userId,
-    });
+    const { workoutName, userId } = req.body;
 
-    await workout.save();
-    console.log("Workout saved:", workout);
-
-    // Fetch the user and update their workouts array
-    const user = await User.findById(req.body.userId);
-    console.log("Fetched user:", user);
+    const user = await User.findById(userId);
 
     if (!user) {
-      console.log("User not found:", req.body.userId);
       return res.status(404).json({ error: "User not found" });
     }
+    user.workouts.push(workoutName);
 
-    user.workouts.push(workout._id);
     await user.save();
-    console.log("Updated user:", user);
 
-    res.status(201).json(workout);
+    res.status(201).json({ workoutName });
   } catch (error) {
     console.error("Error in createWorkout:", error);
     res.status(500).send(error);
   }
 };
 
-// Delete a workout
 exports.deleteWorkout = async (req, res) => {
   try {
-    const workout = await Workout.findById(req.params.id);
+    const { workoutName, userId } = req.body;
 
-    if (!workout) {
-      return res.status(404).json({ error: "Workout not found" });
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
 
-    // Fetch the user and update their workouts array
-    const user = await User.findById(req.body.userId);
-    user.workouts.pull(workout._id);
+    user.workouts = user.workouts.filter((workout) => workout !== workoutName);
+
+    // Save the updated user
     await user.save();
 
-    await workout.remove();
     res.status(200).json({ message: "Workout deleted" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
+    console.error("Error in deleteWorkout:", error);
+    res.status(500).send(error);
   }
 };

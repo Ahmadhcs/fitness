@@ -49,8 +49,6 @@ function Workout({ newBoxes, navigate, deleteBox, calendarModalVisible }) {
     deleteBox(index);
   };
 
-  console.log(boxes);
-
   return (
     <View style={styles.outerView}>
       <ScrollView style={styles.scrollView}>
@@ -77,10 +75,10 @@ function Workout({ newBoxes, navigate, deleteBox, calendarModalVisible }) {
 
             {boxes.map((workout, index) => (
               <Boxes
-                box={workout.workoutName}
-                key={workout._id}
+                box={workout}
+                key={index}
                 isLastBox={boxes.length % 2 !== 0 && index === boxes.length - 1}
-                handleGoToWorkoutView={() => handleGoToWorkoutView(workout.workoutName)}
+                handleGoToWorkoutView={() => handleGoToWorkoutView(workout)}
                 onDeleteBox={() => onDeleteHandler(index)}
               />
             ))}

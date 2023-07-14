@@ -105,8 +105,7 @@ const userSchema = new Schema({
   ],
   workouts: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Workout",
+      type: String,
     },
   ],
 });
