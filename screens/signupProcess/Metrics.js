@@ -17,9 +17,7 @@ const screenWidth = Dimensions.get("window").width;
 
 const Metrics = () => {
   const route = useRoute();
-  const {userName, userGender, userAge} =route.params
-
-
+  const { userName, userGender, userAge } = route.params;
 
   const navigation = useNavigation();
   const [weight, setWeight] = useState(null);
@@ -46,7 +44,15 @@ const Metrics = () => {
   }, []);
 
   const handleMeasure = () => {
-    navigation.navigate("Credentials",{userInfo: userName, userGender: userGender, userAge: userAge, userHeight: height, userWeight: weight, heightUnit: isMetricHeight, weightUnit: isMetricWeight});
+    navigation.navigate("Credentials", {
+      userInfo: userName,
+      userGender: userGender,
+      userAge: userAge,
+      userHeight: height,
+      userWeight: weight,
+      heightUnit: isMetricHeight,
+      weightUnit: isMetricWeight,
+    });
   };
 
   return (
@@ -191,9 +197,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
-  progressText:{
-    marginRight: 8
-  }
+  progressText: {
+    marginRight: 8,
+  },
 });
 
 const pickerSelectStyles = StyleSheet.create({

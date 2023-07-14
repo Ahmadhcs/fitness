@@ -1,4 +1,4 @@
-const Workout = require("../models/Workout"); // use your model path
+const Workout = require("../models/Workout");
 
 // Get all workouts
 exports.getAllWorkouts = async (req, res) => {
@@ -21,6 +21,7 @@ exports.createWorkout = async (req, res) => {
   }
 };
 
+// Delete a workout
 exports.deleteWorkout = async (req, res) => {
   try {
     const workout = await Workout.findById(req.params.id);

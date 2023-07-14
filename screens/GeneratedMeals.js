@@ -42,7 +42,7 @@ const GeneratedMeals = () => {
     });
   }, [navigation]); // re-run effect if navigation object changes
   return (
-    <ScrollView style={{ paddingTop: 10, paddingBottom: 10,}}>
+    <ScrollView style={{ paddingTop: 10, paddingBottom: 10 }}>
       {testArray.map((meal, index) => (
         <>
           <View key={index} style={{ flexDirection: "row" }}>
@@ -63,7 +63,6 @@ const GeneratedMeals = () => {
         </>
       ))}
     </ScrollView>
-
   );
 };
 const styles = StyleSheet.create({

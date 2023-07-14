@@ -31,7 +31,7 @@ const Name = () => {
   }, []);
 
   const handleName = () => {
-    navigation.navigate("Gender", {userName: name});
+    navigation.navigate("Gender", { userName: name });
   };
 
   return (
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     backgroundColor: "blue",
   },
   progressText: {
-    marginRight: 10
+    marginRight: 10,
   },
 });
 

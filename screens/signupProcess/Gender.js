@@ -31,9 +31,7 @@ const Gender = () => {
   };
 
   const handleContinue = () => {
-
     navigation.navigate("Age", { userInfo: userName, userGender: selectedGender });
-
   };
 
   return (
@@ -48,12 +46,18 @@ const Gender = () => {
 
       {/* Back button */}
       <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
-                <View style={{backgroundColor: 'blue', width: screenWidth * 0.1, height:  screenWidth * 0.1, justifyContent: 'center', alignItems: 'center', borderRadius: '50%'}}>
-                    <AntDesign name="arrowleft" style={{color: 'white', fontSize: 20}} />
-               </View>
-         </Pressable>
-
-
+        <View
+          style={{
+            backgroundColor: "blue",
+            width: screenWidth * 0.1,
+            height: screenWidth * 0.1,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: "50%",
+          }}>
+          <AntDesign name="arrowleft" style={{ color: "white", fontSize: 20 }} />
+        </View>
+      </Pressable>
 
       <View style={styles.content}>
         {/* Gender buttons */}
@@ -168,9 +172,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
-  progressText:{
-    marginRight: 10
-  }
+  progressText: {
+    marginRight: 10,
+  },
 });
 
 export default Gender;
