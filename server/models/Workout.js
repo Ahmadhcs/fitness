@@ -1,15 +1,39 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
 const workoutSchema = new Schema({
-  workoutName: {
-    type: String,
-    required: true,
-  },
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  workoutName: {
+    type: String,
+    required: true,
+  },
+  exercises: [
+    {
+      id: {
+        type: String,
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+      sets: [
+        {
+          reps: {
+            type: Number,
+            required: true,
+          },
+          // store only the highest weight
+          weight: {
+            type: Number,
+          },
+        },
+      ],
+    },
+  ],
 });
 
-module.exports = mongoose.model("Workout", workoutSchema);
+export default mongoose.model("Workout", workoutSchema);

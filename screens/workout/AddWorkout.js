@@ -24,6 +24,7 @@ import axios from "axios";
 // onNotesChange can also be deleted
 // what is setExercises?????
 function AddWorkout({
+  userId,
   navigate,
   onAddNewBox,
   exercises,
@@ -74,15 +75,9 @@ function AddWorkout({
   // Function to handle 'Save' operation
   const handleSave = () => {
     if (workoutName) {
-      // If there's a workout name, add a new box to the workout page
-      // setNewBoxes((prevBoxes) => [...prevBoxes, workoutName]);
-      // navigation.navigate("Workout", { newBoxes: newBoxes });
       onAddNewBox(workoutName);
     }
     navigate("addWorkout", "workout");
-    // setWorkoutName("");
-    // setNotes("");
-    // setExercises([]);
   };
 
   // should be moved to the exercisecard component

@@ -9,6 +9,7 @@ import WorkoutSplitModal from "./WorkoutSplitModal";
 import axios from "axios";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import user from "../../server/models/user";
 
 export default function WorkoutManager() {
   // State management for the visibility of each component
@@ -21,12 +22,14 @@ export default function WorkoutManager() {
   const [workoutSplitModalVisible, setWorkoutSplitModalVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [workoutIds, setWorkoutIds] = useState([]);
 
   const [boxName, setBoxName] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
   const [workoutName, setWorkoutName] = useState("");
   const [notes, setNotes] = useState("");
+  const [selectedWorkoutId, setSelectedWorkoutId] = useState(null);
 
   const [workoutSplit, setWorkoutSplit] = useState({
     Sun: "Rest",
@@ -49,9 +52,16 @@ export default function WorkoutManager() {
         const authDataString = await AsyncStorage.getItem("auth-rn");
         const authData = JSON.parse(authDataString);
         const userId = authData.user._id;
-        const userWorkouts = authData.user.workouts;
+        const userWorkoutIds = authData.user.workouts;
+
+        const workoutsPromises = userWorkoutIds.map((userWorkoutIds) =>
+          axios.get(`http://localhost:8000/api/workouts/${userWorkoutIds}`)
+        );
+        const workoutResponses = await Promise.all(workoutsPromises);
+        const userWorkouts = workoutResponses.map((res) => res.data.workoutName);
         setUserId(userId);
         setNewBoxes(userWorkouts);
+        setWorkoutIds(userWorkoutIds);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -84,20 +94,21 @@ export default function WorkoutManager() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          workoutName: newBox,
+          workoutName: workoutName,
           userId: userId,
+          exercises: addedExercises,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
+          console.log("Response data:", data);
           setNewBoxes((prevBoxes) => {
             const updatedBoxes = [...prevBoxes, data.workoutName];
-            console.log(data);
             return updatedBoxes;
           });
           setWorkoutName("");
           setNotes("");
-          setAddedExercises([]);
+          setExercises([]);
         })
         .catch((error) => console.error("Error:", error));
     }
@@ -106,6 +117,7 @@ export default function WorkoutManager() {
   // A function that manages the navigation between components.
   // It takes the current component and the target component as parameters and sets their visibility accordingly.
   const handleNavigate = (current, target, day, category, boxName) => {
+    const workoutId = workoutIds[newBoxes.indexOf(boxName)];
     switch (current) {
       case "workout":
         setWorkoutVisible(false);
@@ -147,6 +159,7 @@ export default function WorkoutManager() {
       case "workoutView":
         setWorkoutViewVisible(true);
         setBoxName(boxName);
+        setSelectedWorkoutId(workoutId);
         break;
       case "calendarModal":
         setCalendarModalVisible(true);
@@ -219,7 +232,13 @@ export default function WorkoutManager() {
           onAddExercise={handleAddExercise}
         />
       )}
-      {workoutViewVisible && <WorkoutView boxName={boxName} navigate={handleNavigate} />}
+      {workoutViewVisible && (
+        <WorkoutView
+          boxName={boxName}
+          navigate={handleNavigate}
+          workoutId={selectedWorkoutId}
+        />
+      )}
       <CalendarModal
         visible={calendarModalVisible}
         onModalClose={() => handleNavigate("calendarModal", "workout")}

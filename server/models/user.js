@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
+
 const userSchema = new Schema({
   name: {
     type: String,
@@ -51,45 +52,43 @@ const userSchema = new Schema({
       date: {
         type: String,
         required: true,
-      }
-    
-    }],
+      },
+    },
+  ],
 
-    dailyFood: [{
-        servingAmount: {
-            type: Number,
-            required: true
-        },
-        protein:{
-            type: Number,
-            required: true
-        },
-        carbs:{
-            type: Number, 
-            required: true
-        },
-        fats:{
-            type: Number,
-            required: true
-        },
-        calories:{
-            type: Number,
-            required: true
-        },
-        foodName: {
-            type: String, 
-            required: true 
-        }
-           
-    }],
-    workouts: [
-        {
-          type: String,
-        },
-      ], 
-})
-
-
-  
+  dailyFood: [
+    {
+      servingAmount: {
+        type: Number,
+        required: true,
+      },
+      protein: {
+        type: Number,
+        required: true,
+      },
+      carbs: {
+        type: Number,
+        required: true,
+      },
+      fats: {
+        type: Number,
+        required: true,
+      },
+      calories: {
+        type: Number,
+        required: true,
+      },
+      foodName: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+  workouts: [
+    {
+      type: String,
+    },
+  ],
+});
 
 export default mongoose.model("User", userSchema);

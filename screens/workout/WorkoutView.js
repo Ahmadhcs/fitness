@@ -1,32 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import ExerciseCard from "../../components/ExerciseCard";
 import { createUUID } from "../../utils/generateUUID";
+import axios from "axios";
 
 // boxName is passed from workoutmanager that is passed from workout to display the workoutName
 // navigate is passed from workoutmanager to navigate
-function WorkoutView({ boxName, navigate }) {
+function WorkoutView({ boxName, navigate, workoutId }) {
   // exercises should also be passed in from workoutmanager to show the exercises that are saved
-  const [exercises, setExercises] = useState([
-    {
-      id: createUUID(),
-      name: "Exercise 1",
-      sets: [
-        { id: createUUID(), name: "Set 1" },
-        { id: createUUID(), name: "Set 2" },
-      ],
-    },
-    {
-      id: createUUID(),
-      name: "Exercise 2",
-      sets: [
-        { id: createUUID(), name: "Set 1" },
-        { id: createUUID(), name: "Set 2" },
-        { id: createUUID(), name: "Set 3" },
-      ],
-    },
-  ]);
+  const [exercises, setExercises] = useState([]);
+  // const [exercises, setExercises] = useState([
+  //   {
+  //     id: createUUID(),
+  //     name: "Exercise 1",
+  //     sets: [{ id: createUUID(), name: "Set 1" }],
+  //   },
+  // ]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/api/workouts/${workoutId}`)
+      .then((response) => {
+        setExercises(response.data.exercises);
+      })
+      .catch((error) => console.error("Error:", error));
+  }, [workoutId]);
 
   // close the modal
   const handleGoBack = () => {
